@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboardWeb.Router do
+  alias GoChampsScoreboardWeb.GameAdminLive
   use GoChampsScoreboardWeb, :router
 
   pipeline :browser do
@@ -39,6 +40,12 @@ defmodule GoChampsScoreboardWeb.Router do
 
       live_dashboard "/dashboard", metrics: GoChampsScoreboardWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+
+    scope "/scoreboard" do
+      pipe_through :browser
+
+      live "/", GameAdminLive
     end
   end
 end
