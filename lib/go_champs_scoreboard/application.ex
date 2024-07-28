@@ -12,6 +12,7 @@ defmodule GoChampsScoreboard.Application do
       GoChampsScoreboard.Repo,
       {DNSCluster, query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: GoChampsScoreboard.PubSub},
+      {Redix, {"redis://redis", [name: :games_cache]}},
       # Start the Finch HTTP client for sending emails
       {Finch, name: GoChampsScoreboard.Finch},
       # Start a worker by calling: GoChampsScoreboard.Worker.start_link(arg)
