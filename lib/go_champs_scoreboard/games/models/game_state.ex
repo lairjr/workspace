@@ -1,0 +1,30 @@
+defmodule GoChampsScoreboard.Games.Models.GameState do
+  alias GoChampsScoreboard.Games.Models.TeamState
+
+  @type t :: %__MODULE__{
+    id: String.t(),
+    away_team: TeamState,
+    home_team: TeamState
+  }
+  defstruct [:id, :away_team, :home_team]
+
+  @spec new(String.t(), TeamState.t(), TeamState.t()) :: t()
+  def new(id, away_team, home_team) do
+    %__MODULE__{
+      id: id,
+      away_team: away_team,
+      home_team: home_team
+    }
+  end
+
+  @spec from_json(String.t()) :: t()
+  def from_json(curr_game_json) do
+    Poison.decode!(curr_game_json, as: %__MODULE__{away_team: %TeamState{}, home_team: %TeamState{}})
+  end
+
+  defimpl String.Chars do
+    def to_string(game) do
+      Poison.encode!(game)
+    end
+  end
+end

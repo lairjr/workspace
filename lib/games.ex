@@ -1,17 +1,16 @@
 defmodule Games do
+  alias GoChampsScoreboard.Games.Models.GameState
+  alias GoChampsScoreboard.Games.Bootstrapper
+
+  @spec find(String.t()) :: GameState.t()
   def find(game_id) do
     case Redix.command(:games_cache, ["GET", game_id]) do
       {:ok, nil} ->
-        default_game = %{
-          id: game_id,
-          away_team: %{ name: "Team A", score: 10 },
-          home_team: %{ name: "Team B", score: 8 }
-        }
-        game_state = Poison.encode!(default_game)
+        game_state = Bootstrapper.bootstrap(game_id)
         Redix.command(:games_cache, ["SET", game_id, game_state])
-        default_game
-      {:ok, curr_game} ->
-        Poison.decode!(curr_game, as: %GoChampsScoreboard.GameState{away_team: %GoChampsScoreboard.TeamState{}, home_team: %GoChampsScoreboard.TeamState{}})
+        game_state
+      {:ok, curr_game_json} ->
+        GameState.from_json(curr_game_json)
     end
   end
 

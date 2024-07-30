@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.TeamState do
+defmodule GoChampsScoreboard.Games.Models.TeamState do
   @type t :: %__MODULE__{
     name: String.t(),
     score: integer()
