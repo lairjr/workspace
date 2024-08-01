@@ -6,7 +6,8 @@ defmodule Games do
   def find(game_id) do
     case Redix.command(:games_cache, ["GET", game_id]) do
       {:ok, nil} ->
-        game_state = Bootstrapper.bootstrap(game_id)
+        game_state =
+          Bootstrapper.bootstrap()
         Redix.command(:games_cache, ["SET", game_id, game_state])
         game_state
       {:ok, curr_game_json} ->
