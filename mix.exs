@@ -38,6 +38,8 @@ defmodule GoChampsScoreboard.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:redix, "~> 1.1"},
       {:poison, "~> 6.0"},
+      {:httpoison, "~> 2.0"},
+      {:mox, "~> 1.0", only: :test},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},

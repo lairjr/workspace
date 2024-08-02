@@ -83,3 +83,8 @@ config :phoenix_live_view,
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+# HTTP poison
+config :go_champs_scoreboard, :http_client,
+  http_client: HTTPoison,
+  url: "https://api.go-champs.com"
