@@ -37,6 +37,6 @@ config :phoenix_live_view,
   enable_expensive_runtime_checks: true
 
 # HTTP poison
-config :go_champs_scoreboard, :game_fetcher,
+config :go_champs_scoreboard, :http_client,
   http_client: GoChampsScoreboard.HTTPClientMock,
   url: "https://test.url"

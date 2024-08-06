@@ -6,7 +6,7 @@ defmodule GoChampsScoreboard.Games.Models.TeamState do
   defstruct [:name, :score]
 
   @spec new(String.t(), integer()) :: t()
-  def new(name, score) do
+  def new(name, score \\ 0) do
     %__MODULE__{
       name: name,
       score: score,
