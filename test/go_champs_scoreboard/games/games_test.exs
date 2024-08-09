@@ -26,20 +26,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
 
   describe "find_or_bootstrap/1 when game is not set" do
     test "bootstraps game and returns it" do
-      response_body = %{
-        "id" => "some-game-id",
-        "away_team" => %{
-          "name" => "Go champs away team",
-        },
-        "home_team" => %{
-          "name" => "Go champs home team"
-        }
-      }
-      expect(@http_client, :get, fn url ->
-        assert url =~ "some-game-id"
-
-        {:ok, %HTTPoison.Response{body: response_body |> Poison.encode!(), status_code: 200}}
-      end)
+      set_go_champs_api_respose()
 
       result_game_state = Games.find_or_bootstrap("some-game-id")
 
@@ -47,6 +34,38 @@ defmodule GoChampsScoreboard.Games.GamesTest do
       assert result_game_state.away_team.name == "Go champs away team"
       assert result_game_state.home_team.name == "Go champs home team"
     end
+
+    test "bootstraps game from go champs, store it and returns it" do
+      set_go_champs_api_respose()
+
+      result_game_state = Games.find_or_bootstrap("some-game-id")
+
+      {:ok, stored_game} = Redix.command(:games_cache, ["GET", "some-game-id"])
+
+      redis_game = GameState.from_json(stored_game)
+
+      assert redis_game.id == "some-game-id"
+      assert result_game_state.id == "some-game-id"
+
+      unset_test_game()
+    end
+  end
+
+  defp set_go_champs_api_respose() do
+    response_body = %{
+      "id" => "some-game-id",
+      "away_team" => %{
+        "name" => "Go champs away team",
+      },
+      "home_team" => %{
+        "name" => "Go champs home team"
+      }
+    }
+    expect(@http_client, :get, fn url ->
+      assert url =~ "some-game-id"
+
+      {:ok, %HTTPoison.Response{body: response_body |> Poison.encode!(), status_code: 200}}
+    end)
   end
 
   defp set_test_game() do
