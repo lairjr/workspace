@@ -34,7 +34,8 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
     Enum.random(@alphabet)
   end
 
-  defp map_game_response_to_game(game_state, game_response) do
+  defp map_game_response_to_game(game_state, game_data) do
+    game_response = game_data["data"]
     away_team_name = Map.get(game_response["away_team"], "name", game_state.away_team.name)
     home_team_name = Map.get(game_response["home_team"], "name", game_state.home_team.name)
 

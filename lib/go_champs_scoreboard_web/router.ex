@@ -45,7 +45,7 @@ defmodule GoChampsScoreboardWeb.Router do
     scope "/scoreboard" do
       pipe_through :browser
 
-      live "/", GameAdminLive
+      live "/:game_id", GameAdminLive
     end
   end
 end

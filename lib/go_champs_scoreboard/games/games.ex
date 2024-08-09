@@ -16,4 +16,14 @@ defmodule GoChampsScoreboard.Games.Games do
         GameState.from_json(curr_game_json)
     end
   end
+
+  @spec topic(String.t()) :: String.t()
+  def topic(game_id) do
+    "game-" <> game_id
+  end
+
+  @spec subscribe(String.t()) :: :ok | {:error, {:already_registered, pid()}}
+  def subscribe(game_id) do
+    Phoenix.PubSub.subscribe(GoChampsScoreboard.PubSub, topic(game_id))
+  end
 end

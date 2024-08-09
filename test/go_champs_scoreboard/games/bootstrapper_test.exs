@@ -20,12 +20,14 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
   describe "bootstrap_from_api" do
     @http_client GoChampsScoreboard.HTTPClientMock
     @response_body %{
-      "id" => "game-id",
-      "away_team" => %{
-        "name" => "Team A",
-      },
-      "home_team" => %{
-        "name" => "Team B"
+      "data" => %{
+        "id" => "game-id",
+        "away_team" => %{
+          "name" => "Team A",
+        },
+        "home_team" => %{
+          "name" => "Team B"
+        }
       }
     }
 

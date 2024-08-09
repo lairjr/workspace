@@ -53,12 +53,14 @@ defmodule GoChampsScoreboard.Games.GamesTest do
 
   defp set_go_champs_api_respose() do
     response_body = %{
-      "id" => "some-game-id",
-      "away_team" => %{
-        "name" => "Go champs away team",
-      },
-      "home_team" => %{
-        "name" => "Go champs home team"
+      "data" => %{
+        "id" => "some-game-id",
+        "away_team" => %{
+          "name" => "Go champs away team",
+        },
+        "home_team" => %{
+          "name" => "Go champs home team"
+        }
       }
     }
     expect(@http_client, :get, fn url ->
