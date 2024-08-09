@@ -4,6 +4,12 @@ defmodule GoChampsScoreboard.Games.GamesTest do
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.Games.Models.GameState
 
+  import Mox
+
+  setup :verify_on_exit!
+
+  @http_client GoChampsScoreboard.HTTPClientMock
+
   describe "find_or_bootstrap/1 when game is set" do
     test "returns game_state" do
       set_test_game()
@@ -20,11 +26,26 @@ defmodule GoChampsScoreboard.Games.GamesTest do
 
   describe "find_or_bootstrap/1 when game is not set" do
     test "bootstraps game and returns it" do
+      response_body = %{
+        "id" => "some-game-id",
+        "away_team" => %{
+          "name" => "Go champs away team",
+        },
+        "home_team" => %{
+          "name" => "Go champs home team"
+        }
+      }
+      expect(@http_client, :get, fn url ->
+        assert url =~ "some-game-id"
+
+        {:ok, %HTTPoison.Response{body: response_body |> Poison.encode!(), status_code: 200}}
+      end)
+
       result_game_state = Games.find_or_bootstrap("some-game-id")
 
       assert result_game_state.id == "some-game-id"
-      assert result_game_state.away_team.name == "Away team"
-      assert result_game_state.home_team.name == "Home team"
+      assert result_game_state.away_team.name == "Go champs away team"
+      assert result_game_state.home_team.name == "Go champs home team"
     end
   end
 

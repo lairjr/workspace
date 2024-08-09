@@ -7,7 +7,7 @@ defmodule GoChampsScoreboard.ApiClientTest do
   setup :verify_on_exit!
 
   @http_client GoChampsScoreboard.HTTPClientMock
-  @test_config http_client: @http_client, url: "pokeapi.com"
+  @test_config http_client: @http_client, url: "url.com"
 
   describe "get_game" do
     test "returns response from API" do
