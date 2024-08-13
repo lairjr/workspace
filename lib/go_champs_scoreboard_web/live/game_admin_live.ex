@@ -14,24 +14,6 @@ defmodule GoChampsScoreboardWeb.GameAdminLive do
     {:ok, socket}
   end
 
-  def render(assigns) do
-    ~H"""
-    <div>
-      <div>
-        <p>Team: <%= @game_state.away_team.name %></p>
-        <p>Score: <%= @game_state.away_team.score %></p>
-        <p><button class="btn" phx-click="inc_score">+1</button></p>
-      </div>
-
-      <div>
-        <p>Team: <%= @game_state.home_team.name %></p>
-        <p>Score: <%= @game_state.home_team.score %></p>
-        <p><button class="btn" phx-click="inc_score">+1</button></p>
-      </div>
-    </div>
-    """
-  end
-
   def handle_event("inc_score", _value, socket) do
     # {:ok, new_game} = Games.inc_away(socket.assigns.game_state)
     Logger.info("Inc score Event")
