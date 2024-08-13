@@ -9,7 +9,6 @@ defmodule GoChampsScoreboard.Application do
   def start(_type, _args) do
     children = [
       GoChampsScoreboardWeb.Telemetry,
-      GoChampsScoreboard.Repo,
       {DNSCluster, query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: GoChampsScoreboard.PubSub},
       {Redix, {"redis://redis", [name: :games_cache]}},
