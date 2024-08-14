@@ -26,6 +26,12 @@ defmodule GoChampsScoreboardWeb.Router do
   #   pipe_through :api
   # end
 
+  scope "/scoreboard" do
+    pipe_through :browser
+
+    live "/:game_id", GameAdminLive
+  end
+
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:go_champs_scoreboard, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
@@ -40,12 +46,6 @@ defmodule GoChampsScoreboardWeb.Router do
 
       live_dashboard "/dashboard", metrics: GoChampsScoreboardWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-
-    scope "/scoreboard" do
-      pipe_through :browser
-
-      live "/:game_id", GameAdminLive
     end
   end
 end
