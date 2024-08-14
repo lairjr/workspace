@@ -22,6 +22,11 @@ config :go_champs_scoreboard, GoChampsScoreboardWeb.Endpoint,
   pubsub_server: GoChampsScoreboard.PubSub,
   live_view: [signing_salt: "omrp2vU9"]
 
+# Configure HTTP Client
+config :go_champs_scoreboard, :http_client,
+  http_client: HTTPoison,
+  url: System.get_env("GO_CHAMPS_API_URL") || "https://go-champs-api-staging.herokuapp.com/"
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
