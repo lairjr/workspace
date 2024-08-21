@@ -1,13 +1,15 @@
-<div>
+<div :if={@game_state.loading}>Loading game...</div>
+
+<div :if={game_state = @game_state.ok? && @game_state.result}>
     <div>
-        <p>Team: <%= @game_state.away_team.name %></p>
-        <p>Score: <%= @game_state.away_team.score %></p>
+        <p>Team: <%= game_state.away_team.name %></p>
+        <p>Score: <%= game_state.away_team.score %></p>
         <p><button class="btn" phx-click="inc_score">+1</button></p>
     </div>
 
     <div>
-        <p>Team: <%= @game_state.home_team.name %></p>
-        <p>Score: <%= @game_state.home_team.score %></p>
+        <p>Team: <%= game_state.home_team.name %></p>
+        <p>Score: <%= game_state.home_team.score %></p>
         <p><button class="btn" phx-click="update_score" phx-value-operation="-" phx-value-amount="1">+1</button></p>
     </div>
 </div>

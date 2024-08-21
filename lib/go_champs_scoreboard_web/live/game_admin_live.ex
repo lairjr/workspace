@@ -4,14 +4,14 @@ defmodule GoChampsScoreboardWeb.GameAdminLive do
   require Logger
 
   def mount(%{"game_id" => game_id}, _session, socket) do
-    game = Games.find_or_bootstrap(game_id)
-
     if (connected?(socket)) do
       Games.subscribe(game_id)
     end
 
-    socket = assign(socket, game_state: game)
-    {:ok, socket}
+    {:ok,
+      socket
+      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)
+    }
   end
 
   def handle_event("inc_score", _value, socket) do
