@@ -25,16 +25,6 @@ defmodule GoChampsScoreboard.Games.GamesTest do
   end
 
   describe "find_or_bootstrap/1 when game is not set" do
-    test "bootstraps game and returns it" do
-      set_go_champs_api_respose()
-
-      result_game_state = Games.find_or_bootstrap("some-game-id")
-
-      assert result_game_state.id == "some-game-id"
-      assert result_game_state.away_team.name == "Go champs away team"
-      assert result_game_state.home_team.name == "Go champs home team"
-    end
-
     test "bootstraps game from go champs, store it and returns it" do
       set_go_champs_api_respose()
 
@@ -46,6 +36,8 @@ defmodule GoChampsScoreboard.Games.GamesTest do
 
       assert redis_game.id == "some-game-id"
       assert result_game_state.id == "some-game-id"
+      assert result_game_state.away_team.name == "Go champs away team"
+      assert result_game_state.home_team.name == "Go champs home team"
 
       unset_test_game()
     end

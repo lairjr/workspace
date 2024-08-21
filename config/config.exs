@@ -8,7 +8,7 @@
 import Config
 
 config :go_champs_scoreboard,
-  ecto_repos: [GoChampsScoreboard.Repo],
+  # ecto_repos: [GoChampsScoreboard.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
