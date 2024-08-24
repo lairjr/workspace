@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboardWeb.GameAdminLive do
+defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   alias GoChampsScoreboard.Games.Games
   use GoChampsScoreboardWeb, :live_view
   require Logger

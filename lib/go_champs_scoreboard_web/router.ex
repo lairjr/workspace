@@ -1,5 +1,5 @@
 defmodule GoChampsScoreboardWeb.Router do
-  alias GoChampsScoreboardWeb.GameAdminLive
+  alias GoChampsScoreboardWeb.ScoreboardControlLive
   use GoChampsScoreboardWeb, :router
 
   pipeline :browser do
@@ -29,7 +29,7 @@ defmodule GoChampsScoreboardWeb.Router do
   scope "/scoreboard" do
     pipe_through :browser
 
-    live "/:game_id", GameAdminLive
+    live "/control/:game_id", ScoreboardControlLive
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
