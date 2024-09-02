@@ -15,19 +15,9 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  test:
     name: Build and test
     runs-on: ubuntu-latest
-    services:
-      redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 6379:6379
     steps:
     - uses: actions/checkout@v4
     - name: Set up Elixir
@@ -43,5 +33,11 @@ jobs:
         restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: mix deps.get
+    - name: Start Redis
+      uses: supercharge/redis-github-action@1.7.0
+      with:
+        redis-version: 7
     - name: Run tests
       run: mix test
+      env:
+        REDIS_URL: 127.0.0.1
