@@ -42,6 +42,4 @@ defmodule GoChampsScoreboard.EventHandles.UpdateTeamScore do
       | away_team: %{current_game.away_team | score: current_game.away_team.score + amount}
     }
   end
-
-
 end

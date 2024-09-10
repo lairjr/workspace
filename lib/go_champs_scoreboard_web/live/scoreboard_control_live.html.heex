@@ -10,6 +10,16 @@
         <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="1" phx-value-team-type="away">-1</button></p>
         <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="2" phx-value-team-type="away">-2</button></p>
         <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="3" phx-value-team-type="away">-3</button></p>
+
+        <div>
+            <p>Players</p>
+
+            <ul>
+                <%= for player <- game_state.away_team.players do %>
+                    <li><%= player.name %></li>
+                <% end %>
+            </ul>
+        </div>
     </div>
 
     <div>
@@ -21,5 +31,15 @@
         <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="1" phx-value-team-type="home">-1</button></p>
         <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="2" phx-value-team-type="home">-2</button></p>
         <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="3" phx-value-team-type="home">-3</button></p>
+
+        <div>
+            <p>Players</p>
+
+            <ul>
+                <%= for player <- game_state.home_team.players do %>
+                    <li><%= player.name %></li>
+                <% end %>
+            </ul>
+        </div>
     </div>
 </div>
