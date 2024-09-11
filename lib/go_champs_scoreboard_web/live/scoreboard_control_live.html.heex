@@ -1,45 +1,321 @@
 <div :if={@game_state.loading}>Loading game...</div>
 
 <div :if={game_state = @game_state.ok? && @game_state.result}>
+  <div class="grid grid-cols-2">
     <div>
-        <p>Team: <%= game_state.away_team.name %></p>
-        <p>Score: <%= game_state.away_team.score %></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="+" phx-value-amount="1" phx-value-team-type="away">+1</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="+" phx-value-amount="2" phx-value-team-type="away">+2</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="+" phx-value-amount="3" phx-value-team-type="away">+3</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="1" phx-value-team-type="away">-1</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="2" phx-value-team-type="away">-2</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="3" phx-value-team-type="away">-3</button></p>
+      <p>Team: <%= game_state.away_team.name %></p>
+      <p>Score: <%= game_state.away_team.score %></p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="+"
+          phx-value-amount="1"
+          phx-value-team-type="away"
+        >
+          +1
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="+"
+          phx-value-amount="2"
+          phx-value-team-type="away"
+        >
+          +2
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="+"
+          phx-value-amount="3"
+          phx-value-team-type="away"
+        >
+          +3
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="-"
+          phx-value-amount="1"
+          phx-value-team-type="away"
+        >
+          -1
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="-"
+          phx-value-amount="2"
+          phx-value-team-type="away"
+        >
+          -2
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="-"
+          phx-value-amount="3"
+          phx-value-team-type="away"
+        >
+          -3
+        </button>
+      </p>
 
-        <div>
-            <p>Players</p>
+      <div style="padding-top: 1rem">
+        <p>Players</p>
 
-            <ul>
-                <%= for player <- game_state.away_team.players do %>
-                    <li><%= player.name %></li>
-                <% end %>
-            </ul>
-        </div>
+        <ul>
+          <%= for player <- game_state.away_team.players do %>
+            <li>
+              <div>
+                <p>Name: <%= player.name %></p>
+                <p>Total points: 2</p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="+"
+                    phx-value-amount="1"
+                    phx-value-team-type="away"
+                    phx-value-player-id={player.id}
+                  >
+                    +1
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="+"
+                    phx-value-amount="2"
+                    phx-value-team-type="away"
+                    phx-value-player-id={player.id}
+                  >
+                    +2
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="+"
+                    phx-value-amount="3"
+                    phx-value-team-type="away"
+                    phx-value-player-id={player.id}
+                  >
+                    +3
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="-"
+                    phx-value-amount="1"
+                    phx-value-team-type="away"
+                    phx-value-player-id={player.id}
+                  >
+                    -1
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="-"
+                    phx-value-amount="2"
+                    phx-value-team-type="away"
+                    phx-value-player-id={player.id}
+                  >
+                    -2
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="-"
+                    phx-value-amount="3"
+                    phx-value-team-type="away"
+                    phx-value-player-id={player.id}
+                  >
+                    -3
+                  </button>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
 
     <div>
-        <p>Team: <%= game_state.home_team.name %></p>
-        <p>Score: <%= game_state.home_team.score %></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="+" phx-value-amount="1" phx-value-team-type="home">+1</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="+" phx-value-amount="2" phx-value-team-type="home">+2</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="+" phx-value-amount="3" phx-value-team-type="home">+3</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="1" phx-value-team-type="home">-1</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="2" phx-value-team-type="home">-2</button></p>
-        <p><button class="btn" phx-click="update-team-score" phx-value-operation="-" phx-value-amount="3" phx-value-team-type="home">-3</button></p>
+      <p>Team: <%= game_state.home_team.name %></p>
+      <p>Score: <%= game_state.home_team.score %></p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="+"
+          phx-value-amount="1"
+          phx-value-team-type="home"
+        >
+          +1
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="+"
+          phx-value-amount="2"
+          phx-value-team-type="home"
+        >
+          +2
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="+"
+          phx-value-amount="3"
+          phx-value-team-type="home"
+        >
+          +3
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="-"
+          phx-value-amount="1"
+          phx-value-team-type="home"
+        >
+          -1
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="-"
+          phx-value-amount="2"
+          phx-value-team-type="home"
+        >
+          -2
+        </button>
+      </p>
+      <p>
+        <button
+          class="btn"
+          phx-click="update-team-score"
+          phx-value-operation="-"
+          phx-value-amount="3"
+          phx-value-team-type="home"
+        >
+          -3
+        </button>
+      </p>
 
-        <div>
-            <p>Players</p>
+      <div style="padding-top: 1rem">
+        <p>Players</p>
 
-            <ul>
-                <%= for player <- game_state.home_team.players do %>
-                    <li><%= player.name %></li>
-                <% end %>
-            </ul>
-        </div>
+        <ul>
+          <%= for player <- game_state.home_team.players do %>
+            <li>
+              <div>
+                <p>Name: <%= player.name %></p>
+                <p>Total points: 2</p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="+"
+                    phx-value-amount="1"
+                    phx-value-team-type="home"
+                    phx-value-player-id={player.id}
+                  >
+                    +1
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="+"
+                    phx-value-amount="2"
+                    phx-value-team-type="home"
+                    phx-value-player-id={player.id}
+                  >
+                    +2
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="+"
+                    phx-value-amount="3"
+                    phx-value-team-type="home"
+                    phx-value-player-id={player.id}
+                  >
+                    +3
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="-"
+                    phx-value-amount="1"
+                    phx-value-team-type="home"
+                    phx-value-player-id={player.id}
+                  >
+                    -1
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="-"
+                    phx-value-amount="2"
+                    phx-value-team-type="home"
+                    phx-value-player-id={player.id}
+                  >
+                    -2
+                  </button>
+                </p>
+                <p>
+                  <button
+                    class="btn"
+                    phx-click="update-player-score"
+                    phx-value-operation="-"
+                    phx-value-amount="3"
+                    phx-value-team-type="home"
+                    phx-value-player-id={player.id}
+                  >
+                    -3
+                  </button>
+                </p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>
