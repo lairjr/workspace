@@ -23,7 +23,7 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       "data" => %{
         "id" => "game-id",
         "away_team" => %{
-          "name" => "Team A",
+          "name" => "Team A"
         },
         "home_team" => %{
           "name" => "Team B"
@@ -38,7 +38,11 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
         {:ok, %HTTPoison.Response{body: @response_body |> Poison.encode!(), status_code: 200}}
       end)
 
-      game = Bootstrapper.bootstrap_from_go_champs(GoChampsScoreboard.Games.Bootstrapper.bootstrap(), "game-id")
+      game =
+        Bootstrapper.bootstrap_from_go_champs(
+          GoChampsScoreboard.Games.Bootstrapper.bootstrap(),
+          "game-id"
+        )
 
       assert game.id == "game-id"
       assert game.away_team.name == "Team A"

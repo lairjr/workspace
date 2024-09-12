@@ -48,13 +48,14 @@ defmodule GoChampsScoreboard.Games.GamesTest do
       "data" => %{
         "id" => "some-game-id",
         "away_team" => %{
-          "name" => "Go champs away team",
+          "name" => "Go champs away team"
         },
         "home_team" => %{
           "name" => "Go champs home team"
         }
       }
     }
+
     expect(@http_client, :get, fn url ->
       assert url =~ "some-game-id"
 
