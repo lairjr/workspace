@@ -9,7 +9,7 @@ defmodule Components.BasketballControls.PlayerStats do
       <p>Player name, <%= @player.name %>!</p>
       <p>
         <button
-          class="btn"
+          class="button"
           phx-click="update-player-stat"
           phx-value-stat-id="points"
           phx-value-operation="+"
@@ -22,7 +22,7 @@ defmodule Components.BasketballControls.PlayerStats do
       </p>
       <p>
         <button
-          class="btn"
+          class="button"
           phx-click="update-player-stat"
           phx-value-stat-id="points"
           phx-value-operation="+"
@@ -35,7 +35,7 @@ defmodule Components.BasketballControls.PlayerStats do
       </p>
       <p>
         <button
-          class="btn"
+          class="button"
           phx-click="update-player-stat"
           phx-value-stat-id="points"
           phx-value-operation="+"
@@ -48,7 +48,7 @@ defmodule Components.BasketballControls.PlayerStats do
       </p>
       <p>
         <button
-          class="btn"
+          class="button"
           phx-click="update-player-stat"
           phx-value-stat-id="points"
           phx-value-operation="-"
@@ -61,7 +61,7 @@ defmodule Components.BasketballControls.PlayerStats do
       </p>
       <p>
         <button
-          class="btn"
+          class="button"
           phx-click="update-player-stat"
           phx-value-stat-id="points"
           phx-value-operation="-"
@@ -74,7 +74,7 @@ defmodule Components.BasketballControls.PlayerStats do
       </p>
       <p>
         <button
-          class="btn"
+          class="button"
           phx-click="update-player-stat"
           phx-value-stat-id="points"
           phx-value-operation="-"
