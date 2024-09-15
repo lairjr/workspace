@@ -20,6 +20,11 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
     {:noreply, socket}
   end
 
+  def handle_event("update-player-stat", _value, socket) do
+    Logger.info("Player event")
+    {:noreply, socket}
+  end
+
   @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}
   def handle_info({:update_game, game}, socket) do
     {:noreply,
