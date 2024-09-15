@@ -47,6 +47,7 @@ defmodule GoChampsScoreboard.MixProject do
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:dart_sass, "~> 0.7", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},
@@ -74,6 +75,7 @@ defmodule GoChampsScoreboard.MixProject do
       "assets.build": ["esbuild go_champs_scoreboard"],
       "assets.deploy": [
         "esbuild go_champs_scoreboard --minify",
+        "sass default --no-source-map --style=compressed",
         "phx.digest"
       ]
     ]
