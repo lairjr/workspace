@@ -26,7 +26,6 @@ config :go_champs_scoreboard, GoChampsScoreboardWeb.Endpoint,
   secret_key_base: "FNFMdOeSNH0BTYBAyGlb0YVDWeWVRj90ykNd2uPIGS3JTA6y/p7QFrQkWbFKnnbU",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:go_champs_scoreboard, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:go_champs_scoreboard, ~w(--watch)]}
   ]
 
 # ## SSL Support

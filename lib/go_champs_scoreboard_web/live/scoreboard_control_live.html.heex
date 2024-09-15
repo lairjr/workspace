@@ -1,13 +1,12 @@
 <div :if={@game_state.loading}>Loading game...</div>
 
 <div :if={game_state = @game_state.ok? && @game_state.result}>
-  <div class="grid grid-cols-2">
+  <div>
     <div>
       <p>Team: <%= game_state.away_team.name %></p>
       <p>Score: <%= game_state.away_team.score %></p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="+"
           phx-value-amount="1"
@@ -18,7 +17,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="+"
           phx-value-amount="2"
@@ -29,7 +27,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="+"
           phx-value-amount="3"
@@ -40,7 +37,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="-"
           phx-value-amount="1"
@@ -51,7 +47,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="-"
           phx-value-amount="2"
@@ -62,7 +57,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="-"
           phx-value-amount="3"
@@ -83,7 +77,6 @@
                 <p>Total points: 2</p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="+"
@@ -96,7 +89,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="+"
@@ -109,7 +101,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="+"
@@ -122,7 +113,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="-"
@@ -135,7 +125,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="-"
@@ -148,7 +137,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="-"
@@ -171,7 +159,6 @@
       <p>Score: <%= game_state.home_team.score %></p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="+"
           phx-value-amount="1"
@@ -182,7 +169,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="+"
           phx-value-amount="2"
@@ -193,7 +179,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="+"
           phx-value-amount="3"
@@ -204,7 +189,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="-"
           phx-value-amount="1"
@@ -215,7 +199,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="-"
           phx-value-amount="2"
@@ -226,7 +209,6 @@
       </p>
       <p>
         <button
-          class="btn"
           phx-click="update-team-score"
           phx-value-operation="-"
           phx-value-amount="3"
@@ -247,7 +229,6 @@
                 <p>Total points: 2</p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="+"
@@ -260,7 +241,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="+"
@@ -273,7 +253,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="+"
@@ -286,7 +265,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="-"
@@ -299,7 +277,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="-"
@@ -312,7 +289,6 @@
                 </p>
                 <p>
                   <button
-                    class="btn"
                     phx-click="update-player-stat"
                     phx-value-stat-id="points"
                     phx-value-operation="-"
