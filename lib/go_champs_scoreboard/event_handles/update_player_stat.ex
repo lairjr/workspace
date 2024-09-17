@@ -7,10 +7,10 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
         current_game,
         %{
           "operation" => op,
-          "team-type" => team_type,
           "amount" => amount,
+          "stat-id" => stat_id,
           "player-id" => player_id,
-          "stat-id" => stat_id
+          "team-type" => team_type,
         }
       ) do
     update_game(current_game, team_type, op, String.to_integer(amount), player_id, stat_id)

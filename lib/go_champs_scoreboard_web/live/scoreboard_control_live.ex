@@ -22,8 +22,6 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("update-player-stat", value, socket) do
-    Logger.info("Player event")
-    Logger.info(socket.assigns.selected_player)
     Games.handle_event(socket.assigns.game_state.result.id, "update-player-stat", value)
     {:noreply, socket}
   end
