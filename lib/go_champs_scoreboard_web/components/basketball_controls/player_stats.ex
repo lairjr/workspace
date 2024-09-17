@@ -5,6 +5,9 @@ defmodule Components.BasketballControls.PlayerStats do
     ~H"""
     <div class="columns is-multiline">
       <div class="column is-12">
+        <p><%= @selected_player.player_id %></p>
+      </div>
+      <div class="column is-12">
         <nav class="panel">
           <p class="panel-heading">Points</p>
           <div class="panel-block is-justify-content-center">
@@ -147,7 +150,7 @@ defmodule Components.BasketballControls.PlayerStats do
       <%= for player <- @players do %>
         <div class="column is-12">
           <button
-            class="button is-medium is-fullwidth"
+            class={["button", "is-medium", "is-fullwidth"] ++ [(if player.id == @selected_player.player_id, do: "is-dark", else: "")]}
             phx-click="select-player"
             phx-value-player-id={player.id}
             phx-value-team-type={@team_type}
@@ -164,15 +167,15 @@ defmodule Components.BasketballControls.PlayerStats do
     ~H"""
     <div class="columns">
       <div class="column">
-        <.team_players players={@game_state.home_team.players} team_type="home" />
+        <.team_players players={@game_state.home_team.players} team_type="home" selected_player={@selected_player} />
       </div>
 
       <div class="column">
-        <.stats_control />
+        <.stats_control selected_player={@selected_player} />
       </div>
 
       <div class="column">
-        <.team_players players={@game_state.away_team.players} team_type="away" />
+        <.team_players players={@game_state.away_team.players} team_type="away" selected_player={@selected_player} />
       </div>
     </div>
     """
