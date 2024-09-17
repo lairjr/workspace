@@ -14,27 +14,29 @@ defmodule GoChampsScoreboard.ApiClientTest do
       response_body = %{
         "id" => "game-id",
         "away_team" => %{
-          "name" => "Away team",
+          "name" => "Away team"
         },
         "home_team" => %{
           "name" => "Home team"
         }
       }
+
       expect(@http_client, :get, fn url ->
         assert url =~ "game-id"
 
         {:ok, %HTTPoison.Response{body: response_body |> Poison.encode!(), status_code: 200}}
       end)
 
-      assert {:ok, %{
-        "id" => "game-id",
-        "away_team" => %{
-          "name" => "Away team",
-        },
-        "home_team" => %{
-          "name" => "Home team"
-        }
-      }} = ApiClient.get_game("game-id", @test_config)
+      assert {:ok,
+              %{
+                "id" => "game-id",
+                "away_team" => %{
+                  "name" => "Away team"
+                },
+                "home_team" => %{
+                  "name" => "Home team"
+                }
+              }} = ApiClient.get_game("game-id", @test_config)
     end
   end
 end

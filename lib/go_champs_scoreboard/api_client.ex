@@ -9,7 +9,7 @@ defmodule GoChampsScoreboard.ApiClient do
     url = Keyword.get(config, :url, "") <> @games_path <> "/" <> game_id
     http_client = Keyword.get(config, :http_client)
 
-    Logger.info("[Get Game]: From Go Champs Api", [url: url])
+    Logger.info("[Get Game]: From Go Champs Api", url: url)
 
     url
     |> http_client.get()
@@ -18,10 +18,13 @@ defmodule GoChampsScoreboard.ApiClient do
   end
 
   defp log(response) do
-    Logger.info("[Get Game]: Response from Go Champs Api", [response: response])
+    Logger.info("[Get Game]: Response from Go Champs Api", response: response)
     response
   end
-  defp handle_response({:ok, %HTTPoison.Response{body: body, status_code: 200}}), do: {:ok, Poison.decode!(body) }
+
+  defp handle_response({:ok, %HTTPoison.Response{body: body, status_code: 200}}),
+    do: {:ok, Poison.decode!(body)}
+
   defp handle_response(_), do: {:error, "something went wrong"}
 
   defp system_config(), do: Application.get_env(:go_champs_scoreboard, :http_client)

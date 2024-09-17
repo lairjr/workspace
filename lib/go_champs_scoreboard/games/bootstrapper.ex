@@ -6,11 +6,11 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
 
   @mock_home_players [
     PlayerState.new("player-1", "Lair Júnior"),
-    PlayerState.new("player-2", "Fausto Silva"),
+    PlayerState.new("player-2", "Fausto Silva")
   ]
   @mock_away_players [
     PlayerState.new("player-3", "Ruan Victor"),
-    PlayerState.new("player-4", "Gugu Liberato"),
+    PlayerState.new("player-4", "Gugu Liberato")
   ]
 
   @spec bootstrap() :: GameState.t()
@@ -35,6 +35,7 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
     # Technically not needed, but just to illustrate we're
     # relying on the PRNG for this in random/1
     :rand.seed(:exsplus, :os.timestamp())
+
     Stream.repeatedly(&random_char_from_alphabet/0)
     |> Enum.take(count)
     |> List.to_string()

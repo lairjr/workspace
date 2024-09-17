@@ -10,11 +10,15 @@ defmodule GoChampsScoreboard.Application do
     redis_username = System.get_env("REDIS_USERNAME") || nil
     redis_password = System.get_env("REDIS_PASSWORD") || nil
     redis_url = System.get_env("REDIS_URL") || "redis"
+
     children = [
       GoChampsScoreboardWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: GoChampsScoreboard.PubSub},
-      {Redix, {"redis://#{redis_url}", [name: :games_cache, username: redis_username, password: redis_password]}},
+      {Redix,
+       {"redis://#{redis_url}",
+        [name: :games_cache, username: redis_username, password: redis_password]}},
       # Start the Finch HTTP client for sending emails
       {Finch, name: GoChampsScoreboard.Finch},
       # Start a worker by calling: GoChampsScoreboard.Worker.start_link(arg)
