@@ -87,4 +87,22 @@ defmodule Components.BasketballControls.PlayerStats do
       </p>
     """
   end
+
+  def view(assigns) do
+    ~H"""
+      <div class="columns">
+        <div class="column">
+          Home players
+        </div>
+
+        <div class="column">
+          Stats
+        </div>
+
+        <div class="column">
+          Away players
+        </div>
+      </div>
+    """
+  end
 end
