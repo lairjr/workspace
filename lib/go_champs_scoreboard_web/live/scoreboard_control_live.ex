@@ -10,6 +10,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
     {:ok,
      socket
+     |> assign(:selected_player, %{player_id: "", team_type: ""})
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
@@ -22,7 +23,14 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
   def handle_event("update-player-stat", _value, socket) do
     Logger.info("Player event")
+    Logger.info(socket.assigns.selected_player)
     {:noreply, socket}
+  end
+
+  def handle_event("select-player", %{"player-id" => player_id, "team-type" => team_type}, socket) do
+    {:noreply,
+     socket
+     |> assign(:selected_player, %{player_id: player_id, team_type: team_type})}
   end
 
   @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}
