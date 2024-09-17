@@ -5,6 +5,7 @@
 @use "../../node_modules/bulma/sass/helpers";
 
 // Load other Bulma components
+@use "../../node_modules/bulma/sass/components/panel.scss";
 @use "../../node_modules/bulma/sass/elements/button";
 @use "../../node_modules/bulma/sass/elements/title";
 

@@ -72,16 +72,6 @@
           -3
         </button>
       </p>
-
-      <div style="padding-top: 1rem">
-        <p>Players</p>
-
-        <ul>
-          <%= for player <- game_state.away_team.players do %>
-            <Components.BasketballControls.PlayerStats.row player={player} />
-          <% end %>
-        </ul>
-      </div>
     </div>
 
     <div>
@@ -153,16 +143,6 @@
           -3
         </button>
       </p>
-
-      <div style="padding-top: 1rem">
-        <p>Players</p>
-
-        <ul>
-          <%= for player <- game_state.home_team.players do %>
-            <Components.BasketballControls.PlayerStats.row player={player} />
-          <% end %>
-        </ul>
-      </div>
     </div>
   </div>
 </div>
