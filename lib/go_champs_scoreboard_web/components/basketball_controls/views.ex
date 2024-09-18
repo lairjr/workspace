@@ -8,7 +8,10 @@ defmodule Components.BasketballControls.Views do
     ~H"""
     <div class="container">
       <.teams_header game_state={@game_state} />
-      <Components.BasketballControls.PlayerStats.view game_state={@game_state} selected_player={@selected_player} />
+      <Components.BasketballControls.PlayerStats.view
+        game_state={@game_state}
+        selected_player={@selected_player}
+      />
     </div>
     """
   end

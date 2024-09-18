@@ -21,6 +21,8 @@ defmodule Components.BasketballControls.PlayerStats do
                       phx-value-stat-id="points"
                       phx-value-operation="+"
                       phx-value-amount="1"
+                      phx-value-player-id={@selected_player.player_id}
+                      phx-value-team-type={@selected_player.team_type}
                     >
                       +1
                     </button>
@@ -32,6 +34,8 @@ defmodule Components.BasketballControls.PlayerStats do
                       phx-value-stat-id="points"
                       phx-value-operation="+"
                       phx-value-amount="2"
+                      phx-value-player-id={@selected_player.player_id}
+                      phx-value-team-type={@selected_player.team_type}
                     >
                       +2
                     </button>
@@ -43,6 +47,8 @@ defmodule Components.BasketballControls.PlayerStats do
                       phx-value-stat-id="points"
                       phx-value-operation="+"
                       phx-value-amount="3"
+                      phx-value-player-id={@selected_player.player_id}
+                      phx-value-team-type={@selected_player.team_type}
                     >
                       +3
                     </button>
@@ -58,6 +64,8 @@ defmodule Components.BasketballControls.PlayerStats do
                         phx-value-stat-id="points"
                         phx-value-operation="-"
                         phx-value-amount="1"
+                        phx-value-player-id={@selected_player.player_id}
+                        phx-value-team-type={@selected_player.team_type}
                       >
                         -1
                       </button>
@@ -69,6 +77,8 @@ defmodule Components.BasketballControls.PlayerStats do
                         phx-value-stat-id="points"
                         phx-value-operation="-"
                         phx-value-amount="2"
+                        phx-value-player-id={@selected_player.player_id}
+                        phx-value-team-type={@selected_player.team_type}
                       >
                         -2
                       </button>
@@ -80,6 +90,8 @@ defmodule Components.BasketballControls.PlayerStats do
                         phx-value-stat-id="points"
                         phx-value-operation="-"
                         phx-value-amount="3"
+                        phx-value-player-id={@selected_player.player_id}
+                        phx-value-team-type={@selected_player.team_type}
                       >
                         -3
                       </button>
@@ -150,7 +162,10 @@ defmodule Components.BasketballControls.PlayerStats do
       <%= for player <- @players do %>
         <div class="column is-12">
           <button
-            class={["button", "is-medium", "is-fullwidth"] ++ [(if player.id == @selected_player.player_id, do: "is-dark", else: "")]}
+            class={
+              ["button", "is-medium", "is-fullwidth"] ++
+                [if(player.id == @selected_player.player_id, do: "is-dark", else: "")]
+            }
             phx-click="select-player"
             phx-value-player-id={player.id}
             phx-value-team-type={@team_type}
@@ -167,7 +182,11 @@ defmodule Components.BasketballControls.PlayerStats do
     ~H"""
     <div class="columns">
       <div class="column">
-        <.team_players players={@game_state.home_team.players} team_type="home" selected_player={@selected_player} />
+        <.team_players
+          players={@game_state.home_team.players}
+          team_type="home"
+          selected_player={@selected_player}
+        />
       </div>
 
       <div class="column">
@@ -175,7 +194,11 @@ defmodule Components.BasketballControls.PlayerStats do
       </div>
 
       <div class="column">
-        <.team_players players={@game_state.away_team.players} team_type="away" selected_player={@selected_player} />
+        <.team_players
+          players={@game_state.away_team.players}
+          team_type="away"
+          selected_player={@selected_player}
+        />
       </div>
     </div>
     """
