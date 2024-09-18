@@ -13,6 +13,21 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
           "team-type" => team_type,
         }
       ) do
+    # player_stat = current_game
+    #     |> Games.find_player_stat(stat_id)
+
+    # calculated_player_stats = current_game
+    #     |> Games.find_calculated_player_stats()
+
+    # updated_player = current_game
+    #     |> Games.find_player(team_type, player_id)
+    #     |> Players.update_manual_stats_values(player_stat, op)
+    #     |> Players.update_calculated_stats_values(calculated_player_stats)
+
+    # current_game
+    # |> Games.update_player(team_type, player_id, updated_player)
+    # |> Games.update_team_total_player_stats(team_type)
+
     update_game(current_game, team_type, op, String.to_integer(amount), player_id, stat_id)
   end
 
