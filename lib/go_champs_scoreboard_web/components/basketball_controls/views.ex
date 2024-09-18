@@ -28,7 +28,7 @@ defmodule Components.BasketballControls.Views do
           </div>
           <div class="column is-2 has-text-right">
             <h3 class="title is-3">
-              <%= @game_state.home_team.score %>
+              <%= @game_state.home_team.total_player_stats["points"] %>
             </h3>
           </div>
         </div>
@@ -38,7 +38,7 @@ defmodule Components.BasketballControls.Views do
         <div class="columns">
           <div class="column is-2">
             <h3 class="title is-3">
-              <%= @game_state.away_team.score %>
+              <%= @game_state.away_team.total_player_stats["points"] %>
             </h3>
           </div>
           <div class="column">

@@ -10,7 +10,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
           "amount" => amount,
           "stat-id" => stat_id,
           "player-id" => player_id,
-          "team-type" => team_type,
+          "team-type" => team_type
         }
       ) do
     update_game(current_game, team_type, op, String.to_integer(amount), player_id, stat_id)
@@ -27,13 +27,6 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
   end
 
   defp update_team(team, op, amount, player_id, stats_id) do
-    updated_score =
-      if stats_id == "points" do
-        update_score(team.score, op, amount)
-      else
-        team.score
-      end
-
     updated_players =
       Enum.map(team.players, fn player ->
         if player.id == player_id do
@@ -44,18 +37,14 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
         end
       end)
 
-    updated_team_stats = update_team_stats(team.total_player_stats, stats_id, op, amount)
+    updated_team_stats = sum_stats_values(updated_players)
 
     %{
       team
-      | score: updated_score,
-        players: updated_players,
+      | players: updated_players,
         total_player_stats: updated_team_stats
     }
   end
-
-  defp update_score(score, "+", amount), do: score + amount
-  defp update_score(score, "-", amount), do: score - amount
 
   defp update_player_stats(stats_values, stats_id, "+", amount) do
     Map.update(stats_values, stats_id, amount, &(&1 + amount))
@@ -65,11 +54,13 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
     Map.update(stats_values, stats_id, 0, &(&1 - amount))
   end
 
-  defp update_team_stats(total_stats, stats_id, "+", amount) do
-    Map.update(total_stats, stats_id, amount, &(&1 + amount))
-  end
-
-  defp update_team_stats(total_stats, stats_id, "-", amount) do
-    Map.update(total_stats, stats_id, 0, &(&1 - amount))
+  defp sum_stats_values(players) do
+    Enum.reduce(players, %{}, fn player, acc ->
+      player
+      |> Map.get(:stats_values, %{})
+      |> Enum.reduce(acc, fn {key, value}, acc ->
+        Map.update(acc, key, value, &(&1 + value))
+      end)
+    end)
   end
 end

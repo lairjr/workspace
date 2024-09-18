@@ -5,7 +5,7 @@
   <div>
     <div>
       <p>Team: <%= game_state.away_team.name %></p>
-      <p>Score: <%= game_state.away_team.score %></p>
+      <p>Score: <%= game_state.away_team.total_player_stats["points"] %></p>
       <p>
         <button
           class="button"
@@ -76,7 +76,7 @@
 
     <div>
       <p>Team: <%= game_state.home_team.name %></p>
-      <p>Score: <%= game_state.home_team.score %></p>
+      <p>Score: <%= game_state.home_team.total_player_stats["points"] %></p>
       <p>
         <button
           class="button"

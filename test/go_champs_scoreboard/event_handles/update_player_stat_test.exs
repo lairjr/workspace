@@ -5,7 +5,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
 
   @initial_state %GameState{
     home_team: %{
-      score: 1,
+      score: 0,
       players: [
         %{id: "123", stats_values: %{"points" => 1}}
       ],
@@ -31,7 +31,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
 
     expected_state = %GameState{
       home_team: %{
-        score: 3,
+        score: 0,
         players: [
           %{id: "123", stats_values: %{"points" => 3}}
         ],
@@ -87,7 +87,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
 
     expected_state = %GameState{
       home_team: %{
-        score: 1,
+        score: 0,
         players: [
           %{id: "123", stats_values: %{"points" => 1}}
         ],
@@ -113,7 +113,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
         total_player_stats: %{}
       },
       away_team: %{
-        score: 2,
+        score: 0,
         players: [
           %{id: "456", stats_values: %{"fouls" => 5}}
         ],
@@ -136,7 +136,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
         total_player_stats: %{}
       },
       away_team: %{
-        score: 2,
+        score: 0,
         players: [
           %{id: "456", stats_values: %{"fouls" => 4}}
         ],
