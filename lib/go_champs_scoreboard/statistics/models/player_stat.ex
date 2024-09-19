@@ -3,15 +3,15 @@ defmodule GoChampsScoreboard.Statistics.Models.PlayerStat do
 
   @type type :: :manual | :calculated
   @type operation_type :: :increment | :decrement
-  @type value_calculator :: (PlayerState.t() -> float()) | nil
+  @type value_calculator :: fun(PlayerState.t() :: float()) | nil
 
   @type t :: %__MODULE__{
-    key: String.t(),
-    type: type,
-    operations: [operation_type],
-    value: float(),
-    value_calculator: value_calculator
-  }
+          key: String.t(),
+          type: type,
+          operations: [operation_type],
+          value: float(),
+          value_calculator: value_calculator
+        }
 
   defstruct [:key, :type, :operations, :value, :value_calculator]
 

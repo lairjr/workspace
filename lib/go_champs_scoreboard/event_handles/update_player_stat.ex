@@ -10,7 +10,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
           "amount" => amount,
           "stat-id" => stat_id,
           "player-id" => player_id,
-          "team-type" => team_type,
+          "team-type" => team_type
         }
       ) do
     # player_stat = current_game

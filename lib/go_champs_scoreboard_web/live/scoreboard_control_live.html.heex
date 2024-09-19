@@ -1,7 +1,10 @@
 <div :if={@game_state.loading}>Loading game...</div>
 
 <div :if={game_state = @game_state.ok? && @game_state.result}>
-  <Components.BasketballControls.Views.general game_state={game_state} selected_player={@selected_player} />
+  <Components.BasketballControls.Views.general
+    game_state={game_state}
+    selected_player={@selected_player}
+  />
   <div>
     <div>
       <p>Team: <%= game_state.away_team.name %></p>
