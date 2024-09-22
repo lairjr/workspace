@@ -9,19 +9,17 @@ defmodule GoChampsScoreboard.Statistics.Models.PlayerStat do
           key: String.t(),
           type: type,
           operations: [operation_type],
-          value: float(),
           value_calculator: value_calculator
         }
 
-  defstruct [:key, :type, :operations, :value, :value_calculator]
+  defstruct [:key, :type, :operations, :value_calculator]
 
-  @spec new(String.t(), type(), float(), value_calculator()) :: t()
-  def new(key, type, operations \\ [:inc, :dec], value \\ 0, value_calculator \\ nil) do
+  @spec new(String.t(), type(), value_calculator()) :: t()
+  def new(key, type, operations \\ [:inc, :dec], value_calculator \\ nil) do
     %__MODULE__{
       key: key,
       type: type,
       operations: operations,
-      value: value,
       value_calculator: value_calculator
     }
   end

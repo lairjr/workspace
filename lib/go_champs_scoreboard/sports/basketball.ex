@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboard.Sports.Basketball do
+  alias GoChampsScoreboard.Sports.Basketball.Statistics
   alias GoChampsScoreboard.Statistics.Models.PlayerStat
 
   @player_stats [
@@ -10,20 +11,17 @@ defmodule GoChampsScoreboard.Sports.Basketball do
     PlayerStat.new("assists", :manual, [:increment, :decrement]),
     PlayerStat.new("blocks", :manual, [:increment, :decrement]),
     PlayerStat.new("tournovers", :manual, [:increment, :decrement]),
-    PlayerStat.new("points", :calculated, [], 0, fn player_state ->
-      player_state.stats_values["one-points-made"] * 1 +
-        player_state.stats_values["two-points-made"] * 2 +
-        player_state.stats_values["three-points-made"] * 3
-    end),
-    PlayerStat.new("rebounds", :calculated, [], 0, fn player_state ->
-      player_state.stats_values["def-rebounds"] +
-        player_state.stats_values["off-rebounds"]
-    end)
+    PlayerStat.new("points", :calculated, [], &Statistics.calc_player_points/1),
+    PlayerStat.new("rebounds", :calculated, [], &Statistics.calc_player_rebounds/1)
   ]
 
   def bootstrap() do
-    # Enum.reduce(@player_stats, %{}, fn stat, player_stats ->
-    #   Map.merge(player_stats, %{[stat.key] => stat.value})
-    # end)
+    Enum.reduce(@player_stats, %{}, fn stat, player_stats ->
+      Map.merge(player_stats, %{stat.key => 0})
+    end)
+  end
+
+  def find_player_stat(stat_id) do
+    Enum.find(@player_stats, fn stat -> stat.key == stat_id end)
   end
 end
