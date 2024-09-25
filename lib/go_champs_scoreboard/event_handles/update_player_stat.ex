@@ -23,7 +23,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
     IO.inspect(op)
 
     # updated_player = current_game
-    #     |> Games.find_player(team_type, player_id)
+    #     |> Teams.find_player(team_type, player_id)
     #     |> Players.update_manual_stats_values(player_stat, op)
     #     |> Players.update_calculated_stats_values(calculated_player_stats)
 

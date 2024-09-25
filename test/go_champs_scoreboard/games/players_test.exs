@@ -3,8 +3,6 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
   alias GoChampsScoreboard.Games.Players
   alias GoChampsScoreboard.Statistics.Models.PlayerStat
 
-  require IEx
-
   describe "update_manual_stats_values" do
     test "updates the player state with the new value" do
       player_state = %{
@@ -13,7 +11,7 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
         }
       }
 
-      player_stat = PlayerStat.new("one-points-made", :manual, [:increment, :decrement])
+      player_stat = PlayerStat.new("one-points-made", :manual, [:increment])
 
       assert %{
                stats_values: %{
@@ -28,7 +26,9 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
       player_state = %{
         stats_values: %{
           "two-points-made" => 5,
-          "points" => 0
+          "def-rebounds" => 2,
+          "points" => 0,
+          "rebounds" => 0
         }
       }
 
@@ -37,14 +37,22 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
           "points",
           :calculated,
           [],
-          &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_points/1
+          fn player_state -> player_state.stats_values["two-points-made"] * 2 end
+        ),
+        PlayerStat.new(
+          "rebounds",
+          :calculated,
+          [],
+          fn player_state -> player_state.stats_values["def-rebounds"] + 1 end
         )
       ]
 
       assert %{
                stats_values: %{
                  "two-points-made" => 5,
-                 "points" => 10
+                 "def-rebounds" => 2,
+                 "points" => 10,
+                 "rebounds" => 3
                }
              } == Players.update_calculated_stats_values(player_state, player_stats)
     end

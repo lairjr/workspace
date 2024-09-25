@@ -1,15 +1,19 @@
 defmodule GoChampsScoreboard.Games.Players do
-  alias GoChampsScoreboard.Statistics.Statistics
+  alias GoChampsScoreboard.Statistics.Models.PlayerStat
+  alias GoChampsScoreboard.Statistics.Operations
+  alias GoChampsScoreboard.Games.Models.PlayerState
 
+  @spec update_manual_stats_values(PlayerState.t(), PlayerStat.t(), String.t()) :: PlayerState.t()
   def update_manual_stats_values(player_state, player_stat, operation) do
     new_stat_value =
       fetch_stats_value(player_state, player_stat)
-      |> Statistics.calc(operation)
+      |> Operations.calc(operation)
 
     player_state
     |> update_stats_values(player_stat, new_stat_value)
   end
 
+  @spec update_calculated_stats_values(PlayerState.t(), [PlayerStat.t()]) :: PlayerState.t()
   def update_calculated_stats_values(player_state, player_stats) do
     player_stats
     |> Enum.reduce(player_state, fn
@@ -18,10 +22,11 @@ defmodule GoChampsScoreboard.Games.Players do
     end)
   end
 
-  def update_calculated_stat_value(player_state, player_stat) do
+  @spec update_calculated_stat_value(PlayerState.t(), PlayerStat.t()) :: PlayerState.t()
+  defp update_calculated_stat_value(player_state, player_stat) do
     new_stat_value =
       player_state
-      |> Map.get(player_stat, :calculation_function).()
+      |> player_stat.calculation_function.()
 
     player_state
     |> update_stats_values(player_stat, new_stat_value)

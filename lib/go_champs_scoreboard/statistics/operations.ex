@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.Statistics.Statistics do
+defmodule GoChampsScoreboard.Statistics.Operations do
   alias GoChampsScoreboard.Statistics.Operations.{Decrement, Increment}
 
   def calc(current_value, "decrement"),
