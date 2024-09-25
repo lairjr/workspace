@@ -34,7 +34,7 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
 
   test "increments player stats for home team" do
     payload = %{
-      "operation" => "+",
+      "operation" => "increment",
       "team-type" => "home",
       "player-id" => "123",
       "stat-id" => "two-points-made"
