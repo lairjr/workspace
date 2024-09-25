@@ -1,5 +1,5 @@
 defmodule GoChampsScoreboard.Games.Models.PlayerState do
-  alias GoChampsScoreboard.Sports.Basketball
+  alias GoChampsScoreboard.Sports.Basketball.Basketball
 
   @type t :: %__MODULE__{
           id: String.t(),

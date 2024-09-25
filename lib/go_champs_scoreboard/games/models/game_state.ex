@@ -5,16 +5,18 @@ defmodule GoChampsScoreboard.Games.Models.GameState do
   @type t :: %__MODULE__{
           id: String.t(),
           away_team: TeamState,
-          home_team: TeamState
+          home_team: TeamState,
+          sport_id: String.t()
         }
-  defstruct [:id, :away_team, :home_team]
+  defstruct [:id, :away_team, :home_team, :sport_id]
 
-  @spec new(String.t(), TeamState.t(), TeamState.t()) :: t()
-  def new(id, away_team, home_team) do
+  @spec new(String.t(), TeamState.t(), TeamState.t(), String.t()) :: t()
+  def new(id, away_team, home_team, sport_id \\ "basketball") do
     %__MODULE__{
       id: id,
       away_team: away_team,
-      home_team: home_team
+      home_team: home_team,
+      sport_id: sport_id
     }
   end
 
