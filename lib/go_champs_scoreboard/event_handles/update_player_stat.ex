@@ -1,23 +1,26 @@
 defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
   alias GoChampsScoreboard.Games.Models.GameState
-  require Logger
+  alias GoChampsScoreboard.Sports.Sports
 
   @spec handle(GameState.t(), any()) :: GameState.t()
   def handle(
         current_game,
         %{
           "operation" => op,
-          "amount" => amount,
           "stat-id" => stat_id,
           "player-id" => player_id,
           "team-type" => team_type
         }
       ) do
-    # player_stat = current_game
-    #     |> Games.find_player_stat(stat_id)
+    player_stat =
+      current_game.sport_id
+      |> Sports.find_player_stat(stat_id)
 
-    # calculated_player_stats = current_game
-    #     |> Games.find_calculated_player_stats()
+    calculated_player_stats =
+      current_game.sport_id
+      |> Sports.find_calculated_player_stats()
+
+    IO.inspect(op)
 
     # updated_player = current_game
     #     |> Games.find_player(team_type, player_id)
@@ -28,7 +31,8 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
     # |> Games.update_player(team_type, player_id, updated_player)
     # |> Games.update_team_total_player_stats(team_type)
 
-    update_game(current_game, team_type, op, String.to_integer(amount), player_id, stat_id)
+    current_game
+    # update_game(current_game, team_type, op, String.to_integer(amount), player_id, stat_id)
   end
 
   defp update_game(current_game, "home", op, amount, player_id, stats_id) do

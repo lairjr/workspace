@@ -19,8 +19,7 @@ defmodule Components.BasketballControls.PlayerStats do
                       class="button is-large is-info"
                       phx-click="update-player-stat"
                       phx-value-stat-id="points"
-                      phx-value-operation="+"
-                      phx-value-amount="1"
+                      phx-value-operation="increment"
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
                     >

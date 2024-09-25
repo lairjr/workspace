@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.Sports.Basketball do
+defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
   alias GoChampsScoreboard.Sports.Basketball.Statistics
   alias GoChampsScoreboard.Statistics.Models.PlayerStat
 
@@ -21,7 +21,13 @@ defmodule GoChampsScoreboard.Sports.Basketball do
     end)
   end
 
+  @spec find_player_stat(String.t()) :: PlayerStat.t()
   def find_player_stat(stat_id) do
     Enum.find(@player_stats, fn stat -> stat.key == stat_id end)
+  end
+
+  @spec find_calculated_player_stats() :: [PlayerStat.t()]
+  def find_calculated_player_stats() do
+    Enum.filter(@player_stats, fn stat -> stat.type == :calculated end)
   end
 end

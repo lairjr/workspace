@@ -1,6 +1,6 @@
-defmodule GoChampsScoreboard.Sports.BasketballTest do
+defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
   use ExUnit.Case
-  alias GoChampsScoreboard.Sports.Basketball
+  alias GoChampsScoreboard.Sports.Basketball.Basketball
 
   describe "bootstrap" do
     test "returns a map with all player stats" do
@@ -24,15 +24,39 @@ defmodule GoChampsScoreboard.Sports.BasketballTest do
   describe "find_player_stat" do
     test "returns the player stat with the given key" do
       assert %GoChampsScoreboard.Statistics.Models.PlayerStat{
-        key: "points",
-        type: :calculated,
-        operations: [],
-        value_calculator: &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_points/1
-      } == Basketball.find_player_stat("points")
+               key: "points",
+               type: :calculated,
+               operations: [],
+               calculation_function:
+                 &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_points/1
+             } == Basketball.find_player_stat("points")
     end
 
     test "returns nil if the player stat with the given key is not found" do
       assert nil == Basketball.find_player_stat("non-existing-stat")
+    end
+  end
+
+  describe "find_calculated_player_stats" do
+    test "returns all calculated player stats" do
+      expected = [
+        %GoChampsScoreboard.Statistics.Models.PlayerStat{
+          key: "points",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_points/1
+        },
+        %GoChampsScoreboard.Statistics.Models.PlayerStat{
+          key: "rebounds",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_rebounds/1
+        }
+      ]
+
+      assert expected == Basketball.find_calculated_player_stats()
     end
   end
 end
