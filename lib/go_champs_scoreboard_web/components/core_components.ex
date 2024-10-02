@@ -47,44 +47,17 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
       id={@id}
       phx-mounted={@show && show_modal(@id)}
       phx-remove={hide_modal(@id)}
+      phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
+      phx-key="escape"
+      phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
-      class="relative z-50 hidden"
+      class="modal"
     >
-      <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
-      <div
-        class="fixed inset-0 overflow-y-auto"
-        aria-labelledby={"#{@id}-title"}
-        aria-describedby={"#{@id}-description"}
-        role="dialog"
-        aria-modal="true"
-        tabindex="0"
-      >
-        <div class="flex min-h-full items-center justify-center">
-          <div class="w-full max-w-3xl p-4 sm:p-6 lg:py-8">
-            <.focus_wrap
-              id={"#{@id}-container"}
-              phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
-              phx-key="escape"
-              phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="shadow-zinc-700/10 ring-zinc-700/10 relative hidden rounded-2xl bg-white p-14 shadow-lg ring-1 transition"
-            >
-              <div class="absolute top-6 right-5">
-                <button
-                  phx-click={JS.exec("data-cancel", to: "##{@id}")}
-                  type="button"
-                  class="-m-3 flex-none p-3 opacity-20 hover:opacity-40"
-                  aria-label={gettext("close")}
-                >
-                  <.icon name="hero-x-mark-solid" class="h-5 w-5" />
-                </button>
-              </div>
-              <div id={"#{@id}-content"}>
-                <%= render_slot(@inner_block) %>
-              </div>
-            </.focus_wrap>
-          </div>
-        </div>
+      <div class="modal-background"></div>
+      <div class="modal-content" role="dialog" aria-modal="true">
+        <%= render_slot(@inner_block) %>
       </div>
+      <button class="modal-close is-large" aria-label="close" phx-click={JS.exec("data-cancel", to: "##{@id}")}></button>
     </div>
     """
   end
@@ -608,6 +581,7 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
          "opacity-100 translate-y-0 sm:scale-100"}
     )
+    |> JS.add_class("is-active", to: selector)
   end
 
   def hide(js \\ %JS{}, selector) do
@@ -619,6 +593,7 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
          "opacity-100 translate-y-0 sm:scale-100",
          "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"}
     )
+    |> JS.remove_class("is-active", to: selector)
   end
 
   def show_modal(js \\ %JS{}, id) when is_binary(id) do
@@ -630,7 +605,7 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
       transition: {"transition-all transform ease-out duration-300", "opacity-0", "opacity-100"}
     )
     |> show("##{id}-container")
-    |> JS.add_class("overflow-hidden", to: "body")
+    |> JS.add_class("is-clipped", to: "body")
     |> JS.focus_first(to: "##{id}-content")
   end
 

@@ -6,15 +6,6 @@
 
 // Load other Bulma components
 @use "../../node_modules/bulma/sass/components/panel.scss";
+@use "../../node_modules/bulma/sass/components/modal.scss";
 @use "../../node_modules/bulma/sass/elements/button";
 @use "../../node_modules/bulma/sass/elements/title";
-
-:host(.basketball-teams-header) {
-    .home-team {
-
-    }
-
-    .away-team {
-
-    }
-}

@@ -13,6 +13,14 @@ defmodule Components.BasketballControls.Views do
         game_state={@game_state}
         selected_player={@selected_player}
       />
+      <GoChampsScoreboardWeb.CoreComponents.modal id="create_modal">
+        <h2>Add a pet.</h2>
+      </GoChampsScoreboardWeb.CoreComponents.modal>
+      <GoChampsScoreboardWeb.CoreComponents.button phx-click={
+        GoChampsScoreboardWeb.CoreComponents.show_modal("create_modal")
+      }>
+        Add New Pet +
+      </GoChampsScoreboardWeb.CoreComponents.button>
     </div>
     """
   end
