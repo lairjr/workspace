@@ -186,6 +186,11 @@ defmodule Components.BasketballControls.PlayerStats do
           team_type="home"
           selected_player={@selected_player}
         />
+        <button class="button" phx-click={
+          GoChampsScoreboardWeb.CoreComponents.show_modal("add_new_player")
+        }>
+          Add player
+        </button>
       </div>
 
       <div class="column">
