@@ -580,7 +580,6 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
     JS.hide(js, to: selector)
   end
 
-  @spec show_modal(Phoenix.LiveView.JS.t(), binary()) :: struct()
   def show_modal(js \\ %JS{}, id) when is_binary(id) do
     js
     |> JS.add_class("is-active", to: "##{id}")
