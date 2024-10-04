@@ -293,4 +293,52 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
              } == Teams.update_player_in_team(team, player)
     end
   end
+
+  describe "remove_player" do
+    test "removes the player with the given team type and player id" do
+      game_state = %GameState{
+        home_team: %TeamState{
+          players: [
+            %PlayerState{
+              id: 1,
+              name: "Pelé",
+              stats_values: %{
+                "goals" => 1000,
+                "assists" => 500
+              }
+            }
+          ]
+        }
+      }
+
+      assert %GameState{
+               home_team: %TeamState{
+                 players: []
+               }
+             } == Teams.remove_player(game_state, "home", 1)
+    end
+  end
+
+  describe "remove_player_in_team" do
+    test "removes the player from the given team and player id" do
+      team = %TeamState{
+        name: "Brazil",
+        players: [
+          %PlayerState{
+            id: 1,
+            name: "Pelé",
+            stats_values: %{
+              "goals" => 1000,
+              "assists" => 500
+            }
+          }
+        ]
+      }
+
+      assert %TeamState{
+               name: "Brazil",
+               players: []
+             } == Teams.remove_player_in_team(team, 1)
+    end
+  end
 end

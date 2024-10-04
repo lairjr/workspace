@@ -60,4 +60,25 @@ defmodule GoChampsScoreboard.Games.Teams do
     team
     |> Map.update!(:players, fn players -> Enum.map(players, fn p -> if p.id == player.id, do: player, else: p end) end)
   end
+
+  @spec remove_player(GameState.t(), String.t(), String.t()) :: GameState.t()
+  def remove_player(game_state, team_type, player_id) do
+    case team_type do
+      "home" ->
+        game_state
+        |> Map.update!(:home_team, fn team -> remove_player_in_team(team, player_id) end)
+
+      "away" ->
+        game_state
+        |> Map.update!(:away_team, fn team -> remove_player_in_team(team, player_id) end)
+
+      _ -> raise RuntimeError, message: "Invalid team type"
+    end
+  end
+
+  @spec remove_player_in_team(TeamState.t(), String.t()) :: TeamState.t()
+  def remove_player_in_team(team, player_id) do
+    team
+    |> Map.update!(:players, fn players -> Enum.reject(players, fn player -> player.id == player_id end) end)
+  end
 end
