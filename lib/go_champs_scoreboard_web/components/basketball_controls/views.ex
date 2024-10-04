@@ -1,8 +1,10 @@
 defmodule Components.BasketballControls.Views do
-  alias GoChampsScoreboard.Games.Models.GameState
+  alias GoChampsScoreboard.Games.Models.{GameState}
   use Phoenix.Component
 
   attr :game_state, GameState, required: true
+  attr :selected_team, :string, required: true
+  attr :selected_player, :map, required: true
 
   def general(assigns) do
     ~H"""
@@ -14,7 +16,7 @@ defmodule Components.BasketballControls.Views do
       />
       <GoChampsScoreboardWeb.CoreComponents.modal id="add_new_player">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add player</p>
+          <p class="modal-card-title">Add player to <%= @selected_team %></p>
         </header>
         <section class="modal-card-body">
           <form class="form">
