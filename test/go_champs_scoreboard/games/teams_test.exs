@@ -6,6 +6,108 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.Games.Teams
 
+  describe "add_player" do
+    test "adds a player to the given team" do
+      game_state = %GameState{
+        home_team: %TeamState{
+          name: "Brazil",
+          players: [
+            %PlayerState{
+              id: 1,
+              name: "Pelé",
+              stats_values: %{
+                "goals" => 1000,
+                "assists" => 500
+              }
+            }
+          ]
+        }
+      }
+
+      player = %PlayerState{
+        id: 10,
+        name: "Garrincha",
+        stats_values: %{
+          "goals" => 100,
+          "assists" => 50
+        }
+      }
+
+      assert %GameState{
+               home_team: %TeamState{
+                 name: "Brazil",
+                 players: [
+                   %PlayerState{
+                     id: 10,
+                     name: "Garrincha",
+                     stats_values: %{
+                       "goals" => 100,
+                       "assists" => 50
+                     }
+                   },
+                   %PlayerState{
+                     id: 1,
+                     name: "Pelé",
+                     stats_values: %{
+                       "goals" => 1000,
+                       "assists" => 500
+                     }
+                   }
+                 ]
+               }
+             } == Teams.add_player(game_state, "home", player)
+    end
+  end
+
+  describe "add_player_to_team" do
+    test "adds a player to the given team" do
+      team = %TeamState{
+        name: "Brazil",
+        players: [
+          %PlayerState{
+            id: 1,
+            name: "Pelé",
+            stats_values: %{
+              "goals" => 1000,
+              "assists" => 500
+            }
+          }
+        ]
+      }
+
+      player = %PlayerState{
+        id: 10,
+        name: "Garrincha",
+        stats_values: %{
+          "goals" => 100,
+          "assists" => 50
+        }
+      }
+
+      assert %TeamState{
+               name: "Brazil",
+               players: [
+                 %PlayerState{
+                   id: 10,
+                   name: "Garrincha",
+                   stats_values: %{
+                     "goals" => 100,
+                     "assists" => 50
+                   }
+                 },
+                 %PlayerState{
+                   id: 1,
+                   name: "Pelé",
+                   stats_values: %{
+                     "goals" => 1000,
+                     "assists" => 500
+                   }
+                 }
+               ]
+             } == Teams.add_player_to_team(team, player)
+    end
+  end
+
   describe "find_player" do
     test "returns the player with the given team type and player id" do
       game_state = %GameState{
