@@ -7,8 +7,7 @@ defmodule Components.BasketballControls.Views do
   def general(assigns) do
     ~H"""
     <div class="container">
-      <Components.BasketballControls.Game.main
-        game_state={@game_state} />
+      <Components.BasketballControls.Game.main game_state={@game_state} />
       <Components.BasketballControls.PlayerStats.view
         game_state={@game_state}
         selected_player={@selected_player}
@@ -22,12 +21,12 @@ defmodule Components.BasketballControls.Views do
             <div class="field is-grouped">
               <div class="control is-expanded">
                 <label class="label">Name</label>
-                <input class="input" type="text" placeholder="Kobe bryant">
+                <input class="input" type="text" placeholder="Kobe bryant" />
               </div>
 
               <div class="control">
                 <label class="label">Number</label>
-                <input class="input" type="number" placeholder="24">
+                <input class="input" type="number" placeholder="24" />
               </div>
             </div>
           </form>

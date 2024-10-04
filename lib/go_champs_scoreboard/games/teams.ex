@@ -14,7 +14,8 @@ defmodule GoChampsScoreboard.Games.Teams do
         game_state
         |> Map.update!(:away_team, fn team -> add_player_to_team(team, player) end)
 
-      _ -> raise RuntimeError, message: "Invalid team type"
+      _ ->
+        raise RuntimeError, message: "Invalid team type"
     end
   end
 
@@ -27,8 +28,8 @@ defmodule GoChampsScoreboard.Games.Teams do
   @spec find_player(GameState.t(), String.t(), String.t()) :: PlayerState.t()
   def find_player(game_state, team_type, player_id) do
     find_team(game_state, team_type)
-      |> Map.get(:players)
-      |> Enum.find(fn player -> player.id == player_id end)
+    |> Map.get(:players)
+    |> Enum.find(fn player -> player.id == player_id end)
   end
 
   @spec find_team(GameState.t(), String.t()) :: TeamState.t()
@@ -51,14 +52,17 @@ defmodule GoChampsScoreboard.Games.Teams do
         game_state
         |> Map.update!(:away_team, fn team -> update_player_in_team(team, player) end)
 
-      _ -> raise RuntimeError, message: "Invalid team type"
+      _ ->
+        raise RuntimeError, message: "Invalid team type"
     end
   end
 
   @spec update_player_in_team(TeamState.t(), PlayerState.t()) :: TeamState.t()
   def update_player_in_team(team, player) do
     team
-    |> Map.update!(:players, fn players -> Enum.map(players, fn p -> if p.id == player.id, do: player, else: p end) end)
+    |> Map.update!(:players, fn players ->
+      Enum.map(players, fn p -> if p.id == player.id, do: player, else: p end)
+    end)
   end
 
   @spec remove_player(GameState.t(), String.t(), String.t()) :: GameState.t()
@@ -72,13 +76,16 @@ defmodule GoChampsScoreboard.Games.Teams do
         game_state
         |> Map.update!(:away_team, fn team -> remove_player_in_team(team, player_id) end)
 
-      _ -> raise RuntimeError, message: "Invalid team type"
+      _ ->
+        raise RuntimeError, message: "Invalid team type"
     end
   end
 
   @spec remove_player_in_team(TeamState.t(), String.t()) :: TeamState.t()
   def remove_player_in_team(team, player_id) do
     team
-    |> Map.update!(:players, fn players -> Enum.reject(players, fn player -> player.id == player_id end) end)
+    |> Map.update!(:players, fn players ->
+      Enum.reject(players, fn player -> player.id == player_id end)
+    end)
   end
 end

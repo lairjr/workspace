@@ -186,10 +186,13 @@ defmodule Components.BasketballControls.PlayerStats do
           team_type="home"
           selected_player={@selected_player}
         />
-        <button class="button" phx-click={
-          JS.push("select-team", value: %{team_type: "home"})
-          |> JS.dispatch("show_modal")
-        }>
+        <button
+          class="button"
+          phx-click={
+            JS.push("select-team", value: %{team_type: "home"})
+            |> JS.dispatch("show_modal")
+          }
+        >
           Add player
         </button>
       </div>

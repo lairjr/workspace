@@ -57,7 +57,12 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
       <div class="modal-content" role="dialog" aria-modal="true">
         <%= render_slot(@inner_block) %>
       </div>
-      <button class="modal-close is-large" aria-label="close" phx-click={JS.exec("data-cancel", to: "##{@id}")}></button>
+      <button
+        class="modal-close is-large"
+        aria-label="close"
+        phx-click={JS.exec("data-cancel", to: "##{@id}")}
+      >
+      </button>
     </div>
     """
   end
