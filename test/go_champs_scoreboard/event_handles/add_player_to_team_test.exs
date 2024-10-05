@@ -21,10 +21,8 @@ defmodule GoChampsScoreboard.EventHandles.AddPlayerToTeamTest do
 
       add_player_to_team_payload = %{
         "team_type" => "home",
-        "player" => %{
-          "name" => "Michael Jordan",
-          "number" => 23
-        }
+        "name" => "Michael Jordan",
+        "number" => 23
       }
 
       game = AddPlayerToTeam.handle(game_state, add_player_to_team_payload)

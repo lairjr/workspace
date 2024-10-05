@@ -7,7 +7,7 @@ defmodule GoChampsScoreboard.EventHandles do
   alias GoChampsScoreboard.Games.Models.GameState
 
   @spec handle(String.t(), GameState.t(), any()) :: GameState.t()
-  def handler("add-player-to-team", game_state, payload),
+  def handle("add-player-to-team", game_state, payload),
     do: AddPlayerToTeam.handle(game_state, payload)
 
   @spec handle(String.t(), GameState.t(), any()) :: GameState.t()

@@ -4,11 +4,11 @@ defmodule Components.BasketballControls.Modals do
   def add_new_player(assigns) do
     ~H"""
     <GoChampsScoreboardWeb.CoreComponents.modal id="add_new_player">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Add player to <%= @selected_team %></p>
-      </header>
-      <section class="modal-card-body">
-        <.form for={@add_new_player_form} class="form">
+      <.form for={@add_new_player_form} class="form" phx-submit="add-player-to-team">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add player to <%= @selected_team %></p>
+        </header>
+        <section class="modal-card-body">
           <div class="field is-grouped">
             <div class="control is-expanded">
               <GoChampsScoreboardWeb.CoreComponents.input
@@ -25,15 +25,21 @@ defmodule Components.BasketballControls.Modals do
                 field={@add_new_player_form[:number]}
               />
             </div>
+
+            <GoChampsScoreboardWeb.CoreComponents.input
+              type="hidden"
+              value={@selected_team}
+              field={@add_new_player_form[:team_type]}
+            />
           </div>
-        </.form>
-      </section>
-      <footer class="modal-card-foot">
-        <div class="buttons">
-          <button class="button is-success">Save changes</button>
-          <button class="button">Cancel</button>
-        </div>
-      </footer>
+        </section>
+        <footer class="modal-card-foot">
+          <div class="buttons">
+            <button class="button is-success" type="submit">Save changes</button>
+            <button class="button">Cancel</button>
+          </div>
+        </footer>
+      </.form>
     </GoChampsScoreboardWeb.CoreComponents.modal>
     """
   end
