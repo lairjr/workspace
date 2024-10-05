@@ -12,6 +12,14 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      socket
      |> assign(:selected_player, %{player_id: "", team_type: ""})
      |> assign(:selected_team, "")
+     |> assign(
+       :add_new_player_form,
+       to_form(%{
+         "name" => "",
+         "number" => 0,
+         "team_type" => ""
+       })
+     )
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
