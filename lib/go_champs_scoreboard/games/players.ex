@@ -3,6 +3,12 @@ defmodule GoChampsScoreboard.Games.Players do
   alias GoChampsScoreboard.Statistics.Operations
   alias GoChampsScoreboard.Games.Models.PlayerState
 
+  @spec bootstrap(String.t(), number()) :: PlayerState.t()
+  def bootstrap(name, number) do
+    Ecto.UUID.generate()
+    |> PlayerState.new(name, number)
+  end
+
   @spec update_manual_stats_values(PlayerState.t(), PlayerStat.t(), String.t()) :: PlayerState.t()
   def update_manual_stats_values(player_state, player_stat, operation) do
     new_stat_value =

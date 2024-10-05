@@ -3,45 +3,45 @@ defmodule Components.BasketballControls.Game do
 
   def time_controls(assigns) do
     ~H"""
-      <div class="columns is-multiline">
-        <div class="column is-12 has-text-centered">
-          <button class="button">
-            <%= "<" %>
-          </button>
+    <div class="columns is-multiline">
+      <div class="column is-12 has-text-centered">
+        <button class="button">
+          <%= "<" %>
+        </button>
 
-          <button class="button">
-            2o
-          </button>
+        <button class="button">
+          2o
+        </button>
 
-          <button class="button">
-            <%= ">" %>
-          </button>
-        </div>
-
-        <div class="column is-12 has-text-centered">
-          <button class="button">
-            <%= "<" %>
-          </button>
-
-          <button class="button">
-            09:21:32
-          </button>
-
-          <button class="button">
-            <%= ">" %>
-          </button>
-        </div>
-
-        <div class="column is-12 has-text-centered">
-          <button class="button">
-            Start
-          </button>
-
-          <button class="button">
-            Pause
-          </button>
-        </div>
+        <button class="button">
+          <%= ">" %>
+        </button>
       </div>
+
+      <div class="column is-12 has-text-centered">
+        <button class="button">
+          <%= "<" %>
+        </button>
+
+        <button class="button">
+          09:21:32
+        </button>
+
+        <button class="button">
+          <%= ">" %>
+        </button>
+      </div>
+
+      <div class="column is-12 has-text-centered">
+        <button class="button">
+          Start
+        </button>
+
+        <button class="button">
+          Pause
+        </button>
+      </div>
+    </div>
     """
   end
 
@@ -63,7 +63,7 @@ defmodule Components.BasketballControls.Game do
       </div>
 
       <div class="column is-12 has-text-right">
-        <button class="button is-large">
+        <button class="button is-large" phx-click="select-team" phx-value-team-type="home">
           <%= @game_state.home_team.name %>
         </button>
 
@@ -78,15 +78,14 @@ defmodule Components.BasketballControls.Game do
   def away_team_totals(assigns) do
     ~H"""
     <div class="columns is-multiline">
-      <div class="column is-12">
-      </div>
+      <div class="column is-12"></div>
 
       <div class="column is-12">
         <button class="button is-large">
           <%= @game_state.away_team.score %>
         </button>
 
-        <button class="button is-large">
+        <button class="button is-large" phx-click="select-team" phx-value-team-type="away">
           <%= @game_state.away_team.name %>
         </button>
       </div>

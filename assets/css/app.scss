@@ -3,18 +3,12 @@
 @use "../../node_modules/bulma/sass/themes";
 @use "../../node_modules/bulma/sass/grid";
 @use "../../node_modules/bulma/sass/helpers";
+@use "../../node_modules/bulma/sass/form";
 
 // Load other Bulma components
 @use "../../node_modules/bulma/sass/components/panel.scss";
+@use "../../node_modules/bulma/sass/components/modal.scss";
+@use "../../node_modules/bulma/sass/elements/box";
 @use "../../node_modules/bulma/sass/elements/button";
+@use "../../node_modules/bulma/sass/elements/content";
 @use "../../node_modules/bulma/sass/elements/title";
-
-:host(.basketball-teams-header) {
-    .home-team {
-
-    }
-
-    .away-team {
-
-    }
-}
