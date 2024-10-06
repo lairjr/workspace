@@ -39,6 +39,7 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
   attr :id, :string, required: true
   attr :show, :boolean, default: false
   attr :on_cancel, JS, default: %JS{}
+  attr :content_style, :string, default: nil
   slot :inner_block, required: true
 
   def modal(assigns) do
@@ -54,7 +55,7 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
       class="modal"
     >
       <div class="modal-background"></div>
-      <div class="modal-content" role="dialog" aria-modal="true">
+      <div class="modal-content" role="dialog" aria-modal="true" style={@content_style}>
         <%= render_slot(@inner_block) %>
       </div>
       <button

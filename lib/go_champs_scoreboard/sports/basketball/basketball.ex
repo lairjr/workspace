@@ -11,6 +11,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
     PlayerStat.new("assists", :manual, [:increment, :decrement]),
     PlayerStat.new("blocks", :manual, [:increment, :decrement]),
     PlayerStat.new("tournovers", :manual, [:increment, :decrement]),
+    PlayerStat.new("steals", :manual, [:increment, :decrement]),
     PlayerStat.new("points", :calculated, [], &Statistics.calc_player_points/1),
     PlayerStat.new("rebounds", :calculated, [], &Statistics.calc_player_rebounds/1)
   ]
