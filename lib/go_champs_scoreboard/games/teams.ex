@@ -41,6 +41,11 @@ defmodule GoChampsScoreboard.Games.Teams do
     end
   end
 
+  @spec list_players(GameState.t(), String.t()) :: [PlayerState.t()]
+  def list_players(game_state, team_type) do
+    find_team(game_state, team_type).players
+  end
+
   @spec update_player(GameState.t(), String.t(), PlayerState.t()) :: GameState.t()
   def update_player(game_state, team_type, player) do
     case team_type do

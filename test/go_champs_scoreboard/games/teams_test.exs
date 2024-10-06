@@ -210,6 +210,52 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
     end
   end
 
+  describe "list_players" do
+    test "returns the list of players for the given team type" do
+      game_state = %GameState{
+        home_team: %TeamState{
+          players: [
+            %PlayerState{
+              id: 1,
+              name: "Pelé",
+              stats_values: %{
+                "goals" => 1000,
+                "assists" => 500
+              }
+            },
+            %PlayerState{
+              id: 2,
+              name: "Zico",
+              stats_values: %{
+                "goals" => 500,
+                "assists" => 300
+              }
+            }
+          ]
+        }
+      }
+
+      assert [
+               %PlayerState{
+                 id: 1,
+                 name: "Pelé",
+                 stats_values: %{
+                   "goals" => 1000,
+                   "assists" => 500
+                 }
+               },
+               %PlayerState{
+                 id: 2,
+                 name: "Zico",
+                 stats_values: %{
+                   "goals" => 500,
+                   "assists" => 300
+                 }
+               }
+             ] == Teams.list_players(game_state, "home")
+    end
+  end
+
   describe "update_player" do
     test "updates the player with the given team type and player id" do
       game_state = %GameState{
