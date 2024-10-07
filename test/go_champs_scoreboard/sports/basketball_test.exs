@@ -14,7 +14,8 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
         "blocks" => 0,
         "tournovers" => 0,
         "points" => 0,
-        "rebounds" => 0
+        "rebounds" => 0,
+        "steals" => 0
       }
 
       assert expected == Basketball.bootstrap()

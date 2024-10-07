@@ -2,8 +2,9 @@ defmodule Components.BasketballControls.Views do
   alias GoChampsScoreboard.Games.Models.{GameState}
   use Phoenix.Component
 
-  attr :add_new_player_form, :map, required: true
+  attr :form_add_new_player, :map, required: true
   attr :game_state, GameState, required: true
+  attr :modals, :map, required: true
   attr :selected_team, :string, required: true
   attr :selected_player, :map, required: true
 
@@ -16,8 +17,9 @@ defmodule Components.BasketballControls.Views do
         selected_player={@selected_player}
       />
       <Components.BasketballControls.Modals.modals
-        add_new_player_form={@add_new_player_form}
+        form_add_new_player={@form_add_new_player}
         game_state={@game_state}
+        modals={@modals}
         selected_player={@selected_player}
         selected_team={@selected_team}
       />

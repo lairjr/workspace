@@ -63,10 +63,7 @@ defmodule Components.BasketballControls.Game do
       </div>
 
       <div class="column is-12 has-text-right">
-        <button
-          class="button"
-          phx-click={GoChampsScoreboardWeb.CoreComponents.show_modal("team_box_score")}
-        >
+        <button class="button" phx-click="show-team-box-score" phx-value-team-type="home">
           Box score
         </button>
 
@@ -96,10 +93,7 @@ defmodule Components.BasketballControls.Game do
           <%= @game_state.away_team.name %>
         </button>
 
-        <button
-          class="button"
-          phx-click={GoChampsScoreboardWeb.CoreComponents.show_modal("team_box_score")}
-        >
+        <button class="button" phx-click="show-team-box-score" phx-value-team-type="away">
           Box score
         </button>
       </div>
