@@ -20,6 +20,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
          "team_type" => ""
        })
      )
+     |> assign(:modal_team_box_score, %{is_open: false})
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
@@ -49,6 +50,18 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
   def handle_event("add-player-to-team", params, socket) do
     Games.handle_event(socket.assigns.game_state.result.id, "add-player-to-team", params)
+    {:noreply, socket}
+  end
+
+  def handle_event("show-team-box-score", %{"team-type" => team_type}, socket) do
+    {:noreply,
+     socket
+     |> assign(:selected_team, team_type)
+     |> assign(:modal_team_box_score, %{is_open: true})}
+  end
+
+  def handle_event("hide-modal", %{"id" => id}, socket) do
+    socket = assign(socket, :modal_team_box_score, %{is_open: false})
     {:noreply, socket}
   end
 

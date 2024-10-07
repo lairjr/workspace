@@ -4,6 +4,7 @@ defmodule Components.BasketballControls.Views do
 
   attr :add_new_player_form, :map, required: true
   attr :game_state, GameState, required: true
+  attr :modal_team_box_score, :map, required: true
   attr :selected_team, :string, required: true
   attr :selected_player, :map, required: true
 
@@ -18,6 +19,7 @@ defmodule Components.BasketballControls.Views do
       <Components.BasketballControls.Modals.modals
         add_new_player_form={@add_new_player_form}
         game_state={@game_state}
+        modal_team_box_score={@modal_team_box_score}
         selected_player={@selected_player}
         selected_team={@selected_team}
       />

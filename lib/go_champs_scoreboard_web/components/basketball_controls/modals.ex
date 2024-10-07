@@ -1,6 +1,5 @@
 defmodule Components.BasketballControls.Modals do
   use Phoenix.Component
-  alias Phoenix.LiveView.JS
   alias GoChampsScoreboard.Games.Teams
 
   def add_new_player(assigns) do
@@ -48,7 +47,11 @@ defmodule Components.BasketballControls.Modals do
 
   def team_box_score(assigns) do
     ~H"""
-    <GoChampsScoreboardWeb.CoreComponents.modal id="team_box_score" content_style="width: 900px">
+    <GoChampsScoreboardWeb.CoreComponents.modal
+      id="team_box_score"
+      state={@state}
+      content_style="width: 900px"
+    >
       <header class="modal-card-head">
         <p class="modal-card-title">Box score for <%= @selected_team %></p>
       </header>
@@ -96,8 +99,7 @@ defmodule Components.BasketballControls.Modals do
           </tbody>
         </table>
       </section>
-      <footer class="modal-card-foot">
-      </footer>
+      <footer class="modal-card-foot"></footer>
     </GoChampsScoreboardWeb.CoreComponents.modal>
     """
   end
@@ -110,7 +112,11 @@ defmodule Components.BasketballControls.Modals do
       selected_player={@selected_player}
       selected_team={@selected_team}
     />
-    <.team_box_score game_state={@game_state} selected_team={@selected_team} />
+    <.team_box_score
+      game_state={@game_state}
+      state={@modal_team_box_score}
+      selected_team={@selected_team}
+    />
     """
   end
 end

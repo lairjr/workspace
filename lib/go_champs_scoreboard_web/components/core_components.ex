@@ -37,7 +37,7 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
 
   """
   attr :id, :string, required: true
-  attr :show, :boolean, default: false
+  attr :state, :any, default: %{is_open: false}
   attr :on_cancel, JS, default: %JS{}
   attr :content_style, :string, default: nil
   slot :inner_block, required: true
@@ -46,13 +46,13 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
     ~H"""
     <div
       id={@id}
-      phx-mounted={@show && show_modal(@id)}
+      phx-mounted={@state.is_open && show_modal(@id)}
       phx-remove={hide_modal(@id)}
       phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
       phx-key="escape"
       phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
-      class="modal"
+      class={["modal", @state.is_open && "is-active"]}
     >
       <div class="modal-background"></div>
       <div class="modal-content" role="dialog" aria-modal="true" style={@content_style}>
@@ -598,6 +598,8 @@ defmodule GoChampsScoreboardWeb.CoreComponents do
     |> JS.remove_class("is-active", to: "##{id}")
     |> JS.remove_class("is-clipped", to: "body")
     |> JS.pop_focus()
+
+    JS.push("hide-modal", value: %{id: id})
   end
 
   @doc """
