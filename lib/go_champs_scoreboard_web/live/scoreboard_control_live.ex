@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   alias GoChampsScoreboard.Games.Games
+  alias GoChampsScoreboardWeb.Components.Modals
   use GoChampsScoreboardWeb, :live_view
   require Logger
 
@@ -12,15 +13,15 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      socket
      |> assign(:selected_player, %{player_id: "", team_type: ""})
      |> assign(:selected_team, "")
+     |> assign(:modals, Modals.bootstrap(["modal_team_box_score", "modal_add_new_player"]))
      |> assign(
-       :add_new_player_form,
+       :form_add_new_player,
        to_form(%{
          "name" => "",
          "number" => 0,
          "team_type" => ""
        })
      )
-     |> assign(:modal_team_box_score, %{is_open: false})
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
@@ -50,19 +51,42 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
   def handle_event("add-player-to-team", params, socket) do
     Games.handle_event(socket.assigns.game_state.result.id, "add-player-to-team", params)
-    {:noreply, socket}
+
+    updated_modals = socket.assigns.modals
+    |> Modals.hide_modal("modal_add_new_player")
+
+    {:noreply,
+     socket
+     |> assign(:modals, updated_modals)}
   end
 
-  def handle_event("show-team-box-score", %{"team-type" => team_type}, socket) do
+  def handle_event("show-add-player-to-team", %{"team-type" => team_type}, socket) do
+    updated_modals = socket.assigns.modals
+    |> Modals.show_modal("modal_add_new_player")
+
     {:noreply,
      socket
      |> assign(:selected_team, team_type)
-     |> assign(:modal_team_box_score, %{is_open: true})}
+     |> assign(:modals, updated_modals)}
   end
 
-  def handle_event("hide-modal", %{"id" => id}, socket) do
-    socket = assign(socket, :modal_team_box_score, %{is_open: false})
-    {:noreply, socket}
+  def handle_event("show-team-box-score", %{"team-type" => team_type}, socket) do
+    updated_modals = socket.assigns.modals
+    |> Modals.show_modal("modal_team_box_score")
+
+    {:noreply,
+     socket
+     |> assign(:selected_team, team_type)
+     |> assign(:modals, updated_modals)}
+  end
+
+  def handle_event("hide-modal", %{"modal_id" => modal_id}, socket) do
+    updated_modals = socket.assigns.modals
+    |> Modals.hide_modal(modal_id)
+
+    {:noreply,
+     socket
+     |> assign(:modals, updated_modals)}
   end
 
   @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}

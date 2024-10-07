@@ -1,11 +1,14 @@
 defmodule Components.BasketballControls.Modals do
   use Phoenix.Component
   alias GoChampsScoreboard.Games.Teams
+  alias GoChampsScoreboardWeb.Components.Modals
 
   def add_new_player(assigns) do
     ~H"""
-    <GoChampsScoreboardWeb.CoreComponents.modal id="add_new_player">
-      <.form for={@add_new_player_form} class="form" phx-submit="add-player-to-team">
+    <GoChampsScoreboardWeb.CoreComponents.modal
+      id={@id}
+      state={@state}>
+      <.form for={@form_add_new_player} class="form" phx-submit="add-player-to-team">
         <header class="modal-card-head">
           <p class="modal-card-title">Add player to <%= @selected_team %></p>
         </header>
@@ -15,7 +18,7 @@ defmodule Components.BasketballControls.Modals do
               <GoChampsScoreboardWeb.CoreComponents.input
                 label="Name"
                 type="text"
-                field={@add_new_player_form[:name]}
+                field={@form_add_new_player[:name]}
               />
             </div>
 
@@ -23,14 +26,14 @@ defmodule Components.BasketballControls.Modals do
               <GoChampsScoreboardWeb.CoreComponents.input
                 label="Number"
                 type="number"
-                field={@add_new_player_form[:number]}
+                field={@form_add_new_player[:number]}
               />
             </div>
 
             <GoChampsScoreboardWeb.CoreComponents.input
               type="hidden"
               value={@selected_team}
-              field={@add_new_player_form[:team_type]}
+              field={@form_add_new_player[:team_type]}
             />
           </div>
         </section>
@@ -48,7 +51,7 @@ defmodule Components.BasketballControls.Modals do
   def team_box_score(assigns) do
     ~H"""
     <GoChampsScoreboardWeb.CoreComponents.modal
-      id="team_box_score"
+      id={@id}
       state={@state}
       content_style="width: 900px"
     >
@@ -107,14 +110,17 @@ defmodule Components.BasketballControls.Modals do
   def modals(assigns) do
     ~H"""
     <.add_new_player
-      add_new_player_form={@add_new_player_form}
+      id="modal_add_new_player"
+      form_add_new_player={@form_add_new_player}
       game_state={@game_state}
+      state={Modals.find_modal(@modals, "modal_add_new_player")}
       selected_player={@selected_player}
       selected_team={@selected_team}
     />
     <.team_box_score
+      id="modal_team_box_score"
       game_state={@game_state}
-      state={@modal_team_box_score}
+      state={Modals.find_modal(@modals, "modal_team_box_score")}
       selected_team={@selected_team}
     />
     """

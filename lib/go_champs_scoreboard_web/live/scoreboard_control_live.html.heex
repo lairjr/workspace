@@ -2,9 +2,9 @@
 
 <div :if={game_state = @game_state.ok? && @game_state.result}>
   <Components.BasketballControls.Views.general
-    add_new_player_form={@add_new_player_form}
+    form_add_new_player={@form_add_new_player}
     game_state={game_state}
-    modal_team_box_score={@modal_team_box_score}
+    modals={@modals}
     selected_player={@selected_player}
     selected_team={@selected_team}
   />
