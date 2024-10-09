@@ -46,22 +46,6 @@ defmodule GoChampsScoreboard.Games.Teams do
     find_team(game_state, team_type).players
   end
 
-  @spec update_player(GameState.t(), String.t(), PlayerState.t()) :: GameState.t()
-  def update_player(game_state, team_type, player) do
-    case team_type do
-      "home" ->
-        game_state
-        |> Map.update!(:home_team, fn team -> update_player_in_team(team, player) end)
-
-      "away" ->
-        game_state
-        |> Map.update!(:away_team, fn team -> update_player_in_team(team, player) end)
-
-      _ ->
-        raise RuntimeError, message: "Invalid team type"
-    end
-  end
-
   @spec update_player_in_team(TeamState.t(), PlayerState.t()) :: TeamState.t()
   def update_player_in_team(team, player) do
     team
