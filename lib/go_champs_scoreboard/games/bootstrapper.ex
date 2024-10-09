@@ -15,8 +15,8 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
 
   @spec bootstrap() :: GameState.t()
   def bootstrap() do
-    home_team = TeamState.new("Home team", 0)
-    away_team = TeamState.new("Away team", 0)
+    home_team = TeamState.new("Home team")
+    away_team = TeamState.new("Away team")
     game_id = Ecto.UUID.generate()
 
     GameState.new(game_id, away_team, home_team)
@@ -34,8 +34,8 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
     away_team_name = Map.get(game_response["away_team"], "name", game_state.away_team.name)
     home_team_name = Map.get(game_response["home_team"], "name", game_state.home_team.name)
 
-    away_team = TeamState.new(away_team_name, 0, @mock_away_players)
-    home_team = TeamState.new(home_team_name, 0, @mock_home_players)
+    away_team = TeamState.new(away_team_name, @mock_away_players)
+    home_team = TeamState.new(home_team_name, @mock_home_players)
 
     game_id = Map.get(game_response, "id", game_state.id)
 

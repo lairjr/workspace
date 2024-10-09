@@ -256,49 +256,6 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
     end
   end
 
-  describe "update_player" do
-    test "updates the player with the given team type and player id" do
-      game_state = %GameState{
-        home_team: %TeamState{
-          players: [
-            %PlayerState{
-              id: 1,
-              name: "Pelé",
-              stats_values: %{
-                "goals" => 1000,
-                "assists" => 500
-              }
-            }
-          ]
-        }
-      }
-
-      player = %PlayerState{
-        id: 1,
-        name: "Garrincha",
-        stats_values: %{
-          "goals" => 1000,
-          "assists" => 500
-        }
-      }
-
-      assert %GameState{
-               home_team: %TeamState{
-                 players: [
-                   %PlayerState{
-                     id: 1,
-                     name: "Garrincha",
-                     stats_values: %{
-                       "goals" => 1000,
-                       "assists" => 500
-                     }
-                   }
-                 ]
-               }
-             } == Teams.update_player(game_state, "home", player)
-    end
-  end
-
   describe "update_player_in_team" do
     test "updates the player in the given team" do
       team = %TeamState{
@@ -385,6 +342,58 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
                name: "Brazil",
                players: []
              } == Teams.remove_player_in_team(team, 1)
+    end
+  end
+
+  describe "calculate_team_total_player_stats" do
+    test "returns a team state with total_player_stats with the sum all players stats" do
+      team = %TeamState{
+        name: "Brazil",
+        players: [
+          %PlayerState{
+            id: 1,
+            name: "Pelé",
+            stats_values: %{
+              "goals" => 1000,
+              "assists" => 500
+            }
+          },
+          %PlayerState{
+            id: 2,
+            name: "Zico",
+            stats_values: %{
+              "goals" => 500,
+              "assists" => 300
+            }
+          }
+        ]
+      }
+
+      assert %TeamState{
+               name: "Brazil",
+               players: [
+                 %PlayerState{
+                   id: 1,
+                   name: "Pelé",
+                   stats_values: %{
+                     "goals" => 1000,
+                     "assists" => 500
+                   }
+                 },
+                 %PlayerState{
+                   id: 2,
+                   name: "Zico",
+                   stats_values: %{
+                     "assists" => 300,
+                     "goals" => 500
+                   }
+                 }
+               ],
+               total_player_stats: %{
+                 "goals" => 1500,
+                 "assists" => 800
+               }
+             } == Teams.calculate_team_total_player_stats(team)
     end
   end
 end

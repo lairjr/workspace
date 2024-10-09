@@ -72,7 +72,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button is-large">
-          <%= @game_state.home_team.score %>
+          0
         </button>
       </div>
     </div>
@@ -86,7 +86,7 @@ defmodule Components.BasketballControls.Game do
 
       <div class="column is-12">
         <button class="button is-large">
-          <%= @game_state.away_team.score %>
+          0
         </button>
 
         <button class="button is-large" phx-click="select-team" phx-value-team-type="away">

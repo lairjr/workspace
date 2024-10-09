@@ -5,9 +5,7 @@ defmodule Components.BasketballControls.Modals do
 
   def add_new_player(assigns) do
     ~H"""
-    <GoChampsScoreboardWeb.CoreComponents.modal
-      id={@id}
-      state={@state}>
+    <GoChampsScoreboardWeb.CoreComponents.modal id={@id} state={@state}>
       <.form for={@form_add_new_player} class="form" phx-submit="add-player-to-team">
         <header class="modal-card-head">
           <p class="modal-card-title">Add player to <%= @selected_team %></p>
@@ -50,11 +48,7 @@ defmodule Components.BasketballControls.Modals do
 
   def team_box_score(assigns) do
     ~H"""
-    <GoChampsScoreboardWeb.CoreComponents.modal
-      id={@id}
-      state={@state}
-      content_style="width: 900px"
-    >
+    <GoChampsScoreboardWeb.CoreComponents.modal id={@id} state={@state} content_style="width: 900px">
       <header class="modal-card-head">
         <p class="modal-card-title">Box score for <%= @selected_team %></p>
       </header>

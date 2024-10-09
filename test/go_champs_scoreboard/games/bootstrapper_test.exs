@@ -13,7 +13,11 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
     test "bootstraps with home team and away team" do
       game = Bootstrapper.bootstrap()
       assert game.away_team.name == "Away team"
+      assert game.away_team.players == []
+      assert game.away_team.total_player_stats == %{}
       assert game.home_team.name == "Home team"
+      assert game.home_team.players == []
+      assert game.home_team.total_player_stats == %{}
     end
   end
 
@@ -46,7 +50,11 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
 
       assert game.id == "game-id"
       assert game.away_team.name == "Team A"
+      assert Enum.count(game.away_team.players) == 2
+      assert game.away_team.total_player_stats == %{}
       assert game.home_team.name == "Team B"
+      assert Enum.count(game.home_team.players) == 2
+      assert game.home_team.total_player_stats == %{}
     end
   end
 end

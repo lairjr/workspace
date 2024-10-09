@@ -4,8 +4,6 @@ defmodule GoChampsScoreboard.EventHandles.AddPlayerToTeamTest do
   alias GoChampsScoreboard.EventHandles.AddPlayerToTeam
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.TeamState
-  alias GoChampsScoreboard.Games.Models.PlayerState
-  alias GoChampsScoreboard.Games.Players
 
   describe "handle/2" do
     test "returns the game state with new player" do

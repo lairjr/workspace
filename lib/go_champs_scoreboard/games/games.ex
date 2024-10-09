@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboard.Games.Games do
+  alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.EventHandles
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Bootstrapper
@@ -43,5 +44,19 @@ defmodule GoChampsScoreboard.Games.Games do
     )
 
     new_game_state
+  end
+
+  @spec update_team(GameState.t(), String.t(), TeamState.t()) :: GameState.t()
+  def update_team(game_state, team_type, team) do
+    case team_type do
+      "home" ->
+        %{game_state | home_team: team}
+
+      "away" ->
+        %{game_state | away_team: team}
+
+      _ ->
+        raise RuntimeError, message: "Invalid team type"
+    end
   end
 end
