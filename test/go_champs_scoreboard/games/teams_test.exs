@@ -387,4 +387,56 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
              } == Teams.remove_player_in_team(team, 1)
     end
   end
+
+  describe "calculate_team_total_player_stats" do
+    test "returns a team state with total_player_stats with the sum all players stats" do
+      team = %TeamState{
+        name: "Brazil",
+        players: [
+          %PlayerState{
+            id: 1,
+            name: "Pelé",
+            stats_values: %{
+              "goals" => 1000,
+              "assists" => 500
+            }
+          },
+          %PlayerState{
+            id: 2,
+            name: "Zico",
+            stats_values: %{
+              "goals" => 500,
+              "assists" => 300
+            }
+          }
+        ]
+      }
+
+      assert %TeamState{
+               name: "Brazil",
+               players: [
+                 %PlayerState{
+                   id: 1,
+                   name: "Pelé",
+                   stats_values: %{
+                     "goals" => 1000,
+                     "assists" => 500
+                   }
+                 },
+                 %PlayerState{
+                   id: 2,
+                   name: "Zico",
+                   stats_values: %{
+                      "assists" => 300,
+                     "goals" => 500
+                   }
+                 }
+               ],
+               total_player_stats: %{
+                 "goals" => 1500,
+                 "assists" => 800
+               }
+             } == Teams.calculate_team_total_player_stats(team)
+    end
+  end
 end

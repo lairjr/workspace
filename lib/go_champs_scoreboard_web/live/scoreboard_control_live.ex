@@ -25,13 +25,6 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
-  def handle_event("update-team-score", value, socket) do
-    # {:ok, new_game} = Games.inc_away(socket.assigns.game_state)
-    Logger.info("Inc score Event")
-    Games.handle_event(socket.assigns.game_state.result.id, "update-team-score", value)
-    {:noreply, socket}
-  end
-
   def handle_event("update-player-stat", value, socket) do
     Games.handle_event(socket.assigns.game_state.result.id, "update-player-stat", value)
     {:noreply, socket}
@@ -52,8 +45,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   def handle_event("add-player-to-team", params, socket) do
     Games.handle_event(socket.assigns.game_state.result.id, "add-player-to-team", params)
 
-    updated_modals = socket.assigns.modals
-    |> Modals.hide_modal("modal_add_new_player")
+    updated_modals =
+      socket.assigns.modals
+      |> Modals.hide_modal("modal_add_new_player")
 
     {:noreply,
      socket
@@ -61,8 +55,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("show-add-player-to-team", %{"team-type" => team_type}, socket) do
-    updated_modals = socket.assigns.modals
-    |> Modals.show_modal("modal_add_new_player")
+    updated_modals =
+      socket.assigns.modals
+      |> Modals.show_modal("modal_add_new_player")
 
     {:noreply,
      socket
@@ -71,8 +66,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("show-team-box-score", %{"team-type" => team_type}, socket) do
-    updated_modals = socket.assigns.modals
-    |> Modals.show_modal("modal_team_box_score")
+    updated_modals =
+      socket.assigns.modals
+      |> Modals.show_modal("modal_team_box_score")
 
     {:noreply,
      socket
@@ -81,8 +77,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("hide-modal", %{"modal_id" => modal_id}, socket) do
-    updated_modals = socket.assigns.modals
-    |> Modals.hide_modal(modal_id)
+    updated_modals =
+      socket.assigns.modals
+      |> Modals.hide_modal(modal_id)
 
     {:noreply,
      socket
