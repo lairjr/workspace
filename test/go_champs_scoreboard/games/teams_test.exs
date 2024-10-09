@@ -427,7 +427,7 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
                    id: 2,
                    name: "Zico",
                    stats_values: %{
-                      "assists" => 300,
+                     "assists" => 300,
                      "goals" => 500
                    }
                  }
