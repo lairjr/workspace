@@ -186,11 +186,7 @@ defmodule Components.BasketballControls.PlayerStats do
           team_type="home"
           selected_player={@selected_player}
         />
-        <button
-          class="button"
-          phx-click="show-add-player-to-team"
-          phx-value-team-type="home"
-        >
+        <button class="button" phx-click="show-add-player-to-team" phx-value-team-type="home">
           Add player
         </button>
       </div>
@@ -205,11 +201,7 @@ defmodule Components.BasketballControls.PlayerStats do
           team_type="away"
           selected_player={@selected_player}
         />
-        <button
-          class="button"
-          phx-click="show-add-player-to-team"
-          phx-value-team-type="away"
-        >
+        <button class="button" phx-click="show-add-player-to-team" phx-value-team-type="away">
           Add player
         </button>
       </div>

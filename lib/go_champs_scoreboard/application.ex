@@ -4,6 +4,7 @@ defmodule GoChampsScoreboard.Application do
   @moduledoc false
 
   use Application
+  alias GoChampsScoreboard.Clock
 
   @impl true
   def start(_type, _args) do

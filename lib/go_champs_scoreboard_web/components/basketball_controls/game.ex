@@ -1,6 +1,25 @@
 defmodule Components.BasketballControls.Game do
   use Phoenix.Component
 
+  def format_time(time) when is_binary(time) do
+    case Time.from_iso8601(time) do
+      {:ok, time} -> format_time(time)
+      {:error, _reason} -> "Invalid time"
+    end
+  end
+
+  def format_time(%Time{} = time) do
+    minutes = time.minute
+    seconds = time.second
+    "#{pad_zero(minutes)}:#{pad_zero(seconds)}"
+  end
+
+  defp pad_zero(number) when number < 10 do
+    "0#{number}"
+  end
+
+  defp pad_zero(number), do: "#{number}"
+
   def time_controls(assigns) do
     ~H"""
     <div class="columns is-multiline">
@@ -24,7 +43,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button">
-          09:21:32
+          <%= format_time(@game_state.clock_time) %>
         </button>
 
         <button class="button">
@@ -111,7 +130,7 @@ defmodule Components.BasketballControls.Game do
           </div>
 
           <div class="column is-4 has-text-centered">
-            <Components.BasketballControls.Game.time_controls />
+            <Components.BasketballControls.Game.time_controls game_state={@game_state} s />
           </div>
 
           <div class="column is-4">

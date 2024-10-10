@@ -1,5 +1,7 @@
 defmodule GoChampsScoreboard.Games.Games do
   alias GoChampsScoreboard.EventHandles
+  alias GoChampsScoreboard.GameClockSupervisor
+  alias GoChampsScoreboard.GameClock
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Bootstrapper
 
@@ -27,6 +29,7 @@ defmodule GoChampsScoreboard.Games.Games do
 
   @spec subscribe(String.t()) :: :ok | {:error, {:already_registered, pid()}}
   def subscribe(game_id) do
+    # GameClockSupervisor.start_game_clock(game_id)
     Phoenix.PubSub.subscribe(GoChampsScoreboard.PubSub, topic(game_id))
   end
 
@@ -43,5 +46,9 @@ defmodule GoChampsScoreboard.Games.Games do
     )
 
     new_game_state
+  end
+
+  def get_game_time(game_id) do
+    GameClock.get_time(game_id)
   end
 end

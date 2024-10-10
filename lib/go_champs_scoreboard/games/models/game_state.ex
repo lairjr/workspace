@@ -6,17 +6,19 @@ defmodule GoChampsScoreboard.Games.Models.GameState do
           id: String.t(),
           away_team: TeamState,
           home_team: TeamState,
+          clock_time: Time.t(),
           sport_id: String.t()
         }
-  defstruct [:id, :away_team, :home_team, :sport_id]
+  defstruct [:id, :away_team, :home_team, :sport_id, :clock_time]
 
   @spec new(String.t(), TeamState.t(), TeamState.t(), String.t()) :: t()
-  def new(id, away_team, home_team, sport_id \\ "basketball") do
+  def new(id, away_team, home_team, sport_id \\ "basketball", clock_time \\ ~T[00:10:00.000]) do
     %__MODULE__{
       id: id,
       away_team: away_team,
       home_team: home_team,
-      sport_id: sport_id
+      sport_id: sport_id,
+      clock_time: clock_time
     }
   end
 
@@ -32,6 +34,7 @@ defmodule GoChampsScoreboard.Games.Models.GameState do
         }
       }
     )
+    |> Map.update!(:clock_time, fn time -> Time.from_iso8601!(time) end)
   end
 
   defimpl String.Chars do
