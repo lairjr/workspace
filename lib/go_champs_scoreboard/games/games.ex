@@ -1,6 +1,6 @@
 defmodule GoChampsScoreboard.Games.Games do
   alias GoChampsScoreboard.Games.Models.TeamState
-  alias GoChampsScoreboard.EventHandles
+  alias GoChampsScoreboard.EventHandlers
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Bootstrapper
 
@@ -34,7 +34,7 @@ defmodule GoChampsScoreboard.Games.Games do
   @spec handle_event(String.t(), String.t(), any()) :: GameState.t()
   def handle_event(game_id, event, event_payload) do
     current_game_state = find_or_bootstrap(game_id)
-    new_game_state = EventHandles.handle(event, current_game_state, event_payload)
+    new_game_state = EventHandlers.handle(event, current_game_state, event_payload)
     Redix.command(:games_cache, ["SET", game_id, new_game_state])
 
     Phoenix.PubSub.broadcast(

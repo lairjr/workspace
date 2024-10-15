@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStat do
+defmodule GoChampsScoreboard.EventHandlers.UpdatePlayerStat do
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Sports.Sports
   alias GoChampsScoreboard.Games.Games
