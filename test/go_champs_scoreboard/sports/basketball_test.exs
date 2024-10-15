@@ -13,9 +13,12 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
         "assists" => 0,
         "blocks" => 0,
         "tournovers" => 0,
+        "personal-fouls" => 0,
+        "technical-fouls" => 0,
         "points" => 0,
         "rebounds" => 0,
-        "steals" => 0
+        "steals" => 0,
+        "fouls" => 0
       }
 
       assert expected == Basketball.bootstrap()
@@ -54,6 +57,13 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
           operations: [],
           calculation_function:
             &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_rebounds/1
+        },
+        %GoChampsScoreboard.Statistics.Models.PlayerStat{
+          key: "fouls",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_fouls/1
         }
       ]
 
