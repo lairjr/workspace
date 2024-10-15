@@ -20,6 +20,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
   ]
 
   @team_stats [
+    Stat.new("timeouts", :manual, [:increment, :decrement]),
     Stat.new("technical-fouls", :manual, [:increment, :decrement]),
     Stat.new("total-technical-fouls", :calculated, [], &Statistics.calc_team_technical_fouls/1)
   ]
@@ -46,5 +47,15 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
   @spec find_calculated_player_stats() :: [Stat.t()]
   def find_calculated_player_stats() do
     Enum.filter(@player_stats, fn stat -> stat.type == :calculated end)
+  end
+
+  @spec find_team_stat(String.t()) :: Stat.t()
+  def find_team_stat(stat_id) do
+    Enum.find(@team_stats, fn stat -> stat.key == stat_id end)
+  end
+
+  @spec find_calculated_team_stats() :: [Stat.t()]
+  def find_calculated_team_stats() do
+    Enum.filter(@team_stats, fn stat -> stat.type == :calculated end)
   end
 end

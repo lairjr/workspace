@@ -74,11 +74,43 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
   describe "bootstrap_team_stats" do
     test "returns a map with all team stats" do
       expected = %{
+        "timeouts" => 0,
         "technical-fouls" => 0,
         "total-technical-fouls" => 0
       }
 
       assert expected == Basketball.bootstrap_team_stats()
+    end
+  end
+
+  describe "find_calculated_team_stats" do
+    test "returns all calculated team stats" do
+      expected = [
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "total-technical-fouls",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_team_technical_fouls/1
+        }
+      ]
+
+      assert expected == Basketball.find_calculated_team_stats()
+    end
+  end
+
+  describe "find_team_stat" do
+    test "returns the team stat with the given key" do
+      assert %GoChampsScoreboard.Statistics.Models.Stat{
+               key: "technical-fouls",
+               type: :manual,
+               operations: [:increment, :decrement],
+               calculation_function: nil
+             } == Basketball.find_player_stat("technical-fouls")
+    end
+
+    test "returns nil if the team stat with the given key is not found" do
+      assert nil == Basketball.find_team_stat("non-existing-stat")
     end
   end
 end
