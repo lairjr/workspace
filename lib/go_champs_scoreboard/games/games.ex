@@ -29,7 +29,6 @@ defmodule GoChampsScoreboard.Games.Games do
 
   @spec subscribe(String.t()) :: :ok | {:error, {:already_registered, pid()}}
   def subscribe(game_id) do
-    # GameClockSupervisor.start_game_clock(game_id)
     Phoenix.PubSub.subscribe(GoChampsScoreboard.PubSub, topic(game_id))
   end
 

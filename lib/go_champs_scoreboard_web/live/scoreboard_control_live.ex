@@ -1,6 +1,5 @@
 defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   alias GoChampsScoreboard.Games.Games
-  alias GoChampsScoreboard.Clock
   alias GoChampsScoreboardWeb.Components.Modals
   use GoChampsScoreboardWeb, :live_view
   require Logger
@@ -8,7 +7,6 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   def mount(%{"game_id" => game_id}, _session, socket) do
     if connected?(socket) do
       Games.subscribe(game_id)
-      send(self(), :tick)
     end
 
     {:ok,
@@ -94,18 +92,6 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      socket
      |> assign(:modals, updated_modals)}
   end
-
-  def handle_info(:tick, socket) do
-    send(self(), :tick)
-    IO.inspect(Games.get_game_time(socket.assigns.game_id))
-    IO.inspect("Tick")
-    {:noreply, socket}
-  end
-
-  # def handle_info(:tick, socket) do
-  #   Games.handle_event(socket.assigns.game_state.result.id, "tick-clock-time", nil)
-  #   {:noreply, socket}
-  # end
 
   @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}
   def handle_info({:update_game, game}, socket) do

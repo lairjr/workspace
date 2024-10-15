@@ -4,7 +4,6 @@ defmodule GoChampsScoreboard.Application do
   @moduledoc false
 
   use Application
-  alias GoChampsScoreboard.Clock
 
   @impl true
   def start(_type, _args) do
@@ -14,6 +13,7 @@ defmodule GoChampsScoreboard.Application do
 
     children = [
       GoChampsScoreboardWeb.Telemetry,
+      GoChampsScoreboard.GameClockSupervisor,
       {DNSCluster,
        query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: GoChampsScoreboard.PubSub},

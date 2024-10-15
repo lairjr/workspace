@@ -1,11 +1,14 @@
 defmodule GoChampsScoreboard.EventHandles.UpdateTeamScore do
   alias GoChampsScoreboard.Games.Models.GameState
+  alias GoChampsScoreboard.GameClockSupervisor
 
   @spec handle(GameState.t(), any()) :: GameState.t()
   def handle(
         current_game,
         %{"operation" => op, "team-type" => team_type, "amount" => amount}
       ) do
+
+    GameClockSupervisor.start_game_clock(current_game.id)
     update_score(current_game, team_type, op, String.to_integer(amount))
   end
 

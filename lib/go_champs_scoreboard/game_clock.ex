@@ -12,6 +12,8 @@ defmodule GoChampsScoreboard.GameClock do
 
   def handle_info(:tick, state) do
     new_time = Time.add(state.time, 1)
+    IO.inspect(new_time)
+    IO.inspect("game tick")
     schedule_tick()
     {:noreply, %{state | time: new_time}}
   end

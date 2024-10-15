@@ -16,4 +16,11 @@ defmodule GoChampsScoreboard.GameClockSupervisor do
   def start_game_clock(game_id) do
     Supervisor.start_child(__MODULE__, {GoChampsScoreboard.GameClock, game_id})
   end
+
+  def stop_game_clock(game_id) do
+    case Registry.lookup(GoChampsScoreboard.GameRegistry, game_id) do
+      [{pid, _}] -> Supervisor.terminate_child(__MODULE__, pid)
+      [] -> {:error, :not_found}
+    end
+  end
 end

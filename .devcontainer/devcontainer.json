@@ -26,7 +26,8 @@
 		"mtxr.sqltools-driver-pg",
 		"jakebecker.elixir-ls",
 		"GitHub.copilot",
-		"GitHub.copilot-chat"
+		"GitHub.copilot-chat",
+		"cweijan.vscode-redis-client"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
