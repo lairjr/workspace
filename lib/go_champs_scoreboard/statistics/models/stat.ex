@@ -1,9 +1,10 @@
 defmodule GoChampsScoreboard.Statistics.Models.Stat do
   alias GoChampsScoreboard.Games.Models.PlayerState
+  alias GoChampsScoreboard.Games.Models.TeamState
 
   @type type :: :manual | :calculated
   @type operation_type :: :increment | :decrement
-  @type calculation_function() :: (PlayerState.t() -> float()) | nil
+  @type calculation_function() :: (PlayerState.t() | TeamState.t() -> float()) | nil
 
   @type t :: %__MODULE__{
           key: String.t(),
