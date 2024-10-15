@@ -27,7 +27,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
 
   describe "find_player_stat" do
     test "returns the player stat with the given key" do
-      assert %GoChampsScoreboard.Statistics.Models.PlayerStat{
+      assert %GoChampsScoreboard.Statistics.Models.Stat{
                key: "points",
                type: :calculated,
                operations: [],
@@ -44,21 +44,21 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
   describe "find_calculated_player_stats" do
     test "returns all calculated player stats" do
       expected = [
-        %GoChampsScoreboard.Statistics.Models.PlayerStat{
+        %GoChampsScoreboard.Statistics.Models.Stat{
           key: "points",
           type: :calculated,
           operations: [],
           calculation_function:
             &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_points/1
         },
-        %GoChampsScoreboard.Statistics.Models.PlayerStat{
+        %GoChampsScoreboard.Statistics.Models.Stat{
           key: "rebounds",
           type: :calculated,
           operations: [],
           calculation_function:
             &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_rebounds/1
         },
-        %GoChampsScoreboard.Statistics.Models.PlayerStat{
+        %GoChampsScoreboard.Statistics.Models.Stat{
           key: "fouls",
           type: :calculated,
           operations: [],

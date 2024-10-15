@@ -17,7 +17,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.Statistics do
 
     def_rebounds + off_rebounds
   end
-  
+
   @spec calc_player_fouls(PlayerState.t()) :: float()
   def calc_player_fouls(player_state) do
     personal_fouls = Map.get(player_state.stats_values, "personal-fouls", 0)
