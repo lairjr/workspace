@@ -1,6 +1,6 @@
-defmodule GoChampsScoreboard.EventHandles.UpdateTeamStatTest do
+defmodule GoChampsScoreboard.EventHandlers.UpdateTeamStatTest do
   use ExUnit.Case
-  alias GoChampsScoreboard.EventHandles.UpdateTeamStat
+  alias GoChampsScoreboard.EventHandlers.UpdateTeamStat
   alias GoChampsScoreboard.Games.Models.GameState
 
   @initial_state %GameState{

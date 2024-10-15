@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandles.RemovePlayerInTeam do
+defmodule GoChampsScoreboard.EventHandlers.RemovePlayerInTeam do
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Teams
 
