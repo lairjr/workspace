@@ -5,6 +5,7 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
   alias GoChampsScoreboard.Games.Models.PlayerState
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.Games.Teams
+  alias GoChampsScoreboard.Statistics.Models.Stat
 
   describe "add_player" do
     test "adds a player to the given team" do
@@ -394,6 +395,53 @@ defmodule GoChampsScoreboard.Games.TeamsTest do
                  "assists" => 800
                }
              } == Teams.calculate_team_total_player_stats(team)
+    end
+  end
+
+  describe "update_manual_stats_values" do
+    test "updates the team state with the new value" do
+      team_state = %{
+        stats_values: %{
+          "technical-fouls" => 1
+        }
+      }
+
+      team_stat = Stat.new("technical-fouls", :manual, [:increment])
+
+      assert %{
+               stats_values: %{
+                 "technical-fouls" => 2
+               }
+             } == Teams.update_manual_stats_values(team_state, team_stat, "increment")
+    end
+  end
+
+  describe "update_calculated_stats_values" do
+    test "updates the team state with the new value" do
+      team_state = %{
+        stats_values: %{
+          "technical-fouls" => 1,
+          "timeouts" => 2,
+          "total-technical-fouls" => 1
+        }
+      }
+
+      team_stats = [
+        Stat.new(
+          "total-technical-fouls",
+          :calculated,
+          [],
+          fn team_state -> team_state.stats_values["technical-fouls"] + 1 end
+        )
+      ]
+
+      assert %{
+               stats_values: %{
+                 "technical-fouls" => 1,
+                 "timeouts" => 2,
+                 "total-technical-fouls" => 2
+               }
+             } == Teams.update_calculated_stats_values(team_state, team_stats)
     end
   end
 end

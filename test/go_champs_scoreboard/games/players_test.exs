@@ -1,7 +1,7 @@
 defmodule GoChampsScoreboard.Games.PlayersTest do
   use ExUnit.Case
   alias GoChampsScoreboard.Games.Players
-  alias GoChampsScoreboard.Statistics.Models.PlayerStat
+  alias GoChampsScoreboard.Statistics.Models.Stat
 
   describe "bootstrap" do
     test "returns a new player state with new random id, given name and number" do
@@ -21,7 +21,7 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
         }
       }
 
-      player_stat = PlayerStat.new("one-points-made", :manual, [:increment])
+      player_stat = Stat.new("one-points-made", :manual, [:increment])
 
       assert %{
                stats_values: %{
@@ -43,13 +43,13 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
       }
 
       player_stats = [
-        PlayerStat.new(
+        Stat.new(
           "points",
           :calculated,
           [],
           fn player_state -> player_state.stats_values["two-points-made"] * 2 end
         ),
-        PlayerStat.new(
+        Stat.new(
           "rebounds",
           :calculated,
           [],

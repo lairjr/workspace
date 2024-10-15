@@ -1,5 +1,5 @@
 defmodule GoChampsScoreboard.Games.Players do
-  alias GoChampsScoreboard.Statistics.Models.PlayerStat
+  alias GoChampsScoreboard.Statistics.Models.Stat
   alias GoChampsScoreboard.Statistics.Operations
   alias GoChampsScoreboard.Games.Models.PlayerState
 
@@ -9,7 +9,7 @@ defmodule GoChampsScoreboard.Games.Players do
     |> PlayerState.new(name, number)
   end
 
-  @spec update_manual_stats_values(PlayerState.t(), PlayerStat.t(), String.t()) :: PlayerState.t()
+  @spec update_manual_stats_values(PlayerState.t(), Stat.t(), String.t()) :: PlayerState.t()
   def update_manual_stats_values(player_state, player_stat, operation) do
     new_stat_value =
       fetch_stats_value(player_state, player_stat)
@@ -19,7 +19,7 @@ defmodule GoChampsScoreboard.Games.Players do
     |> update_stats_values(player_stat, new_stat_value)
   end
 
-  @spec update_calculated_stats_values(PlayerState.t(), [PlayerStat.t()]) :: PlayerState.t()
+  @spec update_calculated_stats_values(PlayerState.t(), [Stat.t()]) :: PlayerState.t()
   def update_calculated_stats_values(player_state, player_stats) do
     player_stats
     |> Enum.reduce(player_state, fn
@@ -28,7 +28,7 @@ defmodule GoChampsScoreboard.Games.Players do
     end)
   end
 
-  @spec update_calculated_stat_value(PlayerState.t(), PlayerStat.t()) :: PlayerState.t()
+  @spec update_calculated_stat_value(PlayerState.t(), Stat.t()) :: PlayerState.t()
   defp update_calculated_stat_value(player_state, player_stat) do
     new_stat_value =
       player_state
