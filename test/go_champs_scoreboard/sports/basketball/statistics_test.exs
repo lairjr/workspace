@@ -41,4 +41,19 @@ defmodule GoChampsScoreboard.Sports.Basketball.StatisticsTest do
       assert Statistics.calc_player_fouls(player_state) == 4
     end
   end
+
+  describe "calc_team_technical_fouls" do
+    test "returns them sum of personal-fouls and technical-fouls" do
+      team_state = %GoChampsScoreboard.Games.Models.TeamState{
+        total_player_stats: %{
+          "technical-fouls" => 1
+        },
+        stats_values: %{
+          "technical-fouls" => 1
+        }
+      }
+
+      assert Statistics.calc_team_technical_fouls(team_state) == 2
+    end
+  end
 end

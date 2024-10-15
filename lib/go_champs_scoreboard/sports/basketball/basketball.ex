@@ -19,10 +19,22 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
     Stat.new("fouls", :calculated, [], &Statistics.calc_player_fouls/1)
   ]
 
+  @team_stats [
+    Stat.new("technical-fouls", :manual, [:increment, :decrement]),
+    Stat.new("total-technical-fouls", :calculated, [], &Statistics.calc_team_technical_fouls/1)
+  ]
+
   @spec bootstrap() :: %{String.t() => number()}
   def bootstrap() do
     Enum.reduce(@player_stats, %{}, fn stat, player_stats ->
       Map.merge(player_stats, %{stat.key => 0})
+    end)
+  end
+
+  @spec bootstrap_team_stats() :: %{String.t() => number()}
+  def bootstrap_team_stats() do
+    Enum.reduce(@team_stats, %{}, fn stat, team_stats ->
+      Map.merge(team_stats, %{stat.key => 0})
     end)
   end
 

@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboard.Sports.Basketball.Statistics do
   alias GoChampsScoreboard.Games.Models.PlayerState
+  alias GoChampsScoreboard.Games.Models.TeamState
 
   @spec calc_player_points(PlayerState.t()) :: float()
   def calc_player_points(player_state) do
@@ -24,5 +25,13 @@ defmodule GoChampsScoreboard.Sports.Basketball.Statistics do
     technical_fouls = Map.get(player_state.stats_values, "technical-fouls", 0)
 
     personal_fouls + technical_fouls
+  end
+
+  @spec calc_team_technical_fouls(TeamState.t()) :: float()
+  def calc_team_technical_fouls(team_state) do
+    total_technical_fouls_players = Map.get(team_state.total_player_stats, "technical-fouls", 0)
+    technical_fouls = Map.get(team_state.stats_values, "technical-fouls", 0)
+
+    total_technical_fouls_players + technical_fouls
   end
 end

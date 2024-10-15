@@ -70,4 +70,15 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
       assert expected == Basketball.find_calculated_player_stats()
     end
   end
+
+  describe "bootstrap_team_stats" do
+    test "returns a map with all team stats" do
+      expected = %{
+        "technical-fouls" => 0,
+        "total-technical-fouls" => 0
+      }
+
+      assert expected == Basketball.bootstrap_team_stats()
+    end
+  end
 end
