@@ -1,7 +1,6 @@
 defmodule GoChampsScoreboard.EventHandles do
   alias GoChampsScoreboard.EventHandles.AddPlayerToTeam
   alias GoChampsScoreboard.EventHandles.RemovePlayerInTeam
-  alias GoChampsScoreboard.EventHandles.TickClockTime
   alias GoChampsScoreboard.EventHandles.UpdatePlayerStat
   alias GoChampsScoreboard.EventHandles.UpdatePlayerInTeam
   alias GoChampsScoreboard.EventHandles.UpdateTeamScore
@@ -14,10 +13,6 @@ defmodule GoChampsScoreboard.EventHandles do
   @spec handle(String.t(), GameState.t(), any()) :: GameState.t()
   def handle("remove-player-in-team", game_state, payload),
     do: RemovePlayerInTeam.handle(game_state, payload)
-
-  @spec handle(String.t(), GameState.t(), any()) :: GameState.t()
-  def handle("tick-clock-time", game_state, _payload),
-    do: TickClockTime.handle(game_state)
 
   @spec handle(String.t(), GameState.t(), any()) :: GameState.t()
   def handle("update-player-in-team", game_state, payload),

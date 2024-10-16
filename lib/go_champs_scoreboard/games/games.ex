@@ -46,8 +46,4 @@ defmodule GoChampsScoreboard.Games.Games do
 
     new_game_state
   end
-
-  def get_game_time(game_id) do
-    GameClock.get_time(game_id)
-  end
 end
