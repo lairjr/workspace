@@ -1,6 +1,22 @@
 defmodule Components.BasketballControls.Game do
   use Phoenix.Component
 
+  def format_time(seconds) when is_integer(seconds) and seconds >= 0 do
+    minutes = div(seconds, 60)
+    remaining_seconds = rem(seconds, 60)
+
+    formatted_minutes = pad_zero(minutes)
+    formatted_seconds = pad_zero(remaining_seconds)
+
+    "#{formatted_minutes}:#{formatted_seconds}"
+  end
+
+  defp pad_zero(number) when number < 10 do
+    "0#{number}"
+  end
+
+  defp pad_zero(number), do: "#{number}"
+
   def time_controls(assigns) do
     ~H"""
     <div class="columns is-multiline">
@@ -10,7 +26,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button">
-          2o
+          <%= @game_state.clock_state.period %>
         </button>
 
         <button class="button">
@@ -24,7 +40,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button">
-          09:21:32
+          <%= format_time(@game_state.clock_state.time) %>
         </button>
 
         <button class="button">
@@ -33,11 +49,11 @@ defmodule Components.BasketballControls.Game do
       </div>
 
       <div class="column is-12 has-text-centered">
-        <button class="button">
+        <button class="button" phx-click="update-clock-state" phx-value-state="running">
           Start
         </button>
 
-        <button class="button">
+        <button class="button" phx-click="update-clock-state" phx-value-state="paused">
           Pause
         </button>
       </div>
@@ -49,8 +65,8 @@ defmodule Components.BasketballControls.Game do
     ~H"""
     <div class="columns is-multiline">
       <div class="column is-12">
-        <button class="button">
-          Active log
+        <button class="button" phx-click="start-live-mode">
+          Start live
         </button>
 
         <button class="button">
@@ -111,7 +127,7 @@ defmodule Components.BasketballControls.Game do
           </div>
 
           <div class="column is-4 has-text-centered">
-            <Components.BasketballControls.Game.time_controls />
+            <Components.BasketballControls.Game.time_controls game_state={@game_state} />
           </div>
 
           <div class="column is-4">

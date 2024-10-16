@@ -12,7 +12,7 @@ defmodule GoChampsScoreboard.Games.Players do
   @spec update_manual_stats_values(PlayerState.t(), Stat.t(), String.t()) :: PlayerState.t()
   def update_manual_stats_values(player_state, player_stat, operation) do
     new_stat_value =
-      Map.fetch!(player_state, player_stat)
+      Map.fetch!(player_state.stats_values, player_stat.key)
       |> Operations.calc(operation)
 
     player_state

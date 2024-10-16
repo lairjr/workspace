@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   alias GoChampsScoreboard.Games.Games
+  alias GoChampsScoreboard.GameTickerSupervisor
   alias GoChampsScoreboardWeb.Components.Modals
   use GoChampsScoreboardWeb, :live_view
   require Logger
@@ -40,6 +41,11 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
     {:noreply,
      socket
      |> assign(:selected_team, team_type)}
+  end
+
+  def handle_event("update-clock-state", params, socket) do
+    Games.handle_event(socket.assigns.game_state.result.id, "update-clock-state", params)
+    {:noreply, socket}
   end
 
   def handle_event("add-player-to-team", params, socket) do
@@ -86,10 +92,17 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign(:modals, updated_modals)}
   end
 
+  def handle_event("start-live-mode", _, socket) do
+    GameTickerSupervisor.start_game_ticker(socket.assigns.game_state.result.id)
+    {:noreply, socket}
+  end
+
   @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}
   def handle_info({:update_game, game}, socket) do
-    {:noreply,
-     socket
-     |> assign_async(:game_state, fn -> {:ok, %{game_state: game}} end)}
+    updated_socket =
+      socket
+      |> assign(:game_state, %{socket.assigns.game_state | result: game})
+
+    {:noreply, updated_socket}
   end
 end
