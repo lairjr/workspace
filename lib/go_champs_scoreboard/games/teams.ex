@@ -2,6 +2,8 @@ defmodule GoChampsScoreboard.Games.Teams do
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.PlayerState
   alias GoChampsScoreboard.Games.Models.TeamState
+  alias GoChampsScoreboard.Statistics.Operations
+  alias GoChampsScoreboard.Statistics.Models.Stat
 
   @spec add_player(GameState.t(), String.t(), PlayerState.t()) :: GameState.t()
   def add_player(game_state, team_type, player) do
@@ -46,22 +48,6 @@ defmodule GoChampsScoreboard.Games.Teams do
     find_team(game_state, team_type).players
   end
 
-  @spec update_player(GameState.t(), String.t(), PlayerState.t()) :: GameState.t()
-  def update_player(game_state, team_type, player) do
-    case team_type do
-      "home" ->
-        game_state
-        |> Map.update!(:home_team, fn team -> update_player_in_team(team, player) end)
-
-      "away" ->
-        game_state
-        |> Map.update!(:away_team, fn team -> update_player_in_team(team, player) end)
-
-      _ ->
-        raise RuntimeError, message: "Invalid team type"
-    end
-  end
-
   @spec update_player_in_team(TeamState.t(), PlayerState.t()) :: TeamState.t()
   def update_player_in_team(team, player) do
     team
@@ -92,5 +78,57 @@ defmodule GoChampsScoreboard.Games.Teams do
     |> Map.update!(:players, fn players ->
       Enum.reject(players, fn player -> player.id == player_id end)
     end)
+  end
+
+  @spec calculate_team_total_player_stats(TeamState.t()) :: TeamState.t()
+  def calculate_team_total_player_stats(team) do
+    team
+    |> Map.update!(:total_player_stats, fn _ ->
+      Enum.reduce(team.players, %{}, fn player, acc ->
+        Map.merge(acc, player.stats_values, fn _key, acc_key_value, player_key_value ->
+          acc_key_value + player_key_value
+        end)
+      end)
+    end)
+  end
+
+  @spec update_manual_stats_values(TeamState.t(), Stat.t(), String.t()) :: TeamState.t()
+  def update_manual_stats_values(team_state, team_stat, operation) do
+    new_stat_value =
+      fetch_stats_value(team_state, team_stat)
+      |> Operations.calc(operation)
+
+    team_state
+    |> update_stats_values(team_stat, new_stat_value)
+  end
+
+  @spec update_calculated_stats_values(TeamState.t(), [Stat.t()]) :: TeamState.t()
+  def update_calculated_stats_values(team_state, stats) do
+    stats
+    |> Enum.reduce(team_state, fn
+      stat, current_team_state ->
+        update_calculated_stat_value(current_team_state, stat)
+    end)
+  end
+
+  @spec update_calculated_stat_value(TeamState.t(), Stat.t()) :: TeamState.t()
+  defp update_calculated_stat_value(team_state, stat) do
+    new_stat_value =
+      team_state
+      |> stat.calculation_function.()
+
+    team_state
+    |> update_stats_values(stat, new_stat_value)
+  end
+
+  defp fetch_stats_value(team_state, stat) do
+    Map.fetch!(team_state.stats_values, stat.key)
+  end
+
+  defp update_stats_values(team_state, stat, new_value) do
+    %{
+      team_state
+      | stats_values: Map.replace(team_state.stats_values, stat.key, new_value)
+    }
   end
 end

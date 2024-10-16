@@ -43,6 +43,24 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     end
   end
 
+  describe "update_team" do
+    test "return a game state with given updated team" do
+      game_state = %GameState{
+        id: "some-game-id",
+        away_team: %TeamState{name: "Some away team"},
+        home_team: %TeamState{name: "Some home team"}
+      }
+
+      updated_team = %TeamState{name: "Updated home team"}
+
+      result_game_state = Games.update_team(game_state, "home", updated_team)
+
+      assert result_game_state.id == "some-game-id"
+      assert result_game_state.away_team.name == "Some away team"
+      assert result_game_state.home_team.name == "Updated home team"
+    end
+  end
+
   defp set_go_champs_api_respose() do
     response_body = %{
       "data" => %{

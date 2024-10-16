@@ -1,7 +1,7 @@
-defmodule GoChampsScoreboard.EventHandles.UpdatePlayerInTeamTest do
+defmodule GoChampsScoreboard.EventHandlers.UpdatePlayerInTeamTest do
   use ExUnit.Case
 
-  alias GoChampsScoreboard.EventHandles.UpdatePlayerInTeam
+  alias GoChampsScoreboard.EventHandlers.UpdatePlayerInTeam
   alias GoChampsScoreboard.Games.Models.{GameState, TeamState, PlayerState}
 
   describe "handle/2" do

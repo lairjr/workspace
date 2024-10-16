@@ -1,11 +1,10 @@
-defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
+defmodule GoChampsScoreboard.EventHandlers.UpdatePlayerStatTest do
   use ExUnit.Case
-  alias GoChampsScoreboard.EventHandles.UpdatePlayerStat
+  alias GoChampsScoreboard.EventHandlers.UpdatePlayerStat
   alias GoChampsScoreboard.Games.Models.GameState
 
   @initial_state %GameState{
     home_team: %{
-      score: 1,
       players: [
         %{
           id: "123",
@@ -23,7 +22,6 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
       }
     },
     away_team: %{
-      score: 0,
       players: [
         %{id: "456", stats_values: %{}}
       ],
@@ -42,7 +40,6 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
 
     expected_state = %GameState{
       home_team: %{
-        score: 3,
         players: [
           %{
             id: "123",
@@ -60,7 +57,6 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerStatTest do
         }
       },
       away_team: %{
-        score: 0,
         players: [
           %{id: "456", stats_values: %{}}
         ],

@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.Statistics.Models.PlayerStat do
+defmodule GoChampsScoreboard.Statistics.Models.Stat do
   alias GoChampsScoreboard.Games.Models.PlayerState
 
   @type type :: :manual | :calculated

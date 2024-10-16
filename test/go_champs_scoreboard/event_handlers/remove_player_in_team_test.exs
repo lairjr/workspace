@@ -1,7 +1,7 @@
-defmodule GoChampsScoreboard.EventHandles.RemovePlayerInTeamTest do
+defmodule GoChampsScoreboard.EventHandlers.RemovePlayerInTeamTest do
   use ExUnit.Case
 
-  alias GoChampsScoreboard.EventHandles.RemovePlayerInTeam
+  alias GoChampsScoreboard.EventHandlers.RemovePlayerInTeam
 
   describe "handle/2" do
     test "returns game state with player removed" do

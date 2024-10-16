@@ -1,5 +1,6 @@
-defmodule GoChampsScoreboard.EventHandles.UpdatePlayerInTeam do
+defmodule GoChampsScoreboard.EventHandlers.UpdatePlayerInTeam do
   alias GoChampsScoreboard.Games.Models.GameState
+  alias GoChampsScoreboard.Games.Games
   alias GoChampsScoreboard.Games.Teams
 
   @spec handle(GameState.t(), any()) :: GameState.t()
@@ -12,7 +13,12 @@ defmodule GoChampsScoreboard.EventHandles.UpdatePlayerInTeam do
 
     updated_player = Map.merge(current_player, player)
 
+    updated_team =
+      game_state
+      |> Teams.find_team(team_type)
+      |> Teams.update_player_in_team(updated_player)
+
     game_state
-    |> Teams.update_player(team_type, updated_player)
+    |> Games.update_team(team_type, updated_team)
   end
 end

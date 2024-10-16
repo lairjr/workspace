@@ -1,11 +1,9 @@
-defmodule GoChampsScoreboard.EventHandles.AddPlayerToTeamTest do
+defmodule GoChampsScoreboard.EventHandlers.AddPlayerToTeamTest do
   use ExUnit.Case
 
-  alias GoChampsScoreboard.EventHandles.AddPlayerToTeam
+  alias GoChampsScoreboard.EventHandlers.AddPlayerToTeam
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.TeamState
-  alias GoChampsScoreboard.Games.Models.PlayerState
-  alias GoChampsScoreboard.Games.Players
 
   describe "handle/2" do
     test "returns the game state with new player" do

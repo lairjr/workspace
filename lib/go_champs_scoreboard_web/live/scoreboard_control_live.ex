@@ -25,13 +25,6 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
-  def handle_event("update-team-score", value, socket) do
-    # {:ok, new_game} = Games.inc_away(socket.assigns.game_state)
-    Logger.info("Inc score Event")
-    Games.handle_event(socket.assigns.game_state.result.id, "update-team-score", value)
-    {:noreply, socket}
-  end
-
   def handle_event("update-player-stat", value, socket) do
     Games.handle_event(socket.assigns.game_state.result.id, "update-player-stat", value)
     {:noreply, socket}

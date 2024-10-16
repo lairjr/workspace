@@ -43,7 +43,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button">
-          <%= format_time(@game_state.clock_time) %>
+          10:00
         </button>
 
         <button class="button">
@@ -91,7 +91,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button is-large">
-          <%= @game_state.home_team.score %>
+          0
         </button>
       </div>
     </div>
@@ -105,7 +105,7 @@ defmodule Components.BasketballControls.Game do
 
       <div class="column is-12">
         <button class="button is-large">
-          <%= @game_state.away_team.score %>
+          0
         </button>
 
         <button class="button is-large" phx-click="select-team" phx-value-team-type="away">
@@ -130,7 +130,7 @@ defmodule Components.BasketballControls.Game do
           </div>
 
           <div class="column is-4 has-text-centered">
-            <Components.BasketballControls.Game.time_controls game_state={@game_state} s />
+            <Components.BasketballControls.Game.time_controls game_state={@game_state} />
           </div>
 
           <div class="column is-4">
