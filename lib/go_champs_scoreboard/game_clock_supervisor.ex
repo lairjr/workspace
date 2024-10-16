@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.GameClockSupervisor do
+defmodule GoChampsScoreboard.GameTickerSupervisor do
   use Supervisor
 
   def start_link(_) do
@@ -13,8 +13,8 @@ defmodule GoChampsScoreboard.GameClockSupervisor do
     Supervisor.init(children, strategy: :one_for_one)
   end
 
-  def start_game_clock(game_id) do
-    Supervisor.start_child(__MODULE__, {GoChampsScoreboard.GameClock, game_id})
+  def start_game_ticker(game_id) do
+    Supervisor.start_child(__MODULE__, {GoChampsScoreboard.GameTicker, game_id})
   end
 
   def stop_game_clock(game_id) do

@@ -13,7 +13,7 @@ defmodule GoChampsScoreboard.Application do
 
     children = [
       GoChampsScoreboardWeb.Telemetry,
-      GoChampsScoreboard.GameClockSupervisor,
+      GoChampsScoreboard.GameTickerSupervisor,
       {DNSCluster,
        query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: GoChampsScoreboard.PubSub},

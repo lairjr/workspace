@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboard.EventHandlers do
+  alias GoChampsScoreboard.EventHandlers.GameTick
   alias GoChampsScoreboard.EventHandlers.AddPlayerToTeam
   alias GoChampsScoreboard.EventHandlers.RemovePlayerInTeam
   alias GoChampsScoreboard.EventHandlers.UpdatePlayerStat
@@ -8,6 +9,8 @@ defmodule GoChampsScoreboard.EventHandlers do
   @spec handle(String.t(), GameState.t(), any()) :: GameState.t()
   def handle("add-player-to-team", game_state, payload),
     do: AddPlayerToTeam.handle(game_state, payload)
+
+  def handle("game-tick", game_state, _payload), do: GameTick.handle(game_state)
 
   @spec handle(String.t(), GameState.t(), any()) :: GameState.t()
   def handle("remove-player-in-team", game_state, payload),

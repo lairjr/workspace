@@ -68,8 +68,8 @@ defmodule Components.BasketballControls.Game do
     ~H"""
     <div class="columns is-multiline">
       <div class="column is-12">
-        <button class="button">
-          Active log
+        <button class="button" phx-click="start-live-mode">
+          Start live
         </button>
 
         <button class="button">
