@@ -1,18 +1,20 @@
 defmodule GoChampsScoreboard.Games.Models.GameClockState do
+  @type state :: :not_started | :running | :paused | :stopped
+
   @type t :: %__MODULE__{
           time: integer,
           period: integer,
-          status: String.t()
+          state: state
         }
 
-  defstruct [:time, :period, :status]
+  defstruct [:time, :period, :state]
 
   @spec new(integer(), integer(), String.t()) :: t()
-  def new(time \\ 0, period \\ 1, status \\ "in_hold") do
+  def new(time \\ 0, period \\ 1, state \\ :not_started) do
     %__MODULE__{
       time: time,
       period: period,
-      status: status
+      state: state
     }
   end
 end

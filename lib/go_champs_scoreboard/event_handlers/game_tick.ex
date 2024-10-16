@@ -4,10 +4,7 @@ defmodule GoChampsScoreboard.EventHandlers.GameTick do
   @spec handle(GameState.t()) :: GameState.t()
   def handle(game_state) do
     current_time = System.system_time(:second)
-    game_state
-    |> 
-    IO.inspect("Game tick")
-    IO.inspect(current_time)
+
     game_state
   end
 end

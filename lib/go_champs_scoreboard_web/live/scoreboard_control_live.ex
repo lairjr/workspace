@@ -94,8 +94,10 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
   @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}
   def handle_info({:update_game, game}, socket) do
-    updated_socket = socket
-    |> assign(:game_state, %{socket.assigns.game_state | result: game})
+    updated_socket =
+      socket
+      |> assign(:game_state, %{socket.assigns.game_state | result: game})
+
     {:noreply, updated_socket}
   end
 end

@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboard.Games.Bootstrapper do
   alias GoChampsScoreboard.ApiClient
+  alias GoChampsScoreboard.Games.Models.GameClockState
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.PlayerState
   alias GoChampsScoreboard.Games.Models.TeamState
@@ -17,9 +18,10 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
   def bootstrap() do
     home_team = TeamState.new("Home team")
     away_team = TeamState.new("Away team")
+    clock_state = GameClockState.new()
     game_id = Ecto.UUID.generate()
 
-    GameState.new(game_id, away_team, home_team)
+    GameState.new(game_id, away_team, home_team, clock_state)
   end
 
   def bootstrap_from_go_champs(game, game_id) do
@@ -39,6 +41,8 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
 
     game_id = Map.get(game_response, "id", game_state.id)
 
-    GameState.new(game_id, away_team, home_team)
+    clock_state = GameClockState.new()
+
+    GameState.new(game_id, away_team, home_team, clock_state)
   end
 end

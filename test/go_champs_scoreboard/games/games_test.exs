@@ -3,6 +3,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
   alias GoChampsScoreboard.Games.Games
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.Games.Models.GameState
+  alias GoChampsScoreboard.Games.Models.GameClockState
 
   import Mox
 
@@ -84,7 +85,8 @@ defmodule GoChampsScoreboard.Games.GamesTest do
   defp set_test_game() do
     away_team = TeamState.new("Some away team")
     home_team = TeamState.new("Some home team")
-    game_state = GameState.new("some-game-id", away_team, home_team)
+    clock_state = GameClockState.new()
+    game_state = GameState.new("some-game-id", away_team, home_team, clock_state)
     Redix.command(:games_cache, ["SET", "some-game-id", game_state])
   end
 

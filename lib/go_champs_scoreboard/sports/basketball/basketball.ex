@@ -1,5 +1,4 @@
 defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
-  alias Components.BasketballControls.Game
   alias GoChampsScoreboard.Sports.Basketball.Statistics
   alias GoChampsScoreboard.Statistics.Models.Stat
 
