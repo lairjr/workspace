@@ -62,6 +62,28 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     end
   end
 
+  describe "update_clock_state" do
+    test "return a game state with given updated clock state" do
+      game_state = %GameState{
+        id: "some-game-id",
+        away_team: %TeamState{name: "Some away team"},
+        home_team: %TeamState{name: "Some home team"},
+        clock_state: %GameClockState{time: 10, period: 1, state: :running}
+      }
+
+      updated_clock_state = %GameClockState{time: 9, period: 1, state: :running}
+
+      result_game_state = Games.update_clock_state(game_state, updated_clock_state)
+
+      assert result_game_state.id == "some-game-id"
+      assert result_game_state.away_team.name == "Some away team"
+      assert result_game_state.home_team.name == "Some home team"
+      assert result_game_state.clock_state.time == 9
+      assert result_game_state.clock_state.period == 1
+      assert result_game_state.clock_state.state == :running
+    end
+  end
+
   defp set_go_champs_api_respose() do
     response_body = %{
       "data" => %{

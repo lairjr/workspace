@@ -1,17 +1,14 @@
 defmodule Components.BasketballControls.Game do
   use Phoenix.Component
 
-  def format_time(time) when is_binary(time) do
-    case Time.from_iso8601(time) do
-      {:ok, time} -> format_time(time)
-      {:error, _reason} -> "Invalid time"
-    end
-  end
+  def format_time(seconds) when is_integer(seconds) and seconds >= 0 do
+    minutes = div(seconds, 60)
+    remaining_seconds = rem(seconds, 60)
 
-  def format_time(%Time{} = time) do
-    minutes = time.minute
-    seconds = time.second
-    "#{pad_zero(minutes)}:#{pad_zero(seconds)}"
+    formatted_minutes = pad_zero(minutes)
+    formatted_seconds = pad_zero(remaining_seconds)
+
+    "#{formatted_minutes}:#{formatted_seconds}"
   end
 
   defp pad_zero(number) when number < 10 do
@@ -29,7 +26,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button">
-          2o
+          <%= @game_state.clock_state.period %>
         </button>
 
         <button class="button">
@@ -43,7 +40,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button">
-          10:00
+          <%= format_time(@game_state.clock_state.time) %>
         </button>
 
         <button class="button">
@@ -52,11 +49,11 @@ defmodule Components.BasketballControls.Game do
       </div>
 
       <div class="column is-12 has-text-centered">
-        <button class="button">
+        <button class="button" phx-click="update-clock-state" phx-value-state="running">
           Start
         </button>
 
-        <button class="button">
+        <button class="button" phx-click="update-clock-state" phx-value-state="paused">
           Pause
         </button>
       </div>

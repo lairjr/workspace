@@ -19,9 +19,9 @@ defmodule GoChampsScoreboard.EventHandlers.GameTickTest do
 
       game = GameTick.handle(game_state)
 
-      assert game.game_clock.time == 9
-      assert game.game_clock.period == 1
-      assert game.game_clock.state == :running
+      assert game.clock_state.time == 9
+      assert game.clock_state.period == 1
+      assert game.clock_state.state == :running
     end
   end
 end

@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboard.Games.Games do
+  alias GoChampsScoreboard.Games.Models.GameClockState
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.EventHandlers
   alias GoChampsScoreboard.Games.Models.GameState
@@ -58,5 +59,10 @@ defmodule GoChampsScoreboard.Games.Games do
       _ ->
         raise RuntimeError, message: "Invalid team type"
     end
+  end
+
+  @spec update_clock_state(GameState.t(), GameClockState.t()) :: GameState.t()
+  def update_clock_state(game_state, clock_state) do
+    %{game_state | clock_state: clock_state}
   end
 end

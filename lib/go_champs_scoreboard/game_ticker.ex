@@ -13,7 +13,7 @@ defmodule GoChampsScoreboard.GameTicker do
 
   def handle_info(:tick, state) do
     new_time = Time.add(state.time, 1)
-    Games.handle_event(state.game_id, "game-tick", %{})
+    Games.handle_event(state.game_id, "clock-tick", %{})
     schedule_tick()
     {:noreply, %{state | time: new_time}}
   end

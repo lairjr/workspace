@@ -43,6 +43,11 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign(:selected_team, team_type)}
   end
 
+  def handle_event("update-clock-state", params, socket) do
+    Games.handle_event(socket.assigns.game_state.result.id, "update-clock-state", params)
+    {:noreply, socket}
+  end
+
   def handle_event("add-player-to-team", params, socket) do
     Games.handle_event(socket.assigns.game_state.result.id, "add-player-to-team", params)
 
