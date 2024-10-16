@@ -13,6 +13,7 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
     PlayerState.new("player-3", "Ruan Victor"),
     PlayerState.new("player-4", "Gugu Liberato")
   ]
+  @mock_initial_period_time 600
 
   @spec bootstrap() :: GameState.t()
   def bootstrap() do
@@ -41,7 +42,7 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
 
     game_id = Map.get(game_response, "id", game_state.id)
 
-    clock_state = GameClockState.new()
+    clock_state = GameClockState.new(@mock_initial_period_time, @mock_initial_period_time)
 
     GameState.new(game_id, away_team, home_team, clock_state)
   end

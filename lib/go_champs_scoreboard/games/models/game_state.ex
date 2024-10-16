@@ -36,8 +36,6 @@ defmodule GoChampsScoreboard.Games.Models.GameState do
         clock_state: %GameClockState{}
       }
     )
-
-    # |> Map.update!(:clock_time, fn time -> Time.from_iso8601!(time) end)
   end
 
   defimpl String.Chars do
