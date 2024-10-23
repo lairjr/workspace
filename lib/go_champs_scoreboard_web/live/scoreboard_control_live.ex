@@ -59,24 +59,6 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign(:modals, updated_modals)}
   end
 
-  def handle_event("change-add-player-to-team", params, socket) do
-    current_values = socket.assigns.form_add_new_player
-
-    form_params = Map.take(params, ["name", "number", "team_type"])
-
-    updated_values = Map.merge(current_values, form_params)
-
-    IO.inspect(updated_values)
-    IO.inspect("assiging values")
-
-    {:noreply,
-     socket
-     |> assign(
-       :form_add_new_player,
-       to_form(updated_values)
-     )}
-  end
-
   def handle_event("show-add-player-to-team", %{"team-type" => team_type}, socket) do
     updated_modals =
       socket.assigns.modals

@@ -10,7 +10,6 @@ defmodule Components.BasketballControls.Modals do
         for={@form_add_new_player}
         class="form"
         phx-submit="add-player-to-team"
-        phx-change="change-add-player-to-team"
       >
         <header class="modal-card-head">
           <p class="modal-card-title">Add player to <%= @selected_team %></p>
