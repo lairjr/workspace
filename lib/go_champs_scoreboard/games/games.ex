@@ -43,6 +43,7 @@ defmodule GoChampsScoreboard.Games.Games do
       topic(game_id),
       {:update_game, new_game_state}
     )
+    GoChampsScoreboard.Infrastructure.RabbitMQ.publish("message")
 
     new_game_state
   end

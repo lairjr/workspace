@@ -27,6 +27,13 @@ config :go_champs_scoreboard, :http_client,
   http_client: HTTPoison,
   url: System.get_env("GO_CHAMPS_API_URL") || "https://go-champs-api-staging.herokuapp.com/"
 
+config :go_champs_scoreboard, GoChampsScoreboard.Infrastructure.RabbitMQ,
+  host: System.get_env("RABBIT_MQ_HOST") || "moose-01.rmq.cloudamqp.com",
+  port: System.get_env("RABBIT_MQ_PORT") || 5672,
+  username: System.get_env("RABBIT_MQ_USERNAME") || "viezbksg",
+  password: System.get_env("RABBIT_MQ_PASSWORD") || "lgwUC_UNeUXz-FyHEM9vcl9ItOvLx_47",
+  virtual_host: System.get_env("RABBIT_MQ_VHOST") || "viezbksg"
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
