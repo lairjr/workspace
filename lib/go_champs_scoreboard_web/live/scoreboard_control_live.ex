@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   alias GoChampsScoreboard.Games.Games
+  alias GoChampsScoreboard.Games.Messages.PubSub
   alias GoChampsScoreboard.GameTickerSupervisor
   alias GoChampsScoreboardWeb.Components.Modals
   use GoChampsScoreboardWeb, :live_view
@@ -7,7 +8,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
   def mount(%{"game_id" => game_id}, _session, socket) do
     if connected?(socket) do
-      Games.subscribe(game_id)
+      PubSub.subscribe(game_id)
     end
 
     {:ok,

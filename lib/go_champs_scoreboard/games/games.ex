@@ -2,6 +2,7 @@ defmodule GoChampsScoreboard.Games.Games do
   alias GoChampsScoreboard.Games.Models.GameClockState
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.EventHandlers
+  alias GoChampsScoreboard.Games.Messages.{Producers, PubSub}
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Bootstrapper
 
@@ -22,28 +23,14 @@ defmodule GoChampsScoreboard.Games.Games do
     end
   end
 
-  @spec topic(String.t()) :: String.t()
-  def topic(game_id) do
-    "game-" <> game_id
-  end
-
-  @spec subscribe(String.t()) :: :ok | {:error, {:already_registered, pid()}}
-  def subscribe(game_id) do
-    Phoenix.PubSub.subscribe(GoChampsScoreboard.PubSub, topic(game_id))
-  end
-
   @spec handle_event(String.t(), String.t(), any()) :: GameState.t()
   def handle_event(game_id, event, event_payload) do
     current_game_state = find_or_bootstrap(game_id)
     new_game_state = EventHandlers.handle(event, current_game_state, event_payload)
     Redix.command(:games_cache, ["SET", game_id, new_game_state])
 
-    Phoenix.PubSub.broadcast(
-      GoChampsScoreboard.PubSub,
-      topic(game_id),
-      {:update_game, new_game_state}
-    )
-    GoChampsScoreboard.Infrastructure.RabbitMQ.publish("message")
+    PubSub.broadcast_game_update(game_id, new_game_state)
+    Producers.publish_game_event(new_game_state)
 
     new_game_state
   end
