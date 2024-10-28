@@ -17,6 +17,10 @@ defmodule Components.BasketballControls.Game do
 
   defp pad_zero(number), do: "#{number}"
 
+  def team_score(team) do
+    team.total_player_stats["points"]
+  end
+
   def time_controls(assigns) do
     ~H"""
     <div class="columns is-multiline">
@@ -84,7 +88,7 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button is-large">
-          0
+          <%= team_score(@game_state.home_team) %>
         </button>
       </div>
     </div>
@@ -100,7 +104,7 @@ defmodule Components.BasketballControls.Game do
 
       <div class="column is-12">
         <button class="button is-large">
-          0
+          <%= team_score(@game_state.away_team) %>
         </button>
 
         <button class="button is-large" phx-click="select-team" phx-value-team-type="away">

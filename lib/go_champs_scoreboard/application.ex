@@ -14,6 +14,7 @@ defmodule GoChampsScoreboard.Application do
     children = [
       GoChampsScoreboardWeb.Telemetry,
       GoChampsScoreboard.GameTickerSupervisor,
+      GoChampsScoreboard.Infrastructure.RabbitMQ,
       {DNSCluster,
        query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: GoChampsScoreboard.PubSub},
