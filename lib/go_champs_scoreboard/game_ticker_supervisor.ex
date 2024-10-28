@@ -31,7 +31,9 @@ defmodule GoChampsScoreboard.GameTickerSupervisor do
   @impl true
   def stop_game_ticker(game_id) do
     case Registry.lookup(GoChampsScoreboard.GameRegistry, game_id) do
-      [{pid, _}] -> Supervisor.terminate_child(__MODULE__, pid)
+      [{pid, _}] ->
+        GoChampsScoreboard.GameTicker.stop(game_id)
+        Supervisor.terminate_child(__MODULE__, pid)
       [] -> {:error, :not_found}
     end
   end

@@ -22,6 +22,10 @@ defmodule GoChampsScoreboard.GameTicker do
     Process.send_after(self(), :tick, 1000)
   end
 
+  def stop(game_id) do
+    GenServer.stop(via_tuple(game_id))
+  end
+
   def get_time(game_id) do
     GenServer.call(via_tuple(game_id), :get_time)
   end

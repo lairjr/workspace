@@ -21,7 +21,7 @@ defmodule GoChampsScoreboard.EventHandlers.StartGameLiveModeTest do
 
       expect(GameTickerSupervisorMock, :start_game_ticker, fn _game_id -> :ok end)
 
-      game = StartGameLiveMode.handle(game_state, %{}, GameTickerSupervisorMock)
+      game = StartGameLiveMode.handle(game_state, GameTickerSupervisorMock)
 
       assert game.live_state.state == :running
       verify!()

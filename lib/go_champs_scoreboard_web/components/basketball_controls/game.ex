@@ -123,11 +123,11 @@ defmodule Components.BasketballControls.Game do
     ~H"""
     <div class="live-mode"></div>
 
-    <button class="button" phx-click="start-live-mode">
+    <button class="button" phx-click="start-game-live-mode">
       Start live
     </button>
 
-    <button class="button" phx-click="end-live-mode">
+    <button class="button" phx-click="end-game-live-mode">
       End live
     </button>
     """

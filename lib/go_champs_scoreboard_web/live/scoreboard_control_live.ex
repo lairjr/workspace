@@ -92,7 +92,13 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign(:modals, updated_modals)}
   end
 
-  def handle_event("start-live-mode", _, socket) do
+  def handle_event("end-game-live-mode", _, socket) do
+    Games.handle_event(socket.assigns.game_state.result.id, "end-game-live-mode")
+    {:noreply, socket}
+  end
+
+  def handle_event("start-game-live-mode", _, socket) do
+    Games.handle_event(socket.assigns.game_state.result.id, "start-game-live-mode")
     {:noreply, socket}
   end
 

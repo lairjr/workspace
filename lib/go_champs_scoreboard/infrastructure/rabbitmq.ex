@@ -33,6 +33,7 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
   end
 
   def handle_call({:publish, message}, _from, %{channel: chan} = state) do
+    Logger.info("Publishing message to RabbitMQ", [message: message, exchange: @exchange, routing_key: @routing_key])
     AMQP.Basic.publish(chan, @exchange, @routing_key, message)
     {:reply, :ok, state}
   end

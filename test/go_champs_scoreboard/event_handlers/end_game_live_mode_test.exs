@@ -23,7 +23,7 @@ defmodule GoChampsScoreboard.EventHandlers.EndGameLiveModeTest do
 
       expect(GameTickerSupervisorMock, :stop_game_ticker, fn _game_id -> :ok end)
 
-      game = EndGameLiveMode.handle(game_state, %{}, GameTickerSupervisorMock)
+      game = EndGameLiveMode.handle(game_state, GameTickerSupervisorMock)
 
       assert game.live_state.state == :ended
       verify!()
