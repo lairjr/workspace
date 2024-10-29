@@ -1,6 +1,10 @@
-defmodule GoChampsScoreboard.GameTicker do
+defmodule GoChampsScoreboard.Infrastructure.GameTicker do
   use GenServer
   alias GoChampsScoreboard.Games.Games
+
+  def start_link([game_id]) do
+    start_link(game_id)
+  end
 
   def start_link(game_id) do
     GenServer.start_link(__MODULE__, game_id, name: via_tuple(game_id))
@@ -22,6 +26,10 @@ defmodule GoChampsScoreboard.GameTicker do
     Process.send_after(self(), :tick, 1000)
   end
 
+  def stop(game_id) do
+    GenServer.stop(via_tuple(game_id))
+  end
+
   def get_time(game_id) do
     GenServer.call(via_tuple(game_id), :get_time)
   end
@@ -31,6 +39,6 @@ defmodule GoChampsScoreboard.GameTicker do
   end
 
   defp via_tuple(game_id) do
-    {:via, Registry, {GoChampsScoreboard.GameRegistry, game_id}}
+    {:via, Registry, {GoChampsScoreboard.Infrastructure.GameRegistry, game_id}}
   end
 end

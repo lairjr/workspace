@@ -11,17 +11,21 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
   end
 
   def init(_) do
-  case AMQP.Connection.open(Application.get_env(:go_champs_scoreboard, GoChampsScoreboard.Infrastructure.RabbitMQ)) do
+    case AMQP.Connection.open(
+           Application.get_env(:go_champs_scoreboard, GoChampsScoreboard.Infrastructure.RabbitMQ)
+         ) do
       {:ok, conn} ->
         case AMQP.Channel.open(conn) do
           {:ok, chan} ->
             AMQP.Queue.declare(chan, @queue, durable: true)
             Logger.info("Connected to RabbitMQ")
             {:ok, %{channel: chan}}
+
           {:error, reason} ->
             Logger.error("Failed to open channel: #{inspect(reason)}")
             {:stop, reason}
         end
+
       {:error, reason} ->
         Logger.error("Failed to open connection: #{inspect(reason)}")
         {:stop, reason}
@@ -33,6 +37,12 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
   end
 
   def handle_call({:publish, message}, _from, %{channel: chan} = state) do
+    Logger.info("Publishing message to RabbitMQ",
+      message: message,
+      exchange: @exchange,
+      routing_key: @routing_key
+    )
+
     AMQP.Basic.publish(chan, @exchange, @routing_key, message)
     {:reply, :ok, state}
   end

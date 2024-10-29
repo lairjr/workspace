@@ -24,7 +24,7 @@ defmodule GoChampsScoreboard.Games.Games do
   end
 
   @spec handle_event(String.t(), String.t(), any()) :: GameState.t()
-  def handle_event(game_id, event, event_payload) do
+  def handle_event(game_id, event, event_payload \\ %{}) do
     current_game_state = find_or_bootstrap(game_id)
     new_game_state = EventHandlers.handle(event, current_game_state, event_payload)
     Redix.command(:games_cache, ["SET", game_id, new_game_state])
