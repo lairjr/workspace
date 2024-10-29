@@ -13,7 +13,8 @@ defmodule GoChampsScoreboard.Application do
 
     children = [
       GoChampsScoreboardWeb.Telemetry,
-      GoChampsScoreboard.GameTickerSupervisor,
+      {DynamicSupervisor, name: GoChampsScoreboard.GameTickerSupervisor, strategy: :one_for_one},
+      {Registry, keys: :unique, name: GoChampsScoreboard.GameRegistry},
       GoChampsScoreboard.Infrastructure.RabbitMQ,
       {DNSCluster,
        query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},
@@ -31,8 +32,7 @@ defmodule GoChampsScoreboard.Application do
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: GoChampsScoreboard.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(children, strategy: :one_for_one)
   end
 
   # Tell Phoenix to update the endpoint configuration

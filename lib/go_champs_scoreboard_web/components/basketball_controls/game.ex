@@ -121,13 +121,13 @@ defmodule Components.BasketballControls.Game do
 
   def live_controls(assigns) do
     ~H"""
-    <div class="live-mode"></div>
+    <div :if={@game_state.live_state.state == :running} class="live-mode"></div>
 
-    <button class="button" phx-click="start-game-live-mode">
+    <button :if={@game_state.live_state.state != :running} class="button" phx-click="start-game-live-mode">
       Start live
     </button>
 
-    <button class="button" phx-click="end-game-live-mode">
+    <button :if={@game_state.live_state.state == :running} class="button" phx-click="end-game-live-mode">
       End live
     </button>
     """

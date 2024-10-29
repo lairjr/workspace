@@ -2,6 +2,10 @@ defmodule GoChampsScoreboard.GameTicker do
   use GenServer
   alias GoChampsScoreboard.Games.Games
 
+  def start_link([game_id]) do
+    start_link(game_id)
+  end
+
   def start_link(game_id) do
     GenServer.start_link(__MODULE__, game_id, name: via_tuple(game_id))
   end
