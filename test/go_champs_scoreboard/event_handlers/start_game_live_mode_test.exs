@@ -4,7 +4,7 @@ defmodule GoChampsScoreboard.EventHandlers.StartGameLiveModeTest do
 
   alias GoChampsScoreboard.EventHandlers.StartGameLiveMode
   alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState}
-  alias GoChampsScoreboard.GameTickerSupervisorMock
+  alias GoChampsScoreboard.Infrastructure.GameTickerSupervisorMock
 
   describe "handle/2" do
     test "starts GameTicker and updates live_mode to :running in GameState" do

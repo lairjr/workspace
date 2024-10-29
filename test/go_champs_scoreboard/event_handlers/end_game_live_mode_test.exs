@@ -4,7 +4,7 @@ defmodule GoChampsScoreboard.EventHandlers.EndGameLiveModeTest do
 
   alias GoChampsScoreboard.EventHandlers.EndGameLiveMode
   alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState}
-  alias GoChampsScoreboard.GameTickerSupervisorMock
+  alias GoChampsScoreboard.Infrastructure.GameTickerSupervisorMock
 
   setup :verify_on_exit!
 

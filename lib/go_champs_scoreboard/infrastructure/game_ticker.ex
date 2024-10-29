@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.GameTicker do
+defmodule GoChampsScoreboard.Infrastructure.GameTicker do
   use GenServer
   alias GoChampsScoreboard.Games.Games
 

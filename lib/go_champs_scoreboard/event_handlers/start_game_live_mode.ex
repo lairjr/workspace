@@ -1,6 +1,6 @@
 defmodule GoChampsScoreboard.EventHandlers.StartGameLiveMode do
   alias GoChampsScoreboard.Games.Models.GameState
-  alias GoChampsScoreboard.GameTickerSupervisor
+  alias GoChampsScoreboard.Infrastructure.GameTickerSupervisor
 
   @spec handle(GameState.t(), any()) :: GameState.t()
   def handle(game_state, game_ticker_supervisor \\ GameTickerSupervisor) do

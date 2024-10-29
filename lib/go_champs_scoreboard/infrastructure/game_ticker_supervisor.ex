@@ -1,7 +1,7 @@
-defmodule GoChampsScoreboard.GameTickerSupervisor do
+defmodule GoChampsScoreboard.Infrastructure.GameTickerSupervisor do
   use DynamicSupervisor
 
-  @behaviour GoChampsScoreboard.GameTickerSupervisorBehavior
+  @behaviour GoChampsScoreboard.Infrastructure.GameTickerSupervisorBehavior
 
   @two_days_in_milliseconds 172_800_000
 
@@ -18,7 +18,7 @@ defmodule GoChampsScoreboard.GameTickerSupervisor do
   def start_game_ticker(game_id) do
     child_spec = %{
       id: game_id,
-      start: {GoChampsScoreboard.GameTicker, :start_link, [game_id]},
+      start: {GoChampsScoreboard.Infrastructure.GameTicker, :start_link, [game_id]},
       type: :worker,
       restart: :transient,
       shutdown: @two_days_in_milliseconds
