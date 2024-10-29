@@ -23,6 +23,7 @@ defmodule GoChampsScoreboard.GameTickerSupervisor do
       restart: :transient,
       shutdown: @two_days_in_milliseconds
     }
+
     DynamicSupervisor.start_child(__MODULE__, child_spec)
   end
 
@@ -39,7 +40,9 @@ defmodule GoChampsScoreboard.GameTickerSupervisor do
     case Registry.lookup(GoChampsScoreboard.GameRegistry, game_id) do
       [{pid, _}] ->
         DynamicSupervisor.terminate_child(__MODULE__, pid)
-      [] -> {:error, :not_found}
+
+      [] ->
+        {:error, :not_found}
     end
   end
 
