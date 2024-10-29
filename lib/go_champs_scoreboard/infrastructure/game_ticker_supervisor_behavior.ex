@@ -3,4 +3,5 @@ defmodule GoChampsScoreboard.Infrastructure.GameTickerSupervisorBehavior do
   @callback start_game_ticker(String.t()) :: :ok | {:error, any()}
   @callback stop_game_ticker(String.t()) :: :ok | {:error, any()}
 end
+
 Infrastructure

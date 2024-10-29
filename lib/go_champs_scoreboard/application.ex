@@ -13,7 +13,8 @@ defmodule GoChampsScoreboard.Application do
 
     children = [
       GoChampsScoreboardWeb.Telemetry,
-      {DynamicSupervisor, name: GoChampsScoreboard.Infrastructure.GameTickerSupervisor, strategy: :one_for_one},
+      {DynamicSupervisor,
+       name: GoChampsScoreboard.Infrastructure.GameTickerSupervisor, strategy: :one_for_one},
       {Registry, keys: :unique, name: GoChampsScoreboard.GameRegistry},
       GoChampsScoreboard.Infrastructure.RabbitMQ,
       {DNSCluster,
