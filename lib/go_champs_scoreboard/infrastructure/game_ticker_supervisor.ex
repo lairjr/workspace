@@ -29,7 +29,7 @@ defmodule GoChampsScoreboard.Infrastructure.GameTickerSupervisor do
 
   @impl true
   def get_game_ticker(game_id) do
-    case Registry.lookup(GoChampsScoreboard.GameRegistry, game_id) do
+    case Registry.lookup(GoChampsScoreboard.Infrastructure.GameRegistry, game_id) do
       [{pid, _}] -> {:ok, pid}
       [] -> {:error, :not_found}
     end
@@ -37,7 +37,7 @@ defmodule GoChampsScoreboard.Infrastructure.GameTickerSupervisor do
 
   @impl true
   def stop_game_ticker(game_id) do
-    case Registry.lookup(GoChampsScoreboard.GameRegistry, game_id) do
+    case Registry.lookup(GoChampsScoreboard.Infrastructure.GameRegistry, game_id) do
       [{pid, _}] ->
         DynamicSupervisor.terminate_child(__MODULE__, pid)
 
@@ -47,7 +47,9 @@ defmodule GoChampsScoreboard.Infrastructure.GameTickerSupervisor do
   end
 
   def stop_all_game_tickers do
-    Registry.select(GoChampsScoreboard.GameRegistry, [{{:"$1", :"$2", :"$3"}, [], [:"$1"]}])
+    Registry.select(GoChampsScoreboard.Infrastructure.GameRegistry, [
+      {{:"$1", :"$2", :"$3"}, [], [:"$1"]}
+    ])
     |> Enum.each(fn pid ->
       DynamicSupervisor.terminate_child(__MODULE__, pid)
     end)

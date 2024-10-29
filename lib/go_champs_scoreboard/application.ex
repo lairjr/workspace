@@ -15,7 +15,7 @@ defmodule GoChampsScoreboard.Application do
       GoChampsScoreboardWeb.Telemetry,
       {DynamicSupervisor,
        name: GoChampsScoreboard.Infrastructure.GameTickerSupervisor, strategy: :one_for_one},
-      {Registry, keys: :unique, name: GoChampsScoreboard.GameRegistry},
+      {Registry, keys: :unique, name: GoChampsScoreboard.Infrastructure.GameRegistry},
       GoChampsScoreboard.Infrastructure.RabbitMQ,
       {DNSCluster,
        query: Application.get_env(:go_champs_scoreboard, :dns_cluster_query) || :ignore},

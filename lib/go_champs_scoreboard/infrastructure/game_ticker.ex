@@ -39,6 +39,6 @@ defmodule GoChampsScoreboard.Infrastructure.GameTicker do
   end
 
   defp via_tuple(game_id) do
-    {:via, Registry, {GoChampsScoreboard.GameRegistry, game_id}}
+    {:via, Registry, {GoChampsScoreboard.Infrastructure.GameRegistry, game_id}}
   end
 end
