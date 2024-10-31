@@ -4,10 +4,11 @@ defmodule GoChampsScoreboard.EventHandlers.StartGameLiveModeTest do
 
   alias GoChampsScoreboard.EventHandlers.StartGameLiveMode
   alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState}
+  alias GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisorMock
   alias GoChampsScoreboard.Infrastructure.GameTickerSupervisorMock
 
   describe "handle/2" do
-    test "starts GameTicker and updates live_mode to :running in GameState" do
+    test "starts GameTicker, starts GameEventListener, and updates live_mode to :running in GameState" do
       game_state = %GameState{
         id: "1",
         away_team: %TeamState{
@@ -19,9 +20,16 @@ defmodule GoChampsScoreboard.EventHandlers.StartGameLiveModeTest do
         live_state: %LiveState{state: :not_started}
       }
 
+      expect(GameEventsListenerSupervisorMock, :start_game_events_listener, fn _game_id -> :ok end)
+
       expect(GameTickerSupervisorMock, :start_game_ticker, fn _game_id -> :ok end)
 
-      game = StartGameLiveMode.handle(game_state, GameTickerSupervisorMock)
+      game =
+        StartGameLiveMode.handle(
+          game_state,
+          GameEventsListenerSupervisorMock,
+          GameTickerSupervisorMock
+        )
 
       assert game.live_state.state == :running
       verify!()
