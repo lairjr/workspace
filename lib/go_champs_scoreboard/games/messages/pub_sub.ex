@@ -19,4 +19,13 @@ defmodule GoChampsScoreboard.Games.Messages.PubSub do
       {:update_game, game_state}
     )
   end
+
+  @spec broadcast_game_update(String.t(), GameState.t()) :: :ok
+  def broadcast_game_reacted_to_event(event, game_state, pub_sub \\ GoChampsScoreboard.PubSub) do
+    Phoenix.PubSub.broadcast(
+      pub_sub,
+      topic(game_state.id),
+      {:event, event, :game_state, game_state}
+    )
+  end
 end
