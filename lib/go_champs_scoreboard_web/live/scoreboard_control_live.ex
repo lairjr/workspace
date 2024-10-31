@@ -110,4 +110,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
     {:noreply, updated_socket}
   end
+
+  @spec handle_info({:game_reacted_to_event, any()}, any()) :: {:noreply, any()}
+  def handle_info({:game_reacted_to_event, _event}, socket) do
+    {:noreply, socket}
+  end
 end

@@ -1,6 +1,7 @@
 defmodule GoChampsScoreboard.Infrastructure.GameTicker do
   use GenServer
   alias GoChampsScoreboard.Games.Games
+  alias GoChampsScoreboard.Events.ValidatorCreator
 
   def start_link([game_id]) do
     start_link(game_id)
@@ -17,7 +18,12 @@ defmodule GoChampsScoreboard.Infrastructure.GameTicker do
 
   def handle_info(:tick, state) do
     new_time = Time.add(state.time, 1)
-    Games.handle_event(state.game_id, "clock-tick", %{})
+
+    {:ok, event} = ValidatorCreator.validate_and_create("game-tick")
+
+    event
+    |> Games.react_to_event(state.game_id)
+
     schedule_tick()
     {:noreply, %{state | time: new_time}}
   end
@@ -39,6 +45,6 @@ defmodule GoChampsScoreboard.Infrastructure.GameTicker do
   end
 
   defp via_tuple(game_id) do
-    {:via, Registry, {GoChampsScoreboard.Infrastructure.GameRegistry, game_id}}
+    {:via, Registry, {GoChampsScoreboard.Infrastructure.GameTickerRegistry, game_id}}
   end
 end
