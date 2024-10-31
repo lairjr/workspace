@@ -12,8 +12,17 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
     {:ok, %{game_id: game_id}}
   end
 
-  def handle_info({:update_game, game_state}, state) do
-    IO.inspect(game_state)
+  def handle_info({:update_game, _game_state}, state) do
+    IO.inspect("nothing")
+    {:noreply, state}
+  end
+
+  def handle_info({:game_reacted_to_event, %{event: event, game_state: _game_state}}, state) do
+    if event.metadata.streamable do
+      IO.inspect("streaming event")
+      # Producers.publish_game_event(new_game_state)
+    end
+
     {:noreply, state}
   end
 

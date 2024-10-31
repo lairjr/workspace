@@ -25,7 +25,7 @@ defmodule GoChampsScoreboard.Games.Messages.PubSub do
     Phoenix.PubSub.broadcast(
       pub_sub,
       topic(game_state.id),
-      {:event, event, :game_state, game_state}
+      {:game_reacted_to_event, %{event: event, game_state: game_state}}
     )
   end
 end
