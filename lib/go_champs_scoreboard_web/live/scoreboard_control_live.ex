@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
+  alias GoChampsScoreboard.Events.ValidatorCreator
   alias GoChampsScoreboard.Games.Games
   alias GoChampsScoreboard.Games.Messages.PubSub
   alias GoChampsScoreboardWeb.Components.Modals
@@ -98,7 +99,8 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("start-game-live-mode", _, socket) do
-    Games.handle_event(socket.assigns.game_state.result.id, "start-game-live-mode")
+    {:ok, event} = ValidatorCreator.validate_and_create("start-game-live-mode")
+    Games.react_to_event(event, socket.assigns.game_state.result.id)
     {:noreply, socket}
   end
 
