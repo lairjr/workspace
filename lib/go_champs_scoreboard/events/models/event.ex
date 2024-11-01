@@ -1,7 +1,7 @@
 defmodule GoChampsScoreboard.Events.Models.Event do
   @type t :: %__MODULE__{
           key: String.t(),
-          timestamp: DateTime.t(),
+          timestamp: String.t(),
           payload: any()
         }
 
