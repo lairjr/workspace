@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
   use GenServer
+  alias GoChampsScoreboard.Events.StreamConfigs
   alias GoChampsScoreboard.Games.Messages.PubSub
 
   def start_link(game_id) do
@@ -18,7 +19,9 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
   end
 
   def handle_info({:game_reacted_to_event, %{event: event, game_state: _game_state}}, state) do
-    if event.metadata.streamable do
+    stream_config = StreamConfigs.find_for_game_event(event.key)
+
+    if stream_config.streamable do
       IO.inspect("streaming event")
       # Producers.publish_game_event(new_game_state)
     end
