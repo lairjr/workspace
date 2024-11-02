@@ -4,7 +4,6 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
 
   @exchange "game-events"
   @queue "game-events"
-  @routing_key "game-id"
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
@@ -36,14 +35,18 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
     GenServer.call(__MODULE__, {:publish, message})
   end
 
-  def handle_call({:publish, message}, _from, %{channel: chan} = state) do
+  def handle_call(
+        {:publish, %{message: message, routing_key: routing_key}},
+        _from,
+        %{channel: chan} = state
+      ) do
     Logger.info("Publishing message to RabbitMQ",
       message: message,
       exchange: @exchange,
-      routing_key: @routing_key
+      routing_key: routing_key
     )
 
-    AMQP.Basic.publish(chan, @exchange, @routing_key, message)
+    AMQP.Basic.publish(chan, @exchange, routing_key, message)
     {:reply, :ok, state}
   end
 end

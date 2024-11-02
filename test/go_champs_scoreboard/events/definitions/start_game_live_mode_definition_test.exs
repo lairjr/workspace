@@ -1,11 +1,20 @@
-defmodule GoChampsScoreboard.EventHandlers.StartGameLiveModeTest do
+defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinitionTest do
   use ExUnit.Case
   import Mox
 
-  alias GoChampsScoreboard.EventHandlers.StartGameLiveMode
   alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState}
   alias GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisorMock
   alias GoChampsScoreboard.Infrastructure.GameTickerSupervisorMock
+
+  alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
+  alias GoChampsScoreboard.Events.Models.Event
+
+  describe "validate_and_create/0" do
+    test "returns :ok and event" do
+      assert {:ok, %Event{key: "start-game-live-mode"}} =
+               StartGameLiveModeDefinition.validate_and_create()
+    end
+  end
 
   describe "handle/2" do
     test "starts GameTicker, starts GameEventListener, and updates live_mode to :running in GameState" do
@@ -25,8 +34,9 @@ defmodule GoChampsScoreboard.EventHandlers.StartGameLiveModeTest do
       expect(GameTickerSupervisorMock, :start_game_ticker, fn _game_id -> :ok end)
 
       game =
-        StartGameLiveMode.handle(
+        StartGameLiveModeDefinition.handle(
           game_state,
+          %{},
           GameEventsListenerSupervisorMock,
           GameTickerSupervisorMock
         )
