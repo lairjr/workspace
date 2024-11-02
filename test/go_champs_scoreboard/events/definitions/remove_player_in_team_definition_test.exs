@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandlers.RemovePlayerInTeamTest do
+defmodule GoChampsScoreboard.Events.Definitions.RemovePlayerInTeamDefinitionTest do
   use ExUnit.Case
 
   alias GoChampsScoreboard.EventHandlers.RemovePlayerInTeam

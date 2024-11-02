@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandlers.EndGameLiveModeTest do
+defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinitionTest do
   use ExUnit.Case
   import Mox
 

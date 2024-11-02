@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandlers.UpdateTeamStatTest do
+defmodule GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinitionTest do
   use ExUnit.Case
   alias GoChampsScoreboard.EventHandlers.UpdateTeamStat
   alias GoChampsScoreboard.Games.Models.GameState

@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandlers.AddPlayerToTeamTest do
+defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
   use ExUnit.Case
 
   alias GoChampsScoreboard.EventHandlers.AddPlayerToTeam

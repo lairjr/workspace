@@ -1,4 +1,6 @@
-defmodule GoChampsScoreboard.EventHandlers.AddPlayerToTeam do
+defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinition do
+  @behaviour GoChampsScoreboard.Events.Definitions.Definition
+
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Players
   alias GoChampsScoreboard.Games.Teams

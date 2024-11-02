@@ -1,4 +1,6 @@
-defmodule GoChampsScoreboard.EventHandlers.UpdateClockState do
+defmodule GoChampsScoreboard.Events.Definitions.UpdateClockStateDefinition do
+  @behaviour GoChampsScoreboard.Events.Definitions.Definition
+
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Games
 

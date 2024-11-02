@@ -1,4 +1,4 @@
-defmodule GoChampsScoreboard.EventHandlers.UpdateClockStateTest do
+defmodule GoChampsScoreboard.Events.Definitions.UpdateClockStateDefinitionTest do
   use ExUnit.Case
 
   alias GoChampsScoreboard.Games.Models.GameState

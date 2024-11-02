@@ -1,4 +1,6 @@
-defmodule GoChampsScoreboard.EventHandlers.EndGameLiveMode do
+defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition do
+  @behaviour GoChampsScoreboard.Events.Definitions.Definition
+
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor
   alias GoChampsScoreboard.Infrastructure.GameTickerSupervisor
