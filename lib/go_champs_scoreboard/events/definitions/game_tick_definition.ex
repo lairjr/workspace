@@ -5,6 +5,7 @@ defmodule GoChampsScoreboard.Events.Definitions.GameTickDefinition do
   alias GoChampsScoreboard.Games.Games
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Sports.Sports
+  alias GoChampsScoreboard.Events.Models.StreamConfig
 
   @key "game-tick"
 
@@ -26,4 +27,8 @@ defmodule GoChampsScoreboard.Events.Definitions.GameTickDefinition do
     game_state
     |> Games.update_clock_state(new_clock_state)
   end
+
+  @impl true
+  @spec stream_config() :: StreamConfig.t()
+  def stream_config, do: StreamConfig.new()
 end
