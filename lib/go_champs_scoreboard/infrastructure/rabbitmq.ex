@@ -46,8 +46,6 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
       routing_key: routing_key
     )
 
-    IO.inspect(message)
-
     AMQP.Basic.publish(chan, @exchange, routing_key, message)
     {:reply, :ok, state}
   end

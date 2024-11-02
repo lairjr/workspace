@@ -9,7 +9,6 @@ defmodule GoChampsScoreboard.Infrastructure.Stream.Publisher do
       |> add_metadata()
       |> Poison.encode!()
 
-
     message_broker.publish(%{message: message, routing_key: payload.routing_key})
   end
 
@@ -17,7 +16,7 @@ defmodule GoChampsScoreboard.Infrastructure.Stream.Publisher do
     %{
       metadata: %{
         sender: "go-champs-scoreboard",
-        timestamp: DateTime.utc_now()
+        sent_at: DateTime.utc_now()
       },
       body: body
     }
