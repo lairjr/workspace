@@ -1,9 +1,21 @@
 defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
   use ExUnit.Case
 
-  alias GoChampsScoreboard.EventHandlers.AddPlayerToTeam
+  alias GoChampsScoreboard.Events.Models.Event
+  alias GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinition
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.TeamState
+
+  describe "validate_and_create/0" do
+    test "returns :ok and event" do
+      assert {:ok, %Event{key: "add-player-to-team"}} =
+               AddPlayerToTeamDefinition.validate_and_create(%{
+                 "team_type" => "home",
+                 "name" => "Michael Jordan",
+                 "number" => 23
+               })
+    end
+  end
 
   describe "handle/2" do
     test "returns the game state with new player" do
@@ -23,7 +35,9 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
         "number" => 23
       }
 
-      game = AddPlayerToTeam.handle(game_state, add_player_to_team_payload)
+      {:ok, event} = AddPlayerToTeamDefinition.validate_and_create(add_player_to_team_payload)
+
+      game = AddPlayerToTeamDefinition.handle(game_state, event)
       [player] = game.home_team.players
 
       assert player.name == "Michael Jordan"

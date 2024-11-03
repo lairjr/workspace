@@ -1,20 +1,37 @@
 defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinition do
-  @behaviour GoChampsScoreboard.Events.Definitions.Definition
+  @behaviour GoChampsScoreboard.Events.Definitions.DefinitionBehavior
 
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Sports.Sports
   alias GoChampsScoreboard.Games.Games
+  alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Games.Teams
   alias GoChampsScoreboard.Games.Players
+  alias GoChampsScoreboard.Events.Models.StreamConfig
 
-  @spec handle(GameState.t(), any()) :: GameState.t()
+  @key "update-player-stat"
+
+  @impl true
+  @spec key() :: String.t()
+  def key, do: @key
+
+  @impl true
+  @spec validate_and_create(payload :: any()) :: {:ok, Event.t()}
+  def validate_and_create(payload) do
+    {:ok, Event.new(@key, payload)}
+  end
+
+  @impl true
+  @spec handle(GameState.t(), Event.t()) :: GameState.t()
   def handle(
         current_game,
-        %{
-          "operation" => op,
-          "stat-id" => stat_id,
-          "player-id" => player_id,
-          "team-type" => team_type
+        %Event{
+          payload: %{
+            "operation" => op,
+            "stat-id" => stat_id,
+            "player-id" => player_id,
+            "team-type" => team_type
+          }
         }
       ) do
     player_stat =
@@ -40,4 +57,8 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinition do
     current_game
     |> Games.update_team(team_type, updated_team)
   end
+
+  @impl true
+  @spec stream_config() :: StreamConfig.t()
+  def stream_config, do: StreamConfig.new(true, :generic_game_event_player_stat_builder)
 end
