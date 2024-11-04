@@ -14,11 +14,6 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
     {:ok, %{game_id: game_id}}
   end
 
-  def handle_info({:update_game, _game_state}, state) do
-    IO.inspect("nothing")
-    {:noreply, state}
-  end
-
   def handle_info({:game_reacted_to_event, %{event: event} = payload}, state) do
     stream_config = StreamConfigs.find_for_game_event(event.key)
 

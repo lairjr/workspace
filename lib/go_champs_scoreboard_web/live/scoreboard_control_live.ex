@@ -27,8 +27,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
      |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
   end
 
-  def handle_event("update-player-stat", value, socket) do
-    Games.handle_event(socket.assigns.game_state.result.id, "update-player-stat", value)
+  def handle_event("update-player-stat", params, socket) do
+    {:ok, event} = ValidatorCreator.validate_and_create("update-player-stat", params)
+    Games.react_to_event(event, socket.assigns.game_state.result.id)
     {:noreply, socket}
   end
 
@@ -45,12 +46,14 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("update-clock-state", params, socket) do
-    Games.handle_event(socket.assigns.game_state.result.id, "update-clock-state", params)
+    {:ok, event} = ValidatorCreator.validate_and_create("update-clock-state", params)
+    Games.react_to_event(event, socket.assigns.game_state.result.id)
     {:noreply, socket}
   end
 
   def handle_event("add-player-to-team", params, socket) do
-    Games.handle_event(socket.assigns.game_state.result.id, "add-player-to-team", params)
+    {:ok, event} = ValidatorCreator.validate_and_create("add-player-to-team", params)
+    Games.react_to_event(event, socket.assigns.game_state.result.id)
 
     updated_modals =
       socket.assigns.modals
@@ -94,7 +97,8 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("end-game-live-mode", _, socket) do
-    Games.handle_event(socket.assigns.game_state.result.id, "end-game-live-mode")
+    {:ok, event} = ValidatorCreator.validate_and_create("end-game-live-mode")
+    Games.react_to_event(event, socket.assigns.game_state.result.id)
     {:noreply, socket}
   end
 
@@ -104,17 +108,12 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
     {:noreply, socket}
   end
 
-  @spec handle_info({:update_game, any()}, any()) :: {:noreply, any()}
-  def handle_info({:update_game, game}, socket) do
+  @spec handle_info({:game_reacted_to_event, any()}, any()) :: {:noreply, any()}
+  def handle_info({:game_reacted_to_event, %{game_state: game_state}}, socket) do
     updated_socket =
       socket
-      |> assign(:game_state, %{socket.assigns.game_state | result: game})
+      |> assign(:game_state, %{socket.assigns.game_state | result: game_state})
 
     {:noreply, updated_socket}
-  end
-
-  @spec handle_info({:game_reacted_to_event, any()}, any()) :: {:noreply, any()}
-  def handle_info({:game_reacted_to_event, _event}, socket) do
-    {:noreply, socket}
   end
 end

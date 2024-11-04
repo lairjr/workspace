@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboard.Games.Games do
+  alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Events.Handler
   alias GoChampsScoreboard.Games.Models.GameClockState
   alias GoChampsScoreboard.Games.Models.TeamState
@@ -21,22 +22,6 @@ defmodule GoChampsScoreboard.Games.Games do
     end
   end
 
-  @spec handle_event(String.t(), String.t(), any()) :: GameState.t()
-  def handle_event(game_id, event, event_payload \\ %{}) do
-    # case get_game(game_id) do
-    #   {:ok, nil} ->
-    #     raise RuntimeError, message: "Game not found"
-
-    #   {:ok, current_game_state} ->
-    #     # new_game_state = EventHandlers.handle(event, current_game_state, event_payload)
-    #     update_game(new_game_state)
-
-    #     PubSub.broadcast_game_update(game_id, new_game_state)
-
-    #     new_game_state
-    # end
-  end
-
   @spec react_to_event(Event.t(), GameState.t()) :: GameState.t()
   def react_to_event(event, game_id) do
     case get_game(game_id) do
@@ -47,6 +32,7 @@ defmodule GoChampsScoreboard.Games.Games do
         new_game_state = Handler.handle(current_game_state, event)
         update_game(new_game_state)
 
+        IO.inspect(event)
         PubSub.broadcast_game_reacted_to_event(event, new_game_state)
 
         new_game_state
