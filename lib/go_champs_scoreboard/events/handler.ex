@@ -1,16 +1,16 @@
 defmodule GoChampsScoreboard.Events.Handler do
-  alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
+  alias GoChampsScoreboard.Events.Definitions.Registry
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Games.Models.GameState
 
-  alias GoChampsScoreboard.Events.Definitions.GameTickDefinition
-
   @spec handle(GameState.t(), Event.t()) :: GameState.t()
-  def handle(game_state, %Event{key: key} = _event) do
-    case key do
-      "game-tick" -> GameTickDefinition.handle(game_state)
-      "start-game-live-mode" -> StartGameLiveModeDefinition.handle(game_state)
-      _ -> game_state
+  def handle(game_state, %Event{key: key} = event) do
+    case Registry.get_definition(key) do
+      {:ok, definition} ->
+        definition.handle(game_state, event)
+
+      {:error, :not_registered} ->
+        game_state
     end
   end
 end

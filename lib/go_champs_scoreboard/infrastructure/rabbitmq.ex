@@ -31,8 +31,8 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
     end
   end
 
-  def publish(message) do
-    GenServer.call(__MODULE__, {:publish, message})
+  def publish(payload) do
+    GenServer.call(__MODULE__, {:publish, payload})
   end
 
   def handle_call(

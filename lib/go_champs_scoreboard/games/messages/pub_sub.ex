@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboard.Games.Messages.PubSub do
   alias GoChampsScoreboard.Games.Models.GameState
+  alias GoChampsScoreboard.Events.Models.Event
 
   @spec subscribe(String.t()) :: :ok | {:error, {:already_registered, pid()}}
   def subscribe(game_id, pub_sub \\ GoChampsScoreboard.PubSub) do
@@ -11,16 +12,7 @@ defmodule GoChampsScoreboard.Games.Messages.PubSub do
     "game-" <> game_id
   end
 
-  @spec broadcast_game_update(String.t(), GameState.t()) :: :ok
-  def broadcast_game_update(game_id, game_state, pub_sub \\ GoChampsScoreboard.PubSub) do
-    Phoenix.PubSub.broadcast(
-      pub_sub,
-      topic(game_id),
-      {:update_game, game_state}
-    )
-  end
-
-  @spec broadcast_game_update(String.t(), GameState.t()) :: :ok
+  @spec broadcast_game_reacted_to_event(Event.t(), GameState.t()) :: :ok
   def broadcast_game_reacted_to_event(event, game_state, pub_sub \\ GoChampsScoreboard.PubSub) do
     Phoenix.PubSub.broadcast(
       pub_sub,
