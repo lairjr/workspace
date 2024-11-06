@@ -3,8 +3,6 @@ defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition do
 
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Games.Models.GameState
-  alias GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor
-  alias GoChampsScoreboard.Infrastructure.GameTickerSupervisor
   alias GoChampsScoreboard.Events.Models.StreamConfig
 
   @key "end-game-live-mode"
@@ -24,20 +22,19 @@ defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition do
           GameState.t(),
           Event.t()
         ) :: GameState.t()
+  @spec handle(%{:live_state => any(), optional(any()) => any()}) :: %{
+          :live_state => %{state: :ended},
+          optional(any()) => any()
+        }
   def handle(
         game_state,
-        _event \\ nil,
-        game_events_listener_supervisor \\ GameEventsListenerSupervisor,
-        game_ticker_supervisor \\ GameTickerSupervisor
+        _event \\ nil
       ) do
-    game_events_listener_supervisor.stop_game_events_listener(game_state.id)
-    game_ticker_supervisor.stop_game_ticker(game_state.id)
-
     %{game_state | live_state: %{state: :ended}}
   end
 
   @impl true
   @spec stream_config() :: StreamConfig.t()
   def stream_config,
-    do: StreamConfig.new()
+    do: StreamConfig.new(true, :generic_game_event_live_mode_builder)
 end
