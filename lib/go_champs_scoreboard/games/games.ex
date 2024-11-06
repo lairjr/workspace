@@ -9,6 +9,7 @@ defmodule GoChampsScoreboard.Games.Games do
 
   @spec find_or_bootstrap(String.t()) :: GameState.t()
   def find_or_bootstrap(game_id) do
+    EventLister.start_game_events_listener(game_id)
     case get_game(game_id) do
       {:ok, nil} ->
         game_state =
@@ -20,6 +21,28 @@ defmodule GoChampsScoreboard.Games.Games do
       {:ok, game} ->
         game
     end
+  end
+
+  def start_up do
+    StartEventLister.start()
+  end
+
+  def dispose do
+    StopEventLister.stop()
+  end
+
+  def react_to_event(%Event{key: "start-live-mode"} = event, game_state) do
+    start_up()
+
+    react_to_event(event, game_state)
+  end
+
+  def react_to_event(%Event{key: "end-live-mode"} = event, game_state) do
+    reacted_game_state = react_to_event(event, game_state)
+
+    dispose()
+
+    reacted_game_state
   end
 
   @spec react_to_event(Event.t(), GameState.t()) :: GameState.t()
