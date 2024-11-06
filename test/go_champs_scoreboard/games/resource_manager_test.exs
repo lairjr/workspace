@@ -14,7 +14,7 @@ defmodule GoChampsScoreboard.Games.ResourceManagerTest do
 
       expect(GameTickerSupervisorMock, :start_game_ticker, fn _game_id -> :ok end)
 
-      {:ok, _} =
+      :ok =
         ResourceManager.start_up(
           game_id,
           GameEventsListenerSupervisorMock,

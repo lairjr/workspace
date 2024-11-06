@@ -24,8 +24,7 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor do
       shutdown: @two_days_in_milliseconds
     }
 
-    result = DynamicSupervisor.start_child(__MODULE__, child_spec)
-    IO.inspect(result)
+    DynamicSupervisor.start_child(__MODULE__, child_spec)
   end
 
   @impl true

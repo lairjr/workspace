@@ -22,10 +22,6 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
       |> Publisher.publish()
     end
 
-    if stream_config.disposable do
-      Process.exit(self(), :normal)
-    end
-
     {:noreply, state}
   end
 

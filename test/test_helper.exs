@@ -9,3 +9,7 @@ Mox.defmock(GoChampsScoreboard.Infrastructure.GameTickerSupervisorMock,
 Mox.defmock(GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisorMock,
   for: GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisorBehavior
 )
+
+Mox.defmock(GoChampsScoreboard.Games.ResourceManagerMock,
+  for: GoChampsScoreboard.Games.ResourceManagerBehavior
+)
