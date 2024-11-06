@@ -38,5 +38,6 @@ defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition do
 
   @impl true
   @spec stream_config() :: StreamConfig.t()
-  def stream_config, do: StreamConfig.new(true, :generic_game_event_live_mode_builder, disposable: true)
+  def stream_config,
+    do: StreamConfig.new()
 end
