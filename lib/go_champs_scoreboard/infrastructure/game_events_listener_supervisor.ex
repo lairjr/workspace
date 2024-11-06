@@ -31,6 +31,7 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor do
   def stop_game_events_listener(game_id) do
     case Registry.lookup(GoChampsScoreboard.Infrastructure.GameEventsListenerRegistry, game_id) do
       [{pid, _}] ->
+        :ok = GenServer.call(pid, :process_pending_messages)
         DynamicSupervisor.terminate_child(__MODULE__, pid)
 
       [] ->
