@@ -22,10 +22,6 @@ defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition do
           GameState.t(),
           Event.t()
         ) :: GameState.t()
-  @spec handle(%{:live_state => any(), optional(any()) => any()}) :: %{
-          :live_state => %{state: :ended},
-          optional(any()) => any()
-        }
   def handle(
         game_state,
         _event \\ nil
