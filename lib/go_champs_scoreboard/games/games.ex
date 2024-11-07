@@ -1,11 +1,14 @@
 defmodule GoChampsScoreboard.Games.Games do
+  alias GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition
+  alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Events.Handler
-  alias GoChampsScoreboard.Games.Models.GameClockState
+  alias GoChampsScoreboard.Games.Bootstrapper
+  alias GoChampsScoreboard.Games.ResourceManager
   alias GoChampsScoreboard.Games.Models.TeamState
   alias GoChampsScoreboard.Games.Messages.PubSub
   alias GoChampsScoreboard.Games.Models.GameState
-  alias GoChampsScoreboard.Games.Bootstrapper
+  alias GoChampsScoreboard.Games.Models.GameClockState
 
   @spec find_or_bootstrap(String.t()) :: GameState.t()
   def find_or_bootstrap(game_id) do
@@ -22,7 +25,38 @@ defmodule GoChampsScoreboard.Games.Games do
     end
   end
 
+  @spec start_live_mode(String.t(), module()) :: GameState.t()
+  def start_live_mode(game_id, resource_manager \\ ResourceManager) do
+    case get_game(game_id) do
+      {:ok, nil} ->
+        raise RuntimeError, message: "Game not found"
+
+      {:ok, _current_game_state} ->
+        resource_manager.start_up(game_id)
+
+        {:ok, start_event} = StartGameLiveModeDefinition.validate_and_create()
+        react_to_event(start_event, game_id)
+    end
+  end
+
+  @spec end_live_mode(String.t(), module()) :: GameState.t()
+  def end_live_mode(game_id, resource_manager \\ ResourceManager) do
+    case get_game(game_id) do
+      {:ok, nil} ->
+        raise RuntimeError, message: "Game not found"
+
+      {:ok, _current_game_state} ->
+        {:ok, end_event} = EndGameLiveModeDefinition.validate_and_create()
+        reacted_game = react_to_event(end_event, game_id)
+
+        resource_manager.shut_down(game_id)
+
+        reacted_game
+    end
+  end
+
   @spec react_to_event(Event.t(), GameState.t()) :: GameState.t()
+
   def react_to_event(event, game_id) do
     case get_game(game_id) do
       {:ok, nil} ->
@@ -32,7 +66,6 @@ defmodule GoChampsScoreboard.Games.Games do
         new_game_state = Handler.handle(current_game_state, event)
         update_game(new_game_state)
 
-        IO.inspect(event)
         PubSub.broadcast_game_reacted_to_event(event, new_game_state)
 
         new_game_state

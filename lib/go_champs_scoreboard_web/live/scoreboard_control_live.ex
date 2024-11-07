@@ -97,14 +97,14 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("end-game-live-mode", _, socket) do
-    {:ok, event} = ValidatorCreator.validate_and_create("end-game-live-mode")
-    Games.react_to_event(event, socket.assigns.game_state.result.id)
+    Games.end_live_mode(socket.assigns.game_state.result.id)
+
     {:noreply, socket}
   end
 
   def handle_event("start-game-live-mode", _, socket) do
-    {:ok, event} = ValidatorCreator.validate_and_create("start-game-live-mode")
-    Games.react_to_event(event, socket.assigns.game_state.result.id)
+    Games.start_live_mode(socket.assigns.game_state.result.id)
+
     {:noreply, socket}
   end
 

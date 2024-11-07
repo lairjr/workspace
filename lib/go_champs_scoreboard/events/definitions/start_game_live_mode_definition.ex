@@ -4,8 +4,6 @@ defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition do
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Events.Models.StreamConfig
-  alias GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor
-  alias GoChampsScoreboard.Infrastructure.GameTickerSupervisor
 
   @key "start-game-live-mode"
 
@@ -21,13 +19,8 @@ defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition do
   @spec handle(game_state :: GameState.t(), event :: Event.t()) :: GameState.t()
   def handle(
         game_state,
-        _event \\ nil,
-        game_events_listener_supervisor \\ GameEventsListenerSupervisor,
-        game_ticker_supervisor \\ GameTickerSupervisor
+        _event \\ nil
       ) do
-    game_events_listener_supervisor.start_game_events_listener(game_state.id)
-    game_ticker_supervisor.start_game_ticker(game_state.id)
-
     %{game_state | live_state: %{state: :running}}
   end
 

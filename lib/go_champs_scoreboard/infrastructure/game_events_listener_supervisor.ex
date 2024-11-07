@@ -24,14 +24,14 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor do
       shutdown: @two_days_in_milliseconds
     }
 
-    result = DynamicSupervisor.start_child(__MODULE__, child_spec)
-    IO.inspect(result)
+    DynamicSupervisor.start_child(__MODULE__, child_spec)
   end
 
   @impl true
   def stop_game_events_listener(game_id) do
     case Registry.lookup(GoChampsScoreboard.Infrastructure.GameEventsListenerRegistry, game_id) do
       [{pid, _}] ->
+        :ok = GenServer.call(pid, :process_pending_messages)
         DynamicSupervisor.terminate_child(__MODULE__, pid)
 
       [] ->

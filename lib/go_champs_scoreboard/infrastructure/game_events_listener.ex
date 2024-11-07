@@ -25,6 +25,16 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
     {:noreply, state}
   end
 
+  def handle_call(:process_pending_messages, _from, state) do
+    {:messages, pending_messages} = Process.info(self(), :messages)
+
+    Enum.each(pending_messages, fn message ->
+      handle_info(message, state)
+    end)
+
+    {:reply, :ok, state}
+  end
+
   defp via_tuple(game_id) do
     {:via, Registry, {GoChampsScoreboard.Infrastructure.GameEventsListenerRegistry, game_id}}
   end
