@@ -52,7 +52,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     test "starts up ResourceManager and returns a handled StartGameLiveMode game state" do
       set_test_game()
 
-      {:ok, event} = StartGameLiveModeDefinition.validate_and_create(%{})
+      event = StartGameLiveModeDefinition.create("some-game-id", %{})
       handled_game = get_test_game() |> StartGameLiveModeDefinition.handle(event)
 
       expect(@resource_manager, :start_up, fn _game_id ->
@@ -71,7 +71,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     test "shuts down ResourceManager and returns a handled EndGameLiveMode game state" do
       set_test_game()
 
-      {:ok, event} = EndGameLiveModeDefinition.validate_and_create(%{})
+      event = EndGameLiveModeDefinition.create("some-game-id", %{})
       handled_game = get_test_game() |> EndGameLiveModeDefinition.handle(event)
 
       expect(@resource_manager, :shut_down, fn _game_id ->
@@ -90,7 +90,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     test "when UpdateClockState event is given, returns a game handled by the event" do
       set_test_game()
 
-      {:ok, event} = UpdateClockStateDefinition.validate_and_create(%{"state" => "running"})
+      event = UpdateClockStateDefinition.create("some-game-id", %{"state" => "running"})
       handled_game = get_test_game() |> UpdateClockStateDefinition.handle(event)
 
       result_game_state = Games.react_to_event(event, "some-game-id")

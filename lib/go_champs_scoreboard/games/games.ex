@@ -1,6 +1,5 @@
 defmodule GoChampsScoreboard.Games.Games do
-  alias GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition
-  alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
+  alias GoChampsScoreboard.Events.ValidatorCreator
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Events.Handler
   alias GoChampsScoreboard.Games.Bootstrapper
@@ -34,7 +33,7 @@ defmodule GoChampsScoreboard.Games.Games do
       {:ok, _current_game_state} ->
         resource_manager.start_up(game_id)
 
-        {:ok, start_event} = StartGameLiveModeDefinition.validate_and_create()
+        {:ok, start_event} = ValidatorCreator.validate_and_create("start-game-live-mode", game_id)
         react_to_event(start_event, game_id)
     end
   end
@@ -46,7 +45,7 @@ defmodule GoChampsScoreboard.Games.Games do
         raise RuntimeError, message: "Game not found"
 
       {:ok, _current_game_state} ->
-        {:ok, end_event} = EndGameLiveModeDefinition.validate_and_create()
+        {:ok, end_event} = ValidatorCreator.validate_and_create("end-game-live-mode", game_id)
         reacted_game = react_to_event(end_event, game_id)
 
         resource_manager.shut_down(game_id)
@@ -92,7 +91,7 @@ defmodule GoChampsScoreboard.Games.Games do
   end
 
   @spec get_game(String.t()) :: {:ok, GameState.t()} | {:ok, nil} | {:error, any()}
-  defp get_game(game_id) do
+  def get_game(game_id) do
     case Redix.command(:games_cache, ["GET", game_id]) do
       {:ok, nil} ->
         {:ok, nil}

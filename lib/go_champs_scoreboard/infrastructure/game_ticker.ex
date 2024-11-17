@@ -19,7 +19,8 @@ defmodule GoChampsScoreboard.Infrastructure.GameTicker do
   def handle_info(:tick, state) do
     new_time = Time.add(state.time, 1)
 
-    {:ok, event} = ValidatorCreator.validate_and_create("game-tick")
+    {:ok, event} =
+      ValidatorCreator.validate_and_create("game-tick", state.game_id, %{time: new_time})
 
     event
     |> Games.react_to_event(state.game_id)
