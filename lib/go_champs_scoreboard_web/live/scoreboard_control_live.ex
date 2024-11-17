@@ -28,8 +28,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("update-player-stat", params, socket) do
-    {:ok, event} = ValidatorCreator.validate_and_create("update-player-stat", params)
-    Games.react_to_event(event, socket.assigns.game_state.result.id)
+    game_id = socket.assigns.game_state.result.id
+    {:ok, event} = ValidatorCreator.validate_and_create("update-player-stat", game_id, params)
+    Games.react_to_event(event, game_id)
     {:noreply, socket}
   end
 
@@ -46,14 +47,16 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   end
 
   def handle_event("update-clock-state", params, socket) do
-    {:ok, event} = ValidatorCreator.validate_and_create("update-clock-state", params)
-    Games.react_to_event(event, socket.assigns.game_state.result.id)
+    game_id = socket.assigns.game_state.result.id
+    {:ok, event} = ValidatorCreator.validate_and_create("update-clock-state", game_id, params)
+    Games.react_to_event(event, game_id)
     {:noreply, socket}
   end
 
   def handle_event("add-player-to-team", params, socket) do
-    {:ok, event} = ValidatorCreator.validate_and_create("add-player-to-team", params)
-    Games.react_to_event(event, socket.assigns.game_state.result.id)
+    game_id = socket.assigns.game_state.result.id
+    {:ok, event} = ValidatorCreator.validate_and_create("add-player-to-team", game_id, params)
+    Games.react_to_event(event, game_id)
 
     updated_modals =
       socket.assigns.modals

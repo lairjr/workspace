@@ -6,10 +6,19 @@ defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinitionTest 
   alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
   alias GoChampsScoreboard.Events.Models.Event
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "start-game-live-mode"}} =
-               StartGameLiveModeDefinition.validate_and_create()
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               StartGameLiveModeDefinition.validate(game_state, %{})
+    end
+  end
+
+  describe "create/2" do
+    test "returns event" do
+      assert %Event{key: "start-game-live-mode", game_id: "some-game-id"} =
+               StartGameLiveModeDefinition.create("some-game-id", %{})
     end
   end
 

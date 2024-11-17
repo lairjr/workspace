@@ -5,10 +5,19 @@ defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinitionTest do
   alias GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition
   alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState}
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "end-game-live-mode"}} =
-               EndGameLiveModeDefinition.validate_and_create()
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               EndGameLiveModeDefinition.validate(game_state, %{})
+    end
+  end
+
+  describe "create/2" do
+    test "returns event" do
+      assert %Event{key: "end-game-live-mode", game_id: "some-game-id"} =
+               EndGameLiveModeDefinition.create("some-game-id", %{})
     end
   end
 

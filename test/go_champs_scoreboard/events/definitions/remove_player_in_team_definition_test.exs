@@ -1,13 +1,26 @@
 defmodule GoChampsScoreboard.Events.Definitions.RemovePlayerInTeamDefinitionTest do
   use ExUnit.Case
 
+  alias GoChampsScoreboard.Games.Models.{GameState, TeamState, PlayerState}
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Events.Definitions.RemovePlayerInTeamDefinition
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "remove-player-in-team"}} =
-               RemovePlayerInTeamDefinition.validate_and_create(%{
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               RemovePlayerInTeamDefinition.validate(game_state, %{
+                 "team-type" => "home",
+                 "player-id" => "some-id"
+               })
+    end
+  end
+
+  describe "create/2" do
+    test "returns event" do
+      assert %Event{key: "remove-player-in-team", game_id: "some-game-id"} =
+               RemovePlayerInTeamDefinition.create("some-game-id", %{
                  "team-type" => "home",
                  "player-id" => "some-id"
                })
@@ -16,14 +29,14 @@ defmodule GoChampsScoreboard.Events.Definitions.RemovePlayerInTeamDefinitionTest
 
   describe "handle/2" do
     test "returns game state with player removed" do
-      game_state = %GoChampsScoreboard.Games.Models.GameState{
+      game_state = %GameState{
         id: "1",
-        away_team: %GoChampsScoreboard.Games.Models.TeamState{
+        away_team: %TeamState{
           players: []
         },
-        home_team: %GoChampsScoreboard.Games.Models.TeamState{
+        home_team: %TeamState{
           players: [
-            %GoChampsScoreboard.Games.Models.PlayerState{
+            %PlayerState{
               id: "some-id",
               name: "Kobe Bryant",
               number: 24
@@ -37,8 +50,8 @@ defmodule GoChampsScoreboard.Events.Definitions.RemovePlayerInTeamDefinitionTest
         "player-id" => "some-id"
       }
 
-      {:ok, event} =
-        RemovePlayerInTeamDefinition.validate_and_create(remove_player_in_team_payload)
+      event =
+        RemovePlayerInTeamDefinition.create(game_state.id, remove_player_in_team_payload)
 
       game = RemovePlayerInTeamDefinition.handle(game_state, event)
       players = game.home_team.players
