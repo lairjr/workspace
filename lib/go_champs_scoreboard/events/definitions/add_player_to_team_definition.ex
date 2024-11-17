@@ -14,10 +14,13 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinition do
   def key, do: @key
 
   @impl true
-  @spec validate_and_create(payload :: any()) :: {:ok, Event.t()}
-  def validate_and_create(payload) do
-    {:ok, Event.new(@key, payload)}
-  end
+  @spec validate(game_state :: GameState.t(), payload :: any()) ::
+          {:ok} | {:error, any()}
+  def validate(_game_state, _paylod), do: {:ok}
+
+  @impl true
+  @spec create(game_id :: String.t(), payload :: any()) :: Event.t()
+  def create(game_id, payload), do: Event.new(@key, game_id, payload)
 
   @impl true
   @spec handle(GameState.t(), Event.t()) :: GameState.t()

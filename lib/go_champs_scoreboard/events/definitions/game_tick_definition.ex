@@ -14,8 +14,13 @@ defmodule GoChampsScoreboard.Events.Definitions.GameTickDefinition do
   def key, do: @key
 
   @impl true
-  @spec validate_and_create(payload :: any()) :: {:ok, Event.t()}
-  def validate_and_create(_payload \\ nil), do: {:ok, Event.new(@key)}
+  @spec validate(game_state :: GameState.t(), payload :: any()) ::
+          {:ok} | {:error, any()}
+  def validate(_game_state, _paylod), do: {:ok}
+
+  @impl true
+  @spec create(game_id :: String.t(), payload :: any()) :: Event.t()
+  def create(game_id, _payload), do: Event.new(@key, game_id)
 
   @impl true
   @spec handle(game_state :: GameState.t(), event :: Event.t()) :: GameState.t()

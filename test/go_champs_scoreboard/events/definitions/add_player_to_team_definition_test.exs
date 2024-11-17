@@ -6,10 +6,23 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.TeamState
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "add-player-to-team"}} =
-               AddPlayerToTeamDefinition.validate_and_create(%{
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               AddPlayerToTeamDefinition.validate(game_state, %{
+                 "team_type" => "home",
+                 "name" => "Michael Jordan",
+                 "number" => 23
+               })
+    end
+  end
+
+  describe "create/2" do
+    test "returns event" do
+      assert %Event{key: "add-player-to-team", game_id: "some-game-id"} =
+               AddPlayerToTeamDefinition.create("some-game-id", %{
                  "team_type" => "home",
                  "name" => "Michael Jordan",
                  "number" => 23
@@ -35,7 +48,7 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
         "number" => 23
       }
 
-      {:ok, event} = AddPlayerToTeamDefinition.validate_and_create(add_player_to_team_payload)
+      event = AddPlayerToTeamDefinition.create(game_state.id, add_player_to_team_payload)
 
       game = AddPlayerToTeamDefinition.handle(game_state, event)
       [player] = game.home_team.players

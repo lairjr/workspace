@@ -5,10 +5,19 @@ defmodule GoChampsScoreboard.Events.Definitions.GameTickDefinitionTest do
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.GameClockState
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "game-tick"}} =
-               GameTickDefinition.validate_and_create()
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               GameTickDefinition.validate(game_state, %{})
+    end
+  end
+
+  describe "create/2" do
+    test "returns an event" do
+      assert %Event{key: "game-tick", game_id: "some-game-id"} =
+               GameTickDefinition.create("some-game-id", %{})
     end
   end
 

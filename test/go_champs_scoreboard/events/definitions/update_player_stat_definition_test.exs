@@ -4,10 +4,24 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Games.Models.GameState
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "update-player-stat"}} =
-               UpdatePlayerStatDefinition.validate_and_create(%{
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               UpdatePlayerStatDefinition.validate(game_state, %{
+                 "operation" => "increment",
+                 "team-type" => "home",
+                 "player-id" => "123",
+                 "stat-id" => "two-points-made"
+               })
+    end
+  end
+
+  describe "create/2" do
+    test "returns event" do
+      assert %Event{key: "update-player-stat", game_id: "some-game-id"} =
+               UpdatePlayerStatDefinition.create("some-game-id", %{
                  "operation" => "increment",
                  "team-type" => "home",
                  "player-id" => "123",
@@ -52,7 +66,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
         "stat-id" => "two-points-made"
       }
 
-      {:ok, event} = UpdatePlayerStatDefinition.validate_and_create(payload)
+      event = UpdatePlayerStatDefinition.create("some-game-id", payload)
 
       expected_state = %GameState{
         home_team: %{

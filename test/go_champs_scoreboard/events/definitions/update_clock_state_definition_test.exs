@@ -6,10 +6,19 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateClockStateDefinitionTest d
   alias GoChampsScoreboard.Games.Models.GameClockState
   alias GoChampsScoreboard.Events.Definitions.UpdateClockStateDefinition
 
-  describe "validate_and_create/0" do
-    test "returns :ok and event" do
-      assert {:ok, %Event{key: "update-clock-state"}} =
-               UpdateClockStateDefinition.validate_and_create(%{"state" => "stopped"})
+  describe "validate/2" do
+    test "returns :ok" do
+      game_state = %GameState{}
+
+      assert {:ok} =
+               UpdateClockStateDefinition.validate(game_state, %{"state" => "stopped"})
+    end
+  end
+
+  describe "create/2" do
+    test "returns event" do
+      assert %Event{key: "update-clock-state", game_id: "some-game-id"} =
+               UpdateClockStateDefinition.create("some-game-id", %{"state" => "stopped"})
     end
   end
 
@@ -25,7 +34,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateClockStateDefinitionTest d
         }
       }
 
-      {:ok, event} = UpdateClockStateDefinition.validate_and_create(%{"state" => "stopped"})
+      event = UpdateClockStateDefinition.create(game_state.id, %{"state" => "stopped"})
 
       new_game_state = UpdateClockStateDefinition.handle(game_state, event)
 
