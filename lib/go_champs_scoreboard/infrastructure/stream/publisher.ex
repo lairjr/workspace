@@ -15,6 +15,7 @@ defmodule GoChampsScoreboard.Infrastructure.Stream.Publisher do
   defp add_metadata(body) do
     %{
       metadata: %{
+        env: System.get_env("APP_ENV") || "development",
         sender: "go-champs-scoreboard",
         sent_at: DateTime.utc_now()
       },
