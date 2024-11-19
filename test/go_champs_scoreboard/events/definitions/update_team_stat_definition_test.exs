@@ -26,7 +26,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinitionTest do
                UpdateTeamStatDefinition.validate(game_state, %{
                  "operation" => "increment",
                  "team-type" => "home",
-                 "stat-id" => "technical-fouls"
+                 "stat-id" => "fouls_technical"
                })
     end
   end
@@ -37,7 +37,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinitionTest do
                UpdateTeamStatDefinition.create("some-game-id", %{
                  "operation" => "increment",
                  "team-type" => "home",
-                 "stat-id" => "technical-fouls"
+                 "stat-id" => "fouls_technical"
                })
     end
   end
@@ -53,8 +53,8 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinitionTest do
         ],
         total_player_stats: %{},
         stats_values: %{
-          "technical-fouls" => 1,
-          "total-technical-fouls" => 1
+          "fouls_technical" => 1,
+          "total_fouls_technical" => 1
         }
       },
       away_team: %{
@@ -71,7 +71,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinitionTest do
       payload = %{
         "operation" => "increment",
         "team-type" => "home",
-        "stat-id" => "technical-fouls"
+        "stat-id" => "fouls_technical"
       }
 
       event = UpdateTeamStatDefinition.create("game-id", payload)
@@ -86,8 +86,8 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinitionTest do
           ],
           total_player_stats: %{},
           stats_values: %{
-            "technical-fouls" => 2,
-            "total-technical-fouls" => 2
+            "fouls_technical" => 2,
+            "total_fouls_technical" => 2
           }
         },
         away_team: %{

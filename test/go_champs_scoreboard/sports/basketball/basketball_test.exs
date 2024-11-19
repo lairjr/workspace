@@ -5,20 +5,34 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
   describe "bootstrap" do
     test "returns a map with all player stats" do
       expected = %{
-        "one-points-made" => 0,
-        "two-points-made" => 0,
-        "three-points-made" => 0,
-        "def-rebounds" => 0,
-        "off-rebounds" => 0,
         "assists" => 0,
         "blocks" => 0,
-        "tournovers" => 0,
-        "personal-fouls" => 0,
-        "technical-fouls" => 0,
+        "disqualifications" => 0,
+        "ejections" => 0,
+        "efficiency" => 0,
+        "field_goal_percentage" => 0,
+        "field_goals_missed" => 0,
+        "field_goals_made" => 0,
+        "fouls" => 0,
+        "fouls_flagrant" => 0,
+        "fouls_personal" => 0,
+        "fouls_technical" => 0,
+        "free_throw_percentage" => 0,
+        "free_throws_missed" => 0,
+        "free_throws_made" => 0,
+        "game_played" => 0,
+        "game_started" => 0,
+        "minutes_played" => 0,
+        "plus_minus" => 0,
         "points" => 0,
         "rebounds" => 0,
+        "rebounds_defensive" => 0,
+        "rebounds_offensive" => 0,
         "steals" => 0,
-        "fouls" => 0
+        "three_point_field_goal_percentage" => 0,
+        "three_point_field_goals_missed" => 0,
+        "three_point_field_goals_made" => 0,
+        "turnovers" => 0
       }
 
       assert expected == Basketball.bootstrap()
@@ -45,6 +59,13 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
     test "returns all calculated player stats" do
       expected = [
         %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "fouls",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_fouls/1
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
           key: "points",
           type: :calculated,
           operations: [],
@@ -57,13 +78,6 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
           operations: [],
           calculation_function:
             &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_rebounds/1
-        },
-        %GoChampsScoreboard.Statistics.Models.Stat{
-          key: "fouls",
-          type: :calculated,
-          operations: [],
-          calculation_function:
-            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_fouls/1
         }
       ]
 
@@ -75,8 +89,8 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
     test "returns a map with all team stats" do
       expected = %{
         "timeouts" => 0,
-        "technical-fouls" => 0,
-        "total-technical-fouls" => 0
+        "fouls_technical" => 0,
+        "total_fouls_technical" => 0
       }
 
       assert expected == Basketball.bootstrap_team_stats()
@@ -87,7 +101,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
     test "returns all calculated team stats" do
       expected = [
         %GoChampsScoreboard.Statistics.Models.Stat{
-          key: "total-technical-fouls",
+          key: "total_fouls_technical",
           type: :calculated,
           operations: [],
           calculation_function:
@@ -102,11 +116,11 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
   describe "find_team_stat" do
     test "returns the team stat with the given key" do
       assert %GoChampsScoreboard.Statistics.Models.Stat{
-               key: "technical-fouls",
+               key: "fouls_technical",
                type: :manual,
                operations: [:increment, :decrement],
                calculation_function: nil
-             } == Basketball.find_player_stat("technical-fouls")
+             } == Basketball.find_player_stat("fouls_technical")
     end
 
     test "returns nil if the team stat with the given key is not found" do

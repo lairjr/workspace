@@ -3,26 +3,40 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
   alias GoChampsScoreboard.Statistics.Models.Stat
 
   @player_stats [
-    Stat.new("two-points-made", :manual, [:increment, :decrement]),
-    Stat.new("one-points-made", :manual, [:increment, :decrement]),
-    Stat.new("three-points-made", :manual, [:increment, :decrement]),
-    Stat.new("def-rebounds", :manual, [:increment, :decrement]),
-    Stat.new("off-rebounds", :manual, [:increment, :decrement]),
     Stat.new("assists", :manual, [:increment, :decrement]),
-    Stat.new("blocks", :manual, [:increment, :decrement]),
-    Stat.new("tournovers", :manual, [:increment, :decrement]),
-    Stat.new("steals", :manual, [:increment, :decrement]),
-    Stat.new("personal-fouls", :manual, [:increment, :decrement]),
-    Stat.new("technical-fouls", :manual, [:increment, :decrement]),
+    Stat.new("blocks", :manual, [:incremen, :decrement]),
+    Stat.new("disqualifications", :manual, [:increment, :decrement]),
+    Stat.new("ejections", :manual, [:increment, :decrement]),
+    Stat.new("efficiency", :manual, [:incremen, :decrement]),
+    Stat.new("field_goal_percentage", :manual, [:increment, :decrement]),
+    Stat.new("field_goals_missed", :manual, [:increment, :decrement]),
+    Stat.new("field_goals_made", :manual, [:incremen, :decrement]),
+    Stat.new("fouls", :calculated, [], &Statistics.calc_player_fouls/1),
+    Stat.new("fouls_flagrant", :manual, [:incremen, :decrement]),
+    Stat.new("fouls_personal", :manual, [:incremen, :decrement]),
+    Stat.new("fouls_technical", :manual, [:increment, :decrement]),
+    Stat.new("free_throw_percentage", :manual, [:increment, :decrement]),
+    Stat.new("free_throws_missed", :manual, [:increment, :decrement]),
+    Stat.new("free_throws_made", :manual, [:incremen, :decrement]),
+    Stat.new("game_played", :manual, [:increment, :decrement]),
+    Stat.new("game_started", :manual, [:incremen, :decrement]),
+    Stat.new("minutes_played", :manual, [:incremen, :decrement]),
+    Stat.new("plus_minus", :manual, [:incremen, :decrement]),
     Stat.new("points", :calculated, [], &Statistics.calc_player_points/1),
     Stat.new("rebounds", :calculated, [], &Statistics.calc_player_rebounds/1),
-    Stat.new("fouls", :calculated, [], &Statistics.calc_player_fouls/1)
+    Stat.new("rebounds_defensive", :manual, [:incremen, :decrement]),
+    Stat.new("rebounds_offensive", :manual, [:incremen, :decrement]),
+    Stat.new("steals", :manual, [:incremen, :decrement]),
+    Stat.new("three_point_field_goal_percentage", :manual, [:increment, :decrement]),
+    Stat.new("three_point_field_goals_missed", :manual, [:increment, :decrement]),
+    Stat.new("three_point_field_goals_made", :manual, [:incremen, :decrement]),
+    Stat.new("turnovers", :manual, [:increment, :decrement])
   ]
 
   @team_stats [
     Stat.new("timeouts", :manual, [:increment, :decrement]),
-    Stat.new("technical-fouls", :manual, [:increment, :decrement]),
-    Stat.new("total-technical-fouls", :calculated, [], &Statistics.calc_team_technical_fouls/1)
+    Stat.new("fouls_technical", :manual, [:increment, :decrement]),
+    Stat.new("total_fouls_technical", :calculated, [], &Statistics.calc_team_technical_fouls/1)
   ]
 
   @spec bootstrap() :: %{String.t() => number()}

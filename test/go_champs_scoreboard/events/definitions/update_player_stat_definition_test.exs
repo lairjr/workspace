@@ -13,7 +13,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
                  "operation" => "increment",
                  "team-type" => "home",
                  "player-id" => "123",
-                 "stat-id" => "two-points-made"
+                 "stat-id" => "field_goals_made"
                })
     end
   end
@@ -25,7 +25,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
                  "operation" => "increment",
                  "team-type" => "home",
                  "player-id" => "123",
-                 "stat-id" => "two-points-made"
+                 "stat-id" => "field_goals_made"
                })
     end
   end
@@ -37,14 +37,14 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
           %{
             id: "123",
             stats_values: %{
-              "two-points-made" => 1,
+              "field_goals_made" => 1,
               "points" => 2,
               "rebounds" => 0
             }
           }
         ],
         total_player_stats: %{
-          "two-points-made" => 1,
+          "field_goals_made" => 1,
           "points" => 2,
           "rebounds" => 0
         }
@@ -63,7 +63,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
         "operation" => "increment",
         "team-type" => "home",
         "player-id" => "123",
-        "stat-id" => "two-points-made"
+        "stat-id" => "field_goals_made"
       }
 
       event = UpdatePlayerStatDefinition.create("some-game-id", payload)
@@ -74,14 +74,14 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinitionTest d
             %{
               id: "123",
               stats_values: %{
-                "two-points-made" => 2,
+                "field_goals_made" => 2,
                 "points" => 4,
                 "rebounds" => 0
               }
             }
           ],
           total_player_stats: %{
-            "two-points-made" => 2,
+            "field_goals_made" => 2,
             "points" => 4,
             "rebounds" => 0
           }

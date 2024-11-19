@@ -3,12 +3,12 @@ defmodule GoChampsScoreboard.Sports.Basketball.StatisticsTest do
   alias GoChampsScoreboard.Sports.Basketball.Statistics
 
   describe "calc_player_points" do
-    test "returns the sum of (1 * one-points-made), (2 * two-points-made), and (3 * three-points-made)" do
+    test "returns the sum of (1 * one-points-made), (2 * field_goals_made), and (3 * three-points-made)" do
       player_state = %GoChampsScoreboard.Games.Models.PlayerState{
         stats_values: %{
-          "one-points-made" => 1,
-          "two-points-made" => 2,
-          "three-points-made" => 3
+          "free_throws_made" => 1,
+          "field_goals_made" => 2,
+          "three_point_field_goals_made" => 3
         }
       }
 
@@ -20,8 +20,8 @@ defmodule GoChampsScoreboard.Sports.Basketball.StatisticsTest do
     test "returns them sum of off-rebounds and def-rebounds" do
       player_state = %GoChampsScoreboard.Games.Models.PlayerState{
         stats_values: %{
-          "def-rebounds" => 2,
-          "off-rebounds" => 1
+          "rebounds_defensive" => 2,
+          "rebounds_offensive" => 1
         }
       }
 
@@ -33,8 +33,8 @@ defmodule GoChampsScoreboard.Sports.Basketball.StatisticsTest do
     test "returns them sum of personal-fouls and technical-fouls" do
       player_state = %GoChampsScoreboard.Games.Models.PlayerState{
         stats_values: %{
-          "personal-fouls" => 3,
-          "technical-fouls" => 1
+          "fouls_personal" => 3,
+          "fouls_technical" => 1
         }
       }
 
@@ -46,10 +46,10 @@ defmodule GoChampsScoreboard.Sports.Basketball.StatisticsTest do
     test "returns them sum of personal-fouls and technical-fouls" do
       team_state = %GoChampsScoreboard.Games.Models.TeamState{
         total_player_stats: %{
-          "technical-fouls" => 1
+          "fouls_technical" => 1
         },
         stats_values: %{
-          "technical-fouls" => 1
+          "fouls_technical" => 1
         }
       }
 

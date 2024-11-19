@@ -18,7 +18,7 @@ defmodule Components.BasketballControls.PlayerStats do
                     <button
                       class="button is-large is-info"
                       phx-click="update-player-stat"
-                      phx-value-stat-id="one-points-made"
+                      phx-value-stat-id="free_throws_made"
                       phx-value-operation="increment"
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
@@ -30,7 +30,7 @@ defmodule Components.BasketballControls.PlayerStats do
                     <button
                       class="button is-large is-info"
                       phx-click="update-player-stat"
-                      phx-value-stat-id="two-points-made"
+                      phx-value-stat-id="field_goals_made"
                       phx-value-operation="increment"
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
@@ -42,7 +42,7 @@ defmodule Components.BasketballControls.PlayerStats do
                     <button
                       class="button is-large is-info"
                       phx-click="update-player-stat"
-                      phx-value-stat-id="three-points-made"
+                      phx-value-stat-id="three_point_field_goals_made"
                       phx-value-operation="increment"
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
@@ -58,8 +58,8 @@ defmodule Components.BasketballControls.PlayerStats do
                       <button
                         class="button is-danger"
                         phx-click="update-player-stat"
-                        phx-value-stat-id="one-points-made"
-                        phx-value-operation="decrement"
+                        phx-value-stat-id="free_throws_missed"
+                        phx-value-operation="increment"
                         phx-value-player-id={@selected_player.player_id}
                         phx-value-team-type={@selected_player.team_type}
                       >
@@ -70,8 +70,8 @@ defmodule Components.BasketballControls.PlayerStats do
                       <button
                         class="button is-danger"
                         phx-click="update-player-stat"
-                        phx-value-stat-id="two-points-made"
-                        phx-value-operation="decrement"
+                        phx-value-stat-id="field_goals_missed"
+                        phx-value-operation="increment"
                         phx-value-player-id={@selected_player.player_id}
                         phx-value-team-type={@selected_player.team_type}
                       >
@@ -82,8 +82,8 @@ defmodule Components.BasketballControls.PlayerStats do
                       <button
                         class="button is-danger"
                         phx-click="update-player-stat"
-                        phx-value-stat-id="three-points-made"
-                        phx-value-operation="decrement"
+                        phx-value-stat-id="three_point_field_goals_missed"
+                        phx-value-operation="increment"
                         phx-value-player-id={@selected_player.player_id}
                         phx-value-team-type={@selected_player.team_type}
                       >
