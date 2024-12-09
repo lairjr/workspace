@@ -139,7 +139,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
            to: ~p"/error"
          )}
 
-      {:ok, game_state} ->
+      {:ok, _game_state} ->
         {:noreply, socket}
     end
   end

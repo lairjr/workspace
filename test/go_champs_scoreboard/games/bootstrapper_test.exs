@@ -27,10 +27,32 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       "data" => %{
         "id" => "game-id",
         "away_team" => %{
-          "name" => "Team A"
+          "name" => "Team A",
+          "players" => [
+            %{
+              "id" => "player-1",
+              "name" => "Player 1",
+              "number" => 1
+            },
+            %{
+              "id" => "player-2",
+              "name" => "Player 2"
+            }
+          ]
         },
         "home_team" => %{
-          "name" => "Team B"
+          "name" => "Team B",
+          "players" => [
+            %{
+              "id" => "player-3",
+              "name" => "Player 3",
+              "number" => 3
+            },
+            %{
+              "id" => "player-4",
+              "name" => "Player 4"
+            }
+          ]
         }
       }
     }
@@ -50,12 +72,25 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
           "token"
         )
 
+      [player_1, player_2] = game.away_team.players
       assert game.id == "game-id"
       assert game.away_team.name == "Team A"
-      assert Enum.count(game.away_team.players) == 2
+      assert player_1.id == "player-1"
+      assert player_1.name == "Player 1"
+      assert player_1.number == 1
+      assert player_2.id == "player-2"
+      assert player_2.name == "Player 2"
+      assert player_2.number == nil
       assert game.away_team.total_player_stats == %{}
+
+      [player_3, player_4] = game.home_team.players
       assert game.home_team.name == "Team B"
-      assert Enum.count(game.home_team.players) == 2
+      assert player_3.id == "player-3"
+      assert player_3.name == "Player 3"
+      assert player_3.number == 3
+      assert player_4.id == "player-4"
+      assert player_4.name == "Player 4"
+      assert player_4.number == nil
       assert game.home_team.total_player_stats == %{}
     end
   end
