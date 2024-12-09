@@ -21,8 +21,9 @@ defmodule GoChampsScoreboard.ApiClientTest do
         }
       }
 
-      expect(@http_client, :get, fn url ->
+      expect(@http_client, :get, fn url, headers ->
         assert url =~ "game-id"
+        assert headers == [{"Authorization", "Bearer token"}]
 
         {:ok, %HTTPoison.Response{body: response_body |> Poison.encode!(), status_code: 200}}
       end)
@@ -36,7 +37,7 @@ defmodule GoChampsScoreboard.ApiClientTest do
                 "home_team" => %{
                   "name" => "Home team"
                 }
-              }} = ApiClient.get_game("game-id", @test_config)
+              }} = ApiClient.get_game("game-id", "token", @test_config)
     end
   end
 end

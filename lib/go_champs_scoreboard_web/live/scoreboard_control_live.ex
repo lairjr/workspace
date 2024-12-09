@@ -6,7 +6,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   use GoChampsScoreboardWeb, :live_view
   require Logger
 
-  def mount(%{"game_id" => game_id}, _session, socket) do
+  def mount(%{"game_id" => game_id}, %{"api_token" => api_token} = _session, socket) do
     if connected?(socket) do
       PubSub.subscribe(game_id)
     end
@@ -24,7 +24,9 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
          "team_type" => ""
        })
      )
-     |> assign_async(:game_state, fn -> {:ok, %{game_state: Games.find_or_bootstrap(game_id)}} end)}
+     |> assign_async(:game_state, fn ->
+       {:ok, %{game_state: Games.find_or_bootstrap(game_id, api_token)}}
+     end)}
   end
 
   def handle_event("update-player-stat", params, socket) do

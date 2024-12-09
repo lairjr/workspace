@@ -12,12 +12,13 @@ defmodule GoChampsScoreboard.Games.Games do
   alias GoChampsScoreboard.Games.Models.GameClockState
 
   @spec find_or_bootstrap(String.t()) :: GameState.t()
-  def find_or_bootstrap(game_id) do
+  @spec find_or_bootstrap(String.t(), String.t()) :: GameState.t()
+  def find_or_bootstrap(game_id, go_champs_token \\ "") do
     case get_game(game_id) do
       {:ok, nil} ->
         game_state =
           Bootstrapper.bootstrap()
-          |> Bootstrapper.bootstrap_from_go_champs(game_id)
+          |> Bootstrapper.bootstrap_from_go_champs(game_id, go_champs_token)
 
         update_game(game_state)
 

@@ -36,8 +36,9 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
     }
 
     test "maps game id" do
-      expect(@http_client, :get, fn url ->
+      expect(@http_client, :get, fn url, headers ->
         assert url =~ "game-id"
+        assert headers == [{"Authorization", "Bearer token"}]
 
         {:ok, %HTTPoison.Response{body: @response_body |> Poison.encode!(), status_code: 200}}
       end)
@@ -45,7 +46,8 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       game =
         Bootstrapper.bootstrap_from_go_champs(
           GoChampsScoreboard.Games.Bootstrapper.bootstrap(),
-          "game-id"
+          "game-id",
+          "token"
         )
 
       assert game.id == "game-id"

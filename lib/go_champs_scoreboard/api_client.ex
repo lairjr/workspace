@@ -4,15 +4,17 @@ defmodule GoChampsScoreboard.ApiClient do
 
   @games_path "v1/games"
 
-  @callback get_game(String.t()) :: {:ok, any()} | {:error, any()}
-  def get_game(game_id, config \\ system_config()) do
-    url = Keyword.get(config, :url, "") <> @games_path <> "/" <> game_id
+  @callback get_game(String.t(), String.t()) :: {:ok, any()} | {:error, any()}
+  def get_game(game_id, token, config \\ system_config()) do
+    url = Keyword.get(config, :url, "") <> @games_path <> "/" <> game_id <> "/verify-access"
     http_client = Keyword.get(config, :http_client)
 
     Logger.info("[Get Game]: From Go Champs Api", url: url)
 
+    headers = [{"Authorization", "Bearer #{token}"}]
+
     url
-    |> http_client.get()
+    |> http_client.get(headers)
     |> log()
     |> handle_response()
   end

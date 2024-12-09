@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboardWeb.Router do
+  alias GoChampsScoreboardWeb.ScoreboardController
   alias GoChampsScoreboardWeb.ScoreboardControlLive
   use GoChampsScoreboardWeb, :router
 
@@ -29,6 +30,7 @@ defmodule GoChampsScoreboardWeb.Router do
   scope "/scoreboard" do
     pipe_through :browser
 
+    get "/load/:game_id", ScoreboardController, :load
     live "/control/:game_id", ScoreboardControlLive
   end
 

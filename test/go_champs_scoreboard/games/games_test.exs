@@ -33,7 +33,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     test "bootstraps game from go champs, store it and returns it" do
       set_go_champs_api_respose()
 
-      result_game_state = Games.find_or_bootstrap("some-game-id")
+      result_game_state = Games.find_or_bootstrap("some-game-id", "token")
 
       {:ok, stored_game} = Redix.command(:games_cache, ["GET", "some-game-id"])
 
@@ -154,8 +154,9 @@ defmodule GoChampsScoreboard.Games.GamesTest do
       }
     }
 
-    expect(@http_client, :get, fn url ->
+    expect(@http_client, :get, fn url, headers ->
       assert url =~ "some-game-id"
+      assert headers == [{"Authorization", "Bearer token"}]
 
       {:ok, %HTTPoison.Response{body: response_body |> Poison.encode!(), status_code: 200}}
     end)

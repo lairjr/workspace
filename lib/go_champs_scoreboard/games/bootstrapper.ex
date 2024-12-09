@@ -25,8 +25,8 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
     GameState.new(game_id, away_team, home_team, clock_state)
   end
 
-  def bootstrap_from_go_champs(game, game_id) do
-    {:ok, game_response} = ApiClient.get_game(game_id)
+  def bootstrap_from_go_champs(game, game_id, token) do
+    {:ok, game_response} = ApiClient.get_game(game_id, token)
 
     game
     |> map_game_response_to_game(game_response)
