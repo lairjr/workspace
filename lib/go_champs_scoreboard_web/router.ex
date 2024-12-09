@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboardWeb.Router do
+  alias GoChampsScoreboardWeb.ErrorController
   alias GoChampsScoreboardWeb.ScoreboardController
   alias GoChampsScoreboardWeb.ScoreboardControlLive
   use GoChampsScoreboardWeb, :router
@@ -26,6 +27,12 @@ defmodule GoChampsScoreboardWeb.Router do
   # scope "/api", GoChampsScoreboardWeb do
   #   pipe_through :api
   # end
+
+  scope "/error" do
+    pipe_through :browser
+
+    get "/", ErrorController, :show
+  end
 
   scope "/scoreboard" do
     pipe_through :browser

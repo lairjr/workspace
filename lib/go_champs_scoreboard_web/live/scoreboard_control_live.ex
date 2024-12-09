@@ -2,6 +2,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
   alias GoChampsScoreboard.Events.ValidatorCreator
   alias GoChampsScoreboard.Games.Games
   alias GoChampsScoreboard.Games.Messages.PubSub
+  alias GoChampsScoreboard.ApiClient
   alias GoChampsScoreboardWeb.Components.Modals
   use GoChampsScoreboardWeb, :live_view
   require Logger
@@ -13,6 +14,7 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
 
     {:ok,
      socket
+     |> assign(:api_token, api_token)
      |> assign(:selected_player, %{player_id: "", team_type: ""})
      |> assign(:selected_team, "")
      |> assign(:modals, Modals.bootstrap(["modal_team_box_score", "modal_add_new_player"]))
@@ -120,5 +122,25 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
       |> assign(:game_state, %{socket.assigns.game_state | result: game_state})
 
     {:noreply, updated_socket}
+  end
+
+  def handle_params(%{"game_id" => game_id}, _url, socket) do
+    api_token = socket.assigns.api_token
+
+    IO.inspect("Game ID: #{game_id}")
+    IO.inspect("API Token: #{api_token}")
+
+    case ApiClient.get_game(game_id, api_token) do
+      {:error, reason} ->
+        Logger.error("Failed to fetch game state: #{inspect(reason)}")
+
+        {:noreply,
+         push_navigate(socket,
+           to: ~p"/error"
+         )}
+
+      {:ok, game_state} ->
+        {:noreply, socket}
+    end
   end
 end
