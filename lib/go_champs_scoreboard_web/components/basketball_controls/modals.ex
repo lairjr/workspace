@@ -8,7 +8,7 @@ defmodule Components.BasketballControls.Modals do
     <GoChampsScoreboardWeb.CoreComponents.modal id={@id} state={@state}>
       <.form for={@form_add_new_player} class="form" phx-submit="add-player-to-team">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add player to <%= @selected_team %></p>
+          <p class="modal-card-title">Add player to {@selected_team}</p>
         </header>
         <section class="modal-card-body">
           <div class="field is-grouped">
@@ -50,7 +50,7 @@ defmodule Components.BasketballControls.Modals do
     ~H"""
     <GoChampsScoreboardWeb.CoreComponents.modal id={@id} state={@state} content_style="width: 900px">
       <header class="modal-card-head">
-        <p class="modal-card-title">Box score for <%= @selected_team %></p>
+        <p class="modal-card-title">Box score for {@selected_team}</p>
       </header>
       <section class="modal-card-body">
         <table class="table is-fullwidth">
@@ -75,19 +75,19 @@ defmodule Components.BasketballControls.Modals do
             <%= if @selected_team != "" do %>
               <%= for player <- Teams.list_players(@game_state, @selected_team) do %>
                 <tr>
-                  <td><%= player.number %></td>
-                  <td><%= player.name %></td>
-                  <td><%= Map.get(player.stats_values, "points", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "three-points-made", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "two-points-made", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "one-points-made", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "assists", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "def-rebounds", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "off-rebounds", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "rebounds", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "steals", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "blocks", 0) %></td>
-                  <td><%= Map.get(player.stats_values, "tournovers", 0) %></td>
+                  <td>{player.number}</td>
+                  <td>{player.name}</td>
+                  <td>{Map.get(player.stats_values, "points", 0)}</td>
+                  <td>{Map.get(player.stats_values, "three-points-made", 0)}</td>
+                  <td>{Map.get(player.stats_values, "two-points-made", 0)}</td>
+                  <td>{Map.get(player.stats_values, "one-points-made", 0)}</td>
+                  <td>{Map.get(player.stats_values, "assists", 0)}</td>
+                  <td>{Map.get(player.stats_values, "def-rebounds", 0)}</td>
+                  <td>{Map.get(player.stats_values, "off-rebounds", 0)}</td>
+                  <td>{Map.get(player.stats_values, "rebounds", 0)}</td>
+                  <td>{Map.get(player.stats_values, "steals", 0)}</td>
+                  <td>{Map.get(player.stats_values, "blocks", 0)}</td>
+                  <td>{Map.get(player.stats_values, "tournovers", 0)}</td>
                 </tr>
               <% end %>
             <% else %>

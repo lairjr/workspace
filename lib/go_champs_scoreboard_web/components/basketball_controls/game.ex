@@ -26,29 +26,29 @@ defmodule Components.BasketballControls.Game do
     <div class="columns is-multiline">
       <div class="column is-12 has-text-centered">
         <button class="button">
-          <%= "<" %>
+          {"<"}
         </button>
 
         <button class="button">
-          <%= @game_state.clock_state.period %>
+          {@game_state.clock_state.period}
         </button>
 
         <button class="button">
-          <%= ">" %>
+          {">"}
         </button>
       </div>
 
       <div class="column is-12 has-text-centered">
         <button class="button">
-          <%= "<" %>
+          {"<"}
         </button>
 
         <button class="button">
-          <%= format_time(@game_state.clock_state.time) %>
+          {format_time(@game_state.clock_state.time)}
         </button>
 
         <button class="button">
-          <%= ">" %>
+          {">"}
         </button>
       </div>
 
@@ -84,11 +84,11 @@ defmodule Components.BasketballControls.Game do
         </button>
 
         <button class="button is-large" phx-click="select-team" phx-value-team-type="home">
-          <%= @game_state.home_team.name %>
+          {@game_state.home_team.name}
         </button>
 
         <button class="button is-large">
-          <%= team_score(@game_state.home_team) %>
+          {team_score(@game_state.home_team)}
         </button>
       </div>
     </div>
@@ -104,11 +104,11 @@ defmodule Components.BasketballControls.Game do
 
       <div class="column is-12">
         <button class="button is-large">
-          <%= team_score(@game_state.away_team) %>
+          {team_score(@game_state.away_team)}
         </button>
 
         <button class="button is-large" phx-click="select-team" phx-value-team-type="away">
-          <%= @game_state.away_team.name %>
+          {@game_state.away_team.name}
         </button>
 
         <button class="button" phx-click="show-team-box-score" phx-value-team-type="away">

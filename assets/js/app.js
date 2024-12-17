@@ -21,10 +21,15 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
+import LiveReact, { initLiveReact } from "phoenix_live_react"
+import MyComponent from "./components/MyComponent"
 
+// load react components
+let hooks = { LiveReact }
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
+  hooks,
   params: {_csrf_token: csrfToken}
 })
 
@@ -36,9 +41,18 @@ window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 
+// Optionally render the React components on page load as
+// well to speed up the initial time to render.
+// The pushEvent, pushEventTo and handleEvent props will not be passed here.
+document.addEventListener("DOMContentLoaded", e => {
+  initLiveReact()
+})
+
 // expose liveSocket on window for web console debug logs and latency simulation:
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-
+window.Components = {
+  MyComponent
+}

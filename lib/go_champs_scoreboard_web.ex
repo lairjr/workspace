@@ -51,6 +51,8 @@ defmodule GoChampsScoreboardWeb do
 
   def live_view do
     quote do
+      import PhoenixLiveReact
+
       use Phoenix.LiveView,
         layout: {GoChampsScoreboardWeb.Layouts, :app}
 
@@ -69,6 +71,7 @@ defmodule GoChampsScoreboardWeb do
   def html do
     quote do
       use Phoenix.Component
+      import PhoenixLiveReact
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
