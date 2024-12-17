@@ -8,14 +8,36 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
     Stat.new("disqualifications", :manual, [:increment, :decrement]),
     Stat.new("ejections", :manual, [:increment, :decrement]),
     Stat.new("efficiency", :manual, [:incremen, :decrement]),
-    Stat.new("field_goal_percentage", :manual, [:increment, :decrement]),
+    Stat.new(
+      "field_goal_percentage",
+      :calculated,
+      [],
+      &Statistics.calc_player_field_goal_percentage/1
+    ),
+    Stat.new(
+      "field_goals_attempted",
+      :calculated,
+      [],
+      &Statistics.calc_player_field_goals_attempted/1
+    ),
     Stat.new("field_goals_missed", :manual, [:increment, :decrement]),
     Stat.new("field_goals_made", :manual, [:incremen, :decrement]),
     Stat.new("fouls", :calculated, [], &Statistics.calc_player_fouls/1),
     Stat.new("fouls_flagrant", :manual, [:incremen, :decrement]),
     Stat.new("fouls_personal", :manual, [:incremen, :decrement]),
     Stat.new("fouls_technical", :manual, [:increment, :decrement]),
-    Stat.new("free_throw_percentage", :manual, [:increment, :decrement]),
+    Stat.new(
+      "free_throw_percentage",
+      :calculated,
+      [],
+      &Statistics.calc_player_free_throw_percentage/1
+    ),
+    Stat.new(
+      "free_throws_attempted",
+      :calculated,
+      [],
+      &Statistics.calc_player_free_throws_attempted/1
+    ),
     Stat.new("free_throws_missed", :manual, [:increment, :decrement]),
     Stat.new("free_throws_made", :manual, [:incremen, :decrement]),
     Stat.new("game_played", :manual, [:increment, :decrement]),
@@ -27,7 +49,18 @@ defmodule GoChampsScoreboard.Sports.Basketball.Basketball do
     Stat.new("rebounds_defensive", :manual, [:incremen, :decrement]),
     Stat.new("rebounds_offensive", :manual, [:incremen, :decrement]),
     Stat.new("steals", :manual, [:incremen, :decrement]),
-    Stat.new("three_point_field_goal_percentage", :manual, [:increment, :decrement]),
+    Stat.new(
+      "three_point_field_goal_percentage",
+      :calculated,
+      [],
+      &Statistics.calc_player_three_point_field_goal_percentage/1
+    ),
+    Stat.new(
+      "three_point_field_goals_attempted",
+      :calculated,
+      [],
+      &Statistics.calc_player_three_point_field_goals_attempted/1
+    ),
     Stat.new("three_point_field_goals_missed", :manual, [:increment, :decrement]),
     Stat.new("three_point_field_goals_made", :manual, [:incremen, :decrement]),
     Stat.new("turnovers", :manual, [:increment, :decrement])

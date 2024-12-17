@@ -23,7 +23,7 @@ defmodule Components.BasketballControls.PlayerStats do
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
                     >
-                      +1
+                      Made 1
                     </button>
                   </div>
                   <div class="column has-text-centered">
@@ -35,7 +35,7 @@ defmodule Components.BasketballControls.PlayerStats do
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
                     >
-                      +2
+                      Made 2
                     </button>
                   </div>
                   <div class="column has-text-centered">
@@ -47,7 +47,7 @@ defmodule Components.BasketballControls.PlayerStats do
                       phx-value-player-id={@selected_player.player_id}
                       phx-value-team-type={@selected_player.team_type}
                     >
-                      +3
+                      Made 3
                     </button>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ defmodule Components.BasketballControls.PlayerStats do
                         phx-value-player-id={@selected_player.player_id}
                         phx-value-team-type={@selected_player.team_type}
                       >
-                        -1
+                        Miss 1
                       </button>
                     </div>
                     <div class="column has-text-centered">
@@ -75,7 +75,7 @@ defmodule Components.BasketballControls.PlayerStats do
                         phx-value-player-id={@selected_player.player_id}
                         phx-value-team-type={@selected_player.team_type}
                       >
-                        -2
+                        Miss 2
                       </button>
                     </div>
                     <div class="column has-text-centered">
@@ -87,7 +87,7 @@ defmodule Components.BasketballControls.PlayerStats do
                         phx-value-player-id={@selected_player.player_id}
                         phx-value-team-type={@selected_player.team_type}
                       >
-                        -3
+                        Miss 3
                       </button>
                     </div>
                   </div>
@@ -106,18 +106,41 @@ defmodule Components.BasketballControls.PlayerStats do
               <div class="column is-12">
                 <div class="columns">
                   <div class="column has-text-centered">
-                    <button class="button is-large is-info">
-                      +1 Reb
+                    <button
+                      class="button is-large is-info"
+                      phx-click="update-player-stat"
+                      phx-value-stat-id="rebounds_offensive"
+                      phx-value-operation="increment"
+                      phx-value-player-id={@selected_player.player_id}
+                      phx-value-team-type={@selected_player.team_type}
+                    >
+                      +1 Reb Off
                     </button>
                   </div>
                   <div class="column has-text-centered">
-                    <button class="button is-large is-info">
+                    <button
+                      class="button is-large is-info"
+                      phx-click="update-player-stat"
+                      phx-value-stat-id="rebounds_defensive"
+                      phx-value-operation="increment"
+                      phx-value-player-id={@selected_player.player_id}
+                      phx-value-team-type={@selected_player.team_type}
+                    >
+                      >
+                      +1 Reb Def
+                    </button>
+                  </div>
+                  <div class="column has-text-centered">
+                    <button
+                      class="button is-large is-info"
+                      phx-click="update-player-stat"
+                      phx-value-stat-id="assists"
+                      phx-value-operation="increment"
+                      phx-value-player-id={@selected_player.player_id}
+                      phx-value-team-type={@selected_player.team_type}
+                    >
+                      >
                       +1 Ass
-                    </button>
-                  </div>
-                  <div class="column has-text-centered">
-                    <button class="button is-large is-info">
-                      +1 TO
                     </button>
                   </div>
                 </div>
@@ -125,18 +148,42 @@ defmodule Components.BasketballControls.PlayerStats do
                 <div class="column is-12">
                   <div class="columns">
                     <div class="column has-text-centered">
-                      <button class="button is-danger">
-                        -1 Reb
+                      <button
+                        class="button is-large is-info"
+                        phx-click="update-player-stat"
+                        phx-value-stat-id="blocks"
+                        phx-value-operation="increment"
+                        phx-value-player-id={@selected_player.player_id}
+                        phx-value-team-type={@selected_player.team_type}
+                      >
+                        >
+                        +1 Block
                       </button>
                     </div>
                     <div class="column has-text-centered">
-                      <button class="button is-danger">
-                        -1 Ass
+                      <button
+                        class="button is-large is-info"
+                        phx-click="update-player-stat"
+                        phx-value-stat-id="steals"
+                        phx-value-operation="increment"
+                        phx-value-player-id={@selected_player.player_id}
+                        phx-value-team-type={@selected_player.team_type}
+                      >
+                        >
+                        +1 Steal
                       </button>
                     </div>
                     <div class="column has-text-centered">
-                      <button class="button is-danger">
-                        -1 TO
+                      <button
+                        class="button is-large is-info"
+                        phx-click="update-player-stat"
+                        phx-value-stat-id="turnovers"
+                        phx-value-operation="increment"
+                        phx-value-player-id={@selected_player.player_id}
+                        phx-value-team-type={@selected_player.team_type}
+                      >
+                        >
+                        +1 TO
                       </button>
                     </div>
                   </div>
