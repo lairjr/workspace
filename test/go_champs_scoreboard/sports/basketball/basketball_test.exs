@@ -11,6 +11,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
         "ejections" => 0,
         "efficiency" => 0,
         "field_goal_percentage" => 0,
+        "field_goals_attempted" => 0,
         "field_goals_missed" => 0,
         "field_goals_made" => 0,
         "fouls" => 0,
@@ -18,6 +19,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
         "fouls_personal" => 0,
         "fouls_technical" => 0,
         "free_throw_percentage" => 0,
+        "free_throws_attempted" => 0,
         "free_throws_missed" => 0,
         "free_throws_made" => 0,
         "game_played" => 0,
@@ -30,6 +32,7 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
         "rebounds_offensive" => 0,
         "steals" => 0,
         "three_point_field_goal_percentage" => 0,
+        "three_point_field_goals_attempted" => 0,
         "three_point_field_goals_missed" => 0,
         "three_point_field_goals_made" => 0,
         "turnovers" => 0
@@ -59,11 +62,39 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
     test "returns all calculated player stats" do
       expected = [
         %GoChampsScoreboard.Statistics.Models.Stat{
-          key: "fouls",
+          key: "field_goal_percentage",
           type: :calculated,
           operations: [],
           calculation_function:
-            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_fouls/1
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_field_goal_percentage/1
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "field_goals_attempted",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_field_goals_attempted/1
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_fouls/1,
+          key: "fouls",
+          operations: [],
+          type: :calculated
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "free_throw_percentage",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_free_throw_percentage/1
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "free_throws_attempted",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_free_throws_attempted/1
         },
         %GoChampsScoreboard.Statistics.Models.Stat{
           key: "points",
@@ -78,6 +109,20 @@ defmodule GoChampsScoreboard.Sports.Basketball.BasketballTest do
           operations: [],
           calculation_function:
             &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_rebounds/1
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "three_point_field_goal_percentage",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_three_point_field_goal_percentage/1
+        },
+        %GoChampsScoreboard.Statistics.Models.Stat{
+          key: "three_point_field_goals_attempted",
+          type: :calculated,
+          operations: [],
+          calculation_function:
+            &GoChampsScoreboard.Sports.Basketball.Statistics.calc_player_three_point_field_goals_attempted/1
         }
       ]
 
