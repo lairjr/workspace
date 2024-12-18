@@ -22,12 +22,13 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import LiveReact, { initLiveReact } from "phoenix_live_react"
-import MyComponent from "./components/MyComponent"
+import Scoreboard from "./components/Scoreboard"
 
 // load react components
-let hooks = { LiveReact }
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {
+const hooks = { LiveReact }
+const csfrElem = document.querySelector("meta[name='csrf-token']");
+const csrfToken = csfrElem ? csfrElem.getAttribute("content") : 'token'
+const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   hooks,
   params: {_csrf_token: csrfToken}
@@ -54,5 +55,5 @@ document.addEventListener("DOMContentLoaded", e => {
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 window.Components = {
-  MyComponent
+  Scoreboard
 }

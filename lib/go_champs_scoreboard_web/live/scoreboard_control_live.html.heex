@@ -1,13 +1,1 @@
-<div :if={@game_state.loading}>Loading game...</div>
-
-<div :if={game_state = @game_state.ok? && @game_state.result}>
-  <Components.BasketballControls.Views.general
-    form_add_new_player={@form_add_new_player}
-    game_state={game_state}
-    modals={@modals}
-    selected_player={@selected_player}
-    selected_team={@selected_team}
-  />
-</div>
-
-{live_react_component("Components.MyComponent", [name: "hello"], id: "my-component-1")}
+{live_react_component("Components.Scoreboard", [game_data: Poison.encode!(@game_state)], id: "my-component-1")}
