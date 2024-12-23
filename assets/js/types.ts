@@ -31,3 +31,5 @@ export interface GameState {
   clock_state: GameClockState;
   live_state: LiveState;
 }
+
+export type TeamType = 'home' | 'away';

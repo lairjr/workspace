@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { TeamState } from '../../types';
+import { TeamState, TeamType } from '../../types';
 import { PlayerSelection } from './Main';
 
 interface PlayersControlsProps {
   team: TeamState;
   pushEvent: (event: string, payload: any) => void;
-  teamType: 'home' | 'away';
+  teamType: TeamType;
   selectPlayer: (playerSelection: PlayerSelection) => void;
 }
 

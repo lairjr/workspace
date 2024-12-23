@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { GameState } from '../../types';
+import { GameState, TeamType } from '../../types';
 import StatsControls from './StatsControls';
 import ClockControls from './ClockControls';
 import TopLevel from './TopLevel';
 import PlayersControls from './PlayersControls';
+import TeamControls from './TeamControls';
 
 export interface LiveReactBase {
   pushEvent: (event: string, payload: any) => void;
@@ -13,7 +14,7 @@ export interface LiveReactBase {
 
 export interface PlayerSelection {
   playerId: string;
-  teamType: string;
+  teamType: TeamType;
 }
 
 interface MainProps extends LiveReactBase {
@@ -28,7 +29,9 @@ function Main({ game_state, pushEvent }: MainProps) {
       <TopLevel game_state={game_state} pushEvent={pushEvent} />
 
       <div className="columns is-multiline">
-        <div className="column is-4">Away team summary</div>
+        <div className="column is-4">
+          <TeamControls team={game_state.away_team} teamType="away" />
+        </div>
 
         <div className="column is-4">
           <ClockControls
@@ -37,7 +40,9 @@ function Main({ game_state, pushEvent }: MainProps) {
           />
         </div>
 
-        <div className="column is-4">Home team summary</div>
+        <div className="column is-4">
+          <TeamControls team={game_state.home_team} teamType="home" />
+        </div>
 
         <div className="column is-4">
           <PlayersControls
