@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TeamState, TeamType } from '../../types';
 import { PlayerSelection } from './Main';
+import SubstituteModal from './SubstituteModal';
 
 interface PlayersControlsProps {
   team: TeamState;
@@ -16,8 +17,8 @@ function PlayersControls({
   teamType,
   selectPlayer,
 }: PlayersControlsProps) {
+  const [showSubstituteModal, setShowSubstituteModal] = React.useState(false);
   const playingPlayers = team.players.slice(0, 5);
-  const benchPlayers = team.players.slice(5);
 
   return (
     <div className="columns is-multiline">
@@ -38,16 +39,17 @@ function PlayersControls({
 
       <div className="column is-12"></div>
       <div className="column is-12">
-        <button className="button is-info is-fullwidth">Substitute</button>
-      </div>
-      <div className="column is-12">
-        <button className="button is-info is-fullwidth">Edit player</button>
-      </div>
-      <div className="column is-12">
-        <button className="button is-info is-fullwidth">Add player</button>
-      </div>
-      <div className="column is-12">
-        <button className="button is-info is-fullwidth">Remove player</button>
+        <button
+          className="button is-info is-fullwidth"
+          onClick={() => setShowSubstituteModal(true)}
+        >
+          Substitute
+        </button>
+        <SubstituteModal
+          team={team}
+          showModal={showSubstituteModal}
+          onClose={() => setShowSubstituteModal(false)}
+        />
       </div>
     </div>
   );

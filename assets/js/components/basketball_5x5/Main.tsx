@@ -30,7 +30,16 @@ function Main({ game_state, pushEvent }: MainProps) {
 
       <div className="columns is-multiline">
         <div className="column is-4">
-          <TeamControls team={game_state.away_team} teamType="away" />
+          <div className="panel">
+            <TeamControls team={game_state.away_team} teamType="away" />
+
+            <PlayersControls
+              team={game_state.away_team}
+              pushEvent={pushEvent}
+              teamType="away"
+              selectPlayer={setPlayerSelection}
+            />
+          </div>
         </div>
 
         <div className="column is-4">
@@ -38,35 +47,24 @@ function Main({ game_state, pushEvent }: MainProps) {
             clock_state={game_state.clock_state}
             pushEvent={pushEvent}
           />
-        </div>
 
-        <div className="column is-4">
-          <TeamControls team={game_state.home_team} teamType="home" />
-        </div>
-
-        <div className="column is-4">
-          <PlayersControls
-            team={game_state.away_team}
-            pushEvent={pushEvent}
-            teamType="away"
-            selectPlayer={setPlayerSelection}
-          />
-        </div>
-
-        <div className="column is-4">
           <StatsControls
             playerSelection={playerSelection}
             pushEvent={pushEvent}
           />
         </div>
 
-        <div className="column is-4 has-text-right">
-          <PlayersControls
-            team={game_state.home_team}
-            pushEvent={pushEvent}
-            teamType="home"
-            selectPlayer={setPlayerSelection}
-          />
+        <div className="column is-4">
+          <div className="panel">
+            <TeamControls team={game_state.home_team} teamType="home" />
+
+            <PlayersControls
+              team={game_state.home_team}
+              pushEvent={pushEvent}
+              teamType="home"
+              selectPlayer={setPlayerSelection}
+            />
+          </div>
         </div>
       </div>
     </div>
