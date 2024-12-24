@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "format": "prettier --write \"{assets,test}/**/*.{js,ts,jsx,tsx,html,heex}\""
+    "format": "prettier --write \"{assets,test}/**/*.{js,ts,jsx,tsx,html,heex}\"",
+    "format-check": "prettier --check \"{assets,test}/**/*.{js,ts,jsx,tsx,html,heex}\""
   },
   "dependencies": {
     "bulma": "^1.0.2",
