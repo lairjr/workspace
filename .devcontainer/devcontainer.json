@@ -27,7 +27,8 @@
 		"jakebecker.elixir-ls",
 		"GitHub.copilot",
 		"GitHub.copilot-chat",
-		"cweijan.vscode-redis-client"
+		"cweijan.vscode-redis-client",
+		"esbenp.prettier-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

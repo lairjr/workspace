@@ -5,7 +5,7 @@ defmodule Components.BasketballControls.PlayerStats do
     ~H"""
     <div class="columns is-multiline">
       <div class="column is-12">
-        <p><%= @selected_player.player_id %></p>
+        <p>{@selected_player.player_id}</p>
       </div>
       <div class="column is-12">
         <nav class="panel">
@@ -211,7 +211,7 @@ defmodule Components.BasketballControls.PlayerStats do
             phx-value-player-id={player.id}
             phx-value-team-type={@team_type}
           >
-            <%= player.name %>
+            {player.name}
           </button>
         </div>
       <% end %>

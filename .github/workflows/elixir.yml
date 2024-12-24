@@ -7,52 +7,66 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 permissions:
   contents: read
 
 jobs:
+  js-lint:
+    name: JS Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.9.0'
+      - name: Install dependencies
+        run: npm install
+      - name: Run Prettier
+        run: npm run format-check
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        otp-version: '27.0.1'
-        elixir-version: '1.17.2'
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Run Lint
-      run: mix format --check-formatted
+      - uses: actions/checkout@v4
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: '27.0.1'
+          elixir-version: '1.17.2'
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run Lint
+        run: mix format --check-formatted
 
   test:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Elixir
-      uses: erlef/setup-beam@v1
-      with:
-        otp-version: '27.0.1'
-        elixir-version: '1.17.2'
-    - name: Restore dependencies cache
-      uses: actions/cache@v3
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Start Redis
-      uses: supercharge/redis-github-action@1.7.0
-      with:
-        redis-version: 7
-    - name: Run tests
-      run: mix test
-      env:
-        REDIS_URL: 127.0.0.1
+      - uses: actions/checkout@v4
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: '27.0.1'
+          elixir-version: '1.17.2'
+      - name: Restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.7.0
+        with:
+          redis-version: 7
+      - name: Run tests
+        run: mix test
+        env:
+          REDIS_URL: 127.0.0.1
