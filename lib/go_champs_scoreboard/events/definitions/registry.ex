@@ -5,6 +5,7 @@ defmodule GoChampsScoreboard.Events.Definitions.Registry do
   alias GoChampsScoreboard.Events.Definitions.RemovePlayerInTeamDefinition
   alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
   alias GoChampsScoreboard.Events.Definitions.UpdateClockStateDefinition
+  alias GoChampsScoreboard.Events.Definitions.UpdateClockTimeAndPeriodDefinition
   alias GoChampsScoreboard.Events.Definitions.UpdatePlayerInTeamDefinition
   alias GoChampsScoreboard.Events.Definitions.UpdatePlayerStatDefinition
   alias GoChampsScoreboard.Events.Definitions.UpdateTeamStatDefinition
@@ -16,6 +17,7 @@ defmodule GoChampsScoreboard.Events.Definitions.Registry do
     RemovePlayerInTeamDefinition.key() => RemovePlayerInTeamDefinition,
     StartGameLiveModeDefinition.key() => StartGameLiveModeDefinition,
     UpdateClockStateDefinition.key() => UpdateClockStateDefinition,
+    UpdateClockTimeAndPeriodDefinition.key() => UpdateClockTimeAndPeriodDefinition,
     UpdatePlayerInTeamDefinition.key() => UpdatePlayerInTeamDefinition,
     UpdatePlayerStatDefinition.key() => UpdatePlayerStatDefinition,
     UpdateTeamStatDefinition.key() => UpdateTeamStatDefinition

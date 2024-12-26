@@ -4,6 +4,12 @@ defmodule GoChampsScoreboard.Statistics.Operations do
   def calc(current_value, "decrement"),
     do: Decrement.calc(current_value)
 
+  def calc(current_value, "decrement60"),
+    do: Decrement.calc(current_value, 60)
+
   def calc(current_value, "increment"),
     do: Increment.calc(current_value)
+
+  def calc(current_value, "increment60"),
+    do: Increment.calc(current_value, 60)
 end
