@@ -46,8 +46,9 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
   defp map_team_players_to_players(team) do
     team_players = Map.get(team, "players", [])
 
-    Enum.map(team_players, fn player ->
-      PlayerState.new(player["id"], player["name"], player["number"])
+    Enum.map(Enum.with_index(team_players), fn {player, index} ->
+      state = if index < 5, do: :playing, else: :available
+      PlayerState.new(player["id"], player["name"], player["number"], state)
     end)
   end
 end

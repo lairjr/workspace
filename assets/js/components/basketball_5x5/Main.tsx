@@ -38,6 +38,7 @@ function Main({ game_state, pushEvent }: MainProps) {
               pushEvent={pushEvent}
               teamType="away"
               selectPlayer={setPlayerSelection}
+              selectedPlayer={playerSelection}
             />
           </div>
         </div>
@@ -63,6 +64,7 @@ function Main({ game_state, pushEvent }: MainProps) {
               pushEvent={pushEvent}
               teamType="home"
               selectPlayer={setPlayerSelection}
+              selectedPlayer={playerSelection}
             />
           </div>
         </div>

@@ -1,4 +1,11 @@
 export interface PlayerState {
+  state:
+    | 'playing'
+    | 'bench'
+    | 'injured'
+    | 'suspended'
+    | 'available'
+    | 'not_available';
   id: string;
   name: string;
   number: number;

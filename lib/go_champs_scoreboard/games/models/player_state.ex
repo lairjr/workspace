@@ -1,20 +1,24 @@
 defmodule GoChampsScoreboard.Games.Models.PlayerState do
   alias GoChampsScoreboard.Sports.Basketball.Basketball
 
+  @type state :: :playing | :bench | :injured | :suspended | :available | :not_available
+
   @type t :: %__MODULE__{
           id: String.t(),
           name: String.t(),
           number: number(),
+          state: state(),
           stats_values: map()
         }
-  defstruct [:id, :name, :number, :stats_values]
+  defstruct [:id, :name, :number, :state, :stats_values]
 
-  @spec new(String.t(), String.t(), number(), map()) :: t()
-  def new(id, name, number \\ 0, stats_values \\ Basketball.bootstrap()) do
+  @spec new(String.t(), String.t(), number(), state(), map()) :: t()
+  def new(id, name, number \\ 0, state \\ :available, stats_values \\ Basketball.bootstrap()) do
     %__MODULE__{
       id: id,
       name: name,
       number: number,
+      state: state,
       stats_values: stats_values
     }
   end

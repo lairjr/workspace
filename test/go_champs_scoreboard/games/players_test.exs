@@ -2,6 +2,7 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
   use ExUnit.Case
   alias GoChampsScoreboard.Games.Players
   alias GoChampsScoreboard.Statistics.Models.Stat
+  alias GoChampsScoreboard.Games.Models.PlayerState
 
   describe "bootstrap" do
     test "returns a new player state with new random id, given name and number" do
@@ -65,6 +66,20 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
                  "rebounds" => 3
                }
              } == Players.update_calculated_stats_values(player_state, player_stats)
+    end
+  end
+
+  describe "update_state" do
+    test "returns player state with update state" do
+      player_state = %PlayerState{
+        id: "player-id",
+        state: :playing
+      }
+
+      assert %PlayerState{
+               id: "player-id",
+               state: :bench
+             } == Players.update_state(player_state, :bench)
     end
   end
 end

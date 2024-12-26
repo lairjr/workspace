@@ -1,39 +1,33 @@
 import React from 'react';
 
-import { TeamState, TeamType } from '../../types';
+import { PlayerState, TeamState, TeamType } from '../../types';
 import { PlayerSelection } from './Main';
-import SubstituteModal from './SubstituteModal';
 
-interface PlayersControlsProps {
-  team: TeamState;
-  pushEvent: (event: string, payload: any) => void;
+interface PlayingPlayersProps {
+  players: PlayerState[];
   teamType: TeamType;
   selectPlayer: (playerSelection: PlayerSelection) => void;
+  selectedPlayer?: PlayerSelection;
+  onSubstituteClick: (playerId: string) => void;
 }
 
-function PlayersControls({
-  team,
-  pushEvent,
+function PlayingPlayers({
+  players,
   teamType,
   selectPlayer,
-}: PlayersControlsProps) {
-  const [showSubstitutePlayers, setShowSubstitutePlayers] =
-    React.useState(false);
-  const playingPlayers = team.players.slice(0, 5);
-  const benchPlayers = team.players.slice(5);
-  const onSubstitute = (playerId: string) => {
-    setShowSubstitutePlayers(false);
-    console.log('substitute', playerId);
-  };
-
+  selectedPlayer,
+  onSubstituteClick,
+}: PlayingPlayersProps) {
   return (
     <div className="columns is-multiline">
-      {!showSubstitutePlayers && (
-        <ul className="column is-12">
-          {playingPlayers.map((player) => (
+      <div className="column is-12">
+        <ul>
+          {players.map((player) => (
             <li key={player.id}>
               <button
-                className="button is-dark is-outlined is-fullwidth test-class"
+                className={`button is-fullwidth ${
+                  player.id === selectedPlayer?.playerId ? 'is-dark' : ''
+                }`}
                 onClick={() =>
                   selectPlayer({ playerId: player.id, teamType: teamType })
                 }
@@ -43,33 +37,106 @@ function PlayersControls({
             </li>
           ))}
         </ul>
-      )}
+      </div>
+      <div className="column is-12"></div>
+      <div className="column is-12">
+        <button
+          className="button is-info is-fullwidth"
+          onClick={onSubstituteClick}
+        >
+          Substitute
+        </button>
+      </div>
+    </div>
+  );
+}
 
-      {showSubstitutePlayers && (
-        <ul className="column is-12">
-          {benchPlayers.map((player) => (
+interface BenchPlayersProps {
+  players: PlayerState[];
+  onPlayerClick: (playerId: string) => void;
+  onCancelClick: () => void;
+}
+
+function BenchPlayers({
+  players,
+  onPlayerClick,
+  onCancelClick,
+}: BenchPlayersProps) {
+  return (
+    <div className="columns is-multiline">
+      <div className="column is-12">
+        <ul>
+          {players.map((player) => (
             <li key={player.id}>
               <button
-                className="button is-dark is-outlined is-fullwidth test-class"
-                onClick={() => onSubstitute(player.id)}
+                className="button is-fullwidth"
+                onClick={() => onPlayerClick(player.id)}
               >
                 {player.name + ' - ' + player.number}
               </button>
             </li>
           ))}
         </ul>
-      )}
-
+      </div>
       <div className="column is-12"></div>
       <div className="column is-12">
         <button
-          className="button is-info is-fullwidth"
-          onClick={() => setShowSubstitutePlayers(true)}
+          className="button is-danger is-fullwidth"
+          onClick={onCancelClick}
         >
-          Substitute
+          Cancel
         </button>
       </div>
     </div>
+  );
+}
+
+interface PlayersControlsProps {
+  team: TeamState;
+  pushEvent: (event: string, payload: any) => void;
+  teamType: TeamType;
+  selectPlayer: (playerSelection: PlayerSelection | null) => void;
+  selectedPlayer: PlayerSelection;
+}
+
+function PlayersControls({
+  team,
+  pushEvent,
+  teamType,
+  selectPlayer,
+  selectedPlayer,
+}: PlayersControlsProps) {
+  const [showPlayingPlayers, setShowPlayingPlayers] = React.useState(true);
+  const playingPlayers = team.players.filter(
+    (player) => player.state === 'playing',
+  );
+  const benchPlayers = team.players.filter(
+    (player) => player.state !== 'playing',
+  );
+  const onSubstitute = (playerId: string) => {
+    pushEvent('substitute-player', {
+      ['team-type']: teamType,
+      ['playing-player-id']: selectedPlayer.playerId,
+      ['bench-player-id']: playerId,
+    });
+    setShowPlayingPlayers(true);
+    selectPlayer(null);
+  };
+
+  return showPlayingPlayers ? (
+    <PlayingPlayers
+      players={playingPlayers}
+      selectPlayer={selectPlayer}
+      selectedPlayer={selectedPlayer}
+      teamType={teamType}
+      onSubstituteClick={() => setShowPlayingPlayers(false)}
+    />
+  ) : (
+    <BenchPlayers
+      players={benchPlayers}
+      onCancelClick={() => setShowPlayingPlayers(true)}
+      onPlayerClick={onSubstitute}
+    />
   );
 }
 

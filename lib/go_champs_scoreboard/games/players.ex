@@ -28,6 +28,11 @@ defmodule GoChampsScoreboard.Games.Players do
     end)
   end
 
+  @spec update_state(PlayerState.t(), PlayerState.state()) :: PlayerState.t()
+  def update_state(player_state, player_state_update) do
+    %{player_state | state: player_state_update}
+  end
+
   @spec update_calculated_stat_value(PlayerState.t(), Stat.t()) :: PlayerState.t()
   defp update_calculated_stat_value(player_state, player_stat) do
     new_stat_value =
