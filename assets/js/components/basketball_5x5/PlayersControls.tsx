@@ -19,33 +19,31 @@ function PlayingPlayers({
   onSubstituteClick,
 }: PlayingPlayersProps) {
   return (
-    <div className="columns is-multiline">
-      <div className="column is-12">
-        <ul>
-          {players.map((player) => (
-            <li key={player.id}>
-              <button
-                className={`button is-fullwidth ${
-                  player.id === selectedPlayer?.playerId ? 'is-dark' : ''
-                }`}
-                onClick={() =>
-                  selectPlayer({ playerId: player.id, teamType: teamType })
-                }
-              >
-                {player.name + ' - ' + player.number}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="column is-12"></div>
-      <div className="column is-12">
-        <button
-          className="button is-info is-fullwidth"
-          onClick={onSubstituteClick}
-        >
-          Substitute
-        </button>
+    <div className="controls">
+      <div className="columns is-multiline">
+        {players.map((player) => (
+          <div key={player.id} className="column is-12">
+            <button
+              className={`button is-fullwidth ${
+                player.id === selectedPlayer?.playerId ? 'is-dark' : ''
+              }`}
+              onClick={() =>
+                selectPlayer({ playerId: player.id, teamType: teamType })
+              }
+            >
+              {player.name + ' - ' + player.number}
+            </button>
+          </div>
+        ))}
+        <div className="column is-12"></div>
+        <div className="column is-12">
+          <button
+            className="button is-warning is-fullwidth"
+            onClick={onSubstituteClick}
+          >
+            Substitute
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -63,29 +61,27 @@ function BenchPlayers({
   onCancelClick,
 }: BenchPlayersProps) {
   return (
-    <div className="columns is-multiline">
-      <div className="column is-12">
-        <ul>
-          {players.map((player) => (
-            <li key={player.id}>
-              <button
-                className="button is-fullwidth"
-                onClick={() => onPlayerClick(player.id)}
-              >
-                {player.name + ' - ' + player.number}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="column is-12"></div>
-      <div className="column is-12">
-        <button
-          className="button is-danger is-fullwidth"
-          onClick={onCancelClick}
-        >
-          Cancel
-        </button>
+    <div className="controls">
+      <div className="columns is-multiline">
+        {players.map((player) => (
+          <div key={player.id} className="column is-12">
+            <button
+              className="button is-fullwidth"
+              onClick={() => onPlayerClick(player.id)}
+            >
+              {player.name + ' - ' + player.number}
+            </button>
+          </div>
+        ))}
+        <div className="column is-12"></div>
+        <div className="column is-12">
+          <button
+            className="button is-warning is-fullwidth"
+            onClick={onCancelClick}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

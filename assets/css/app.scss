@@ -1,34 +1,36 @@
 // Load Bulma's base styles and themes (including the minireset)
-@use "../../node_modules/bulma/sass/base";
-@use "../../node_modules/bulma/sass/themes";
-@use "../../node_modules/bulma/sass/grid";
-@use "../../node_modules/bulma/sass/helpers";
-@use "../../node_modules/bulma/sass/form";
+@use '../../node_modules/bulma/sass/base';
+@use '../../node_modules/bulma/sass/themes';
+@use '../../node_modules/bulma/sass/grid';
+@use '../../node_modules/bulma/sass/helpers';
+@use '../../node_modules/bulma/sass/form';
 
 // Load other Bulma components
-@use "../../node_modules/bulma/sass/components/panel.scss";
-@use "../../node_modules/bulma/sass/components/modal.scss";
-@use "../../node_modules/bulma/sass/elements/box";
-@use "../../node_modules/bulma/sass/elements/button";
-@use "../../node_modules/bulma/sass/elements/content";
-@use "../../node_modules/bulma/sass/elements/table";
-@use "../../node_modules/bulma/sass/elements/title";
-@use "../../node_modules/bulma/sass/layout/level";
+@use '../../node_modules/bulma/sass/components/panel.scss';
+@use '../../node_modules/bulma/sass/components/modal.scss';
+@use '../../node_modules/bulma/sass/elements/box';
+@use '../../node_modules/bulma/sass/elements/button';
+@use '../../node_modules/bulma/sass/elements/content';
+@use '../../node_modules/bulma/sass/elements/table';
+@use '../../node_modules/bulma/sass/elements/title';
+@use '../../node_modules/bulma/sass/layout/level';
 
-@import "./components/index.scss";
+@import './colors.scss';
+@import './components/index.scss';
 
 .live-mode {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: rgb(5, 193, 58);
-    filter: blur(3px);
-    animation: grow-shrink 1s ease-in-out infinite;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgb(5, 193, 58);
+  filter: blur(3px);
+  animation: grow-shrink 1s ease-in-out infinite;
 }
 
 @keyframes grow-shrink {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {

@@ -58,48 +58,63 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
     });
   };
   return (
-    <div className="columns is-multiline">
-      <div className="column is-4">
-        <button className="button is-info" onClick={onPeriodDecrement}>
-          {'<'}
-        </button>
-      </div>
-      <div className="column is-4">
-        <p>{clock_state.period}</p>
-      </div>
-      <div className="column is-4">
-        <button className="button is-info" onClick={onPeriodIncrement}>
-          {'>'}
-        </button>
-      </div>
+    <div className="controls">
+      <div className="columns is-multiline">
+        <div className="column is-2">
+          <button className="button is-info" onClick={onPeriodDecrement}>
+            {'<'}
+          </button>
+        </div>
+        <div className="column is-8">
+          <span className="chip-label">{clock_state.period}</span>
+        </div>
+        <div className="column is-2">
+          <button className="button is-info" onClick={onPeriodIncrement}>
+            {'>'}
+          </button>
+        </div>
 
-      <div className="column is-4">
-        <button className="button is-info" onClick={onTimeDecrement60}>
-          {'<<'}
-        </button>
-        <button className="button is-info" onClick={onTimeDecrement}>
-          {'<'}
-        </button>
-      </div>
-      <div className="column is-4">{formatTime(clock_state.time)}</div>
-      <div className="column is-4">
-        <button className="button is-info" onClick={onTimeIncrement}>
-          {'>'}
-        </button>
-        <button className="button is-info" onClick={onTimeIncrement60}>
-          {'>>'}
-        </button>
-      </div>
+        <div className="column is-2">
+          <button className="button is-info" onClick={onTimeDecrement60}>
+            {'<<'}
+          </button>
+        </div>
+        <div className="column is-2">
+          <button className="button is-info" onClick={onTimeDecrement}>
+            {'<'}
+          </button>
+        </div>
+        <div className="column is-4">
+          <span className="chip-label">{formatTime(clock_state.time)}</span>
+        </div>
+        <div className="column is-2">
+          <button className="button is-info" onClick={onTimeIncrement}>
+            {'>'}
+          </button>
+        </div>
+        <div className="column is-2">
+          <button className="button is-info" onClick={onTimeIncrement60}>
+            {'>>'}
+          </button>
+        </div>
 
-      <div className="column is-6">
-        <button className="button is-info" onClick={onPauseClock}>
-          Pause
-        </button>
-      </div>
-      <div className="column is-6">
-        <button className="button is-info" onClick={onStartClock}>
-          Start
-        </button>
+        <div className="column is-12">
+          {clock_state.state === 'running' ? (
+            <button
+              className="button is-info is-fullwidth"
+              onClick={onPauseClock}
+            >
+              Pause
+            </button>
+          ) : (
+            <button
+              className="button is-info is-fullwidth"
+              onClick={onStartClock}
+            >
+              Start
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
