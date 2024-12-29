@@ -14,15 +14,22 @@ defmodule GoChampsScoreboard.Games.Models.GameState do
         }
   defstruct [:id, :away_team, :home_team, :clock_state, :sport_id, :live_state]
 
-  @spec new(String.t(), TeamState.t(), TeamState.t(), GameClockState.t(), String.t()) :: t()
-  def new(id, away_team, home_team, clock_state, sport_id \\ "basketball") do
+  @spec new(
+          String.t(),
+          TeamState.t(),
+          TeamState.t(),
+          GameClockState.t(),
+          LiveState.t(),
+          String.t()
+        ) :: t()
+  def new(id, away_team, home_team, clock_state, live_state, sport_id \\ "basketball") do
     %__MODULE__{
       id: id,
       away_team: away_team,
       home_team: home_team,
       clock_state: clock_state,
       sport_id: sport_id,
-      live_state: LiveState.new()
+      live_state: live_state
     }
   end
 

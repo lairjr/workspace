@@ -27,7 +27,7 @@ export interface GameClockState {
 }
 
 export interface LiveState {
-  state: 'not_started' | 'running' | 'ended';
+  state: 'not_started' | 'in_progress' | 'ended';
 }
 
 export interface GameState {

@@ -1,6 +1,6 @@
 defmodule GoChampsScoreboard.Games.Models.LiveState do
   @derive [Poison.Encoder]
-  @type state :: :not_started | :running | :ended
+  @type state :: :not_started | :in_progress | :ended
 
   @type t :: %__MODULE__{
           state: state
@@ -9,9 +9,10 @@ defmodule GoChampsScoreboard.Games.Models.LiveState do
   defstruct [:state]
 
   @spec new() :: t()
-  def new() do
+  @spec new(state()) :: t()
+  def new(state \\ :not_started) do
     %__MODULE__{
-      state: :not_started
+      state: state
     }
   end
 

@@ -89,7 +89,8 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
               "name" => "Player 12"
             }
           ]
-        }
+        },
+        "live_state" => "ended"
       }
     }
 
@@ -164,6 +165,8 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       assert player_12.number == nil
       assert player_12.state == :available
       assert game.home_team.total_player_stats == %{}
+
+      assert game.live_state.state == :ended
     end
   end
 end

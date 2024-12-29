@@ -1,9 +1,9 @@
-defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinitionTest do
+defmodule GoChampsScoreboard.Events.Definitions.ResetGameLiveModeDefinitionTest do
   use ExUnit.Case
 
   alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState}
 
-  alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
+  alias GoChampsScoreboard.Events.Definitions.ResetGameLiveModeDefinition
   alias GoChampsScoreboard.Events.Models.Event
 
   describe "validate/2" do
@@ -11,14 +11,14 @@ defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinitionTest 
       game_state = %GameState{}
 
       assert {:ok} =
-               StartGameLiveModeDefinition.validate(game_state, %{})
+               ResetGameLiveModeDefinition.validate(game_state, %{})
     end
   end
 
   describe "create/2" do
     test "returns event" do
-      assert %Event{key: "start-game-live-mode", game_id: "some-game-id"} =
-               StartGameLiveModeDefinition.create("some-game-id", %{})
+      assert %Event{key: "reset-game-live-mode", game_id: "some-game-id"} =
+               ResetGameLiveModeDefinition.create("some-game-id", %{})
     end
   end
 
@@ -32,16 +32,16 @@ defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinitionTest 
         home_team: %TeamState{
           players: []
         },
-        live_state: %LiveState{state: :not_started}
+        live_state: %LiveState{state: :ended}
       }
 
       game =
-        StartGameLiveModeDefinition.handle(
+        ResetGameLiveModeDefinition.handle(
           game_state,
           %{}
         )
 
-      assert game.live_state.state == :in_progress
+      assert game.live_state.state == :not_started
     end
   end
 end

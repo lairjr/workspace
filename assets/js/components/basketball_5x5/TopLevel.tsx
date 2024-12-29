@@ -10,7 +10,7 @@ interface TopLevelProps {
 }
 
 function TopLevel({ game_state, pushEvent }: TopLevelProps) {
-  const [showModal, setShowModal] = React.useState(false);
+  const [showBoxScoreModal, setShowBoxScoreModal] = React.useState(false);
   const onStartLive = () => {
     pushEvent('start-game-live-mode', {});
   };
@@ -22,14 +22,17 @@ function TopLevel({ game_state, pushEvent }: TopLevelProps) {
     <nav className="level">
       <div className="level-left">
         <p className="level-item">
-          <button className="button is-info" onClick={() => setShowModal(true)}>
+          <button
+            className="button is-info"
+            onClick={() => setShowBoxScoreModal(true)}
+          >
             Box score
           </button>
         </p>
         <Modal
           title="Box Score"
-          onClose={() => setShowModal(false)}
-          showModal={showModal}
+          onClose={() => setShowBoxScoreModal(false)}
+          showModal={showBoxScoreModal}
         >
           <BoxScore game_state={game_state} />
         </Modal>
@@ -37,7 +40,7 @@ function TopLevel({ game_state, pushEvent }: TopLevelProps) {
 
       <div className="level-right">
         <p className="level-item">
-          {game_state.live_state.state === 'running' ? (
+          {game_state.live_state.state === 'in_progress' ? (
             <button className="button is-danger" onClick={onEndLive}>
               End Live
             </button>

@@ -132,6 +132,24 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
     {:noreply, socket}
   end
 
+  def handle_event("reset-game-live-mode", _, socket) do
+    game_id = socket.assigns.game_state.result.id
+
+    case Games.reset_live_mode(game_id) do
+      :ok ->
+        {:noreply,
+         push_navigate(socket,
+           to: ~p"/scoreboard/#{game_id}"
+         )}
+
+      _ ->
+        {:noreply,
+         push_navigate(socket,
+           to: ~p"/error"
+         )}
+    end
+  end
+
   @spec handle_info({:game_reacted_to_event, any()}, any()) :: {:noreply, any()}
   def handle_info({:game_reacted_to_event, %{game_state: game_state}}, socket) do
     updated_socket =

@@ -1,5 +1,6 @@
 defmodule GoChampsScoreboard.Games.Games do
   alias GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition
+  alias GoChampsScoreboard.Events.Definitions.ResetGameLiveModeDefinition
   alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
   alias GoChampsScoreboard.Events.ValidatorCreator
   alias GoChampsScoreboard.Events.Models.Event
@@ -63,8 +64,26 @@ defmodule GoChampsScoreboard.Games.Games do
     end
   end
 
-  @spec react_to_event(Event.t(), GameState.t()) :: GameState.t()
+  @spec reset_live_mode(String.t()) :: :ok
+  def reset_live_mode(game_id) do
+    case get_game(game_id) do
+      {:ok, nil} ->
+        raise RuntimeError, message: "Game not found"
 
+      {:ok, _current_game_state} ->
+        {:ok, reset_event} =
+          ResetGameLiveModeDefinition.key()
+          |> ValidatorCreator.validate_and_create(game_id)
+
+        react_to_event(reset_event, game_id)
+
+        delete_game(game_id)
+
+        :ok
+    end
+  end
+
+  @spec react_to_event(Event.t(), GameState.t()) :: GameState.t()
   def react_to_event(event, game_id) do
     case get_game(game_id) do
       {:ok, nil} ->
@@ -117,5 +136,11 @@ defmodule GoChampsScoreboard.Games.Games do
   defp update_game(game_state) do
     Redix.command(:games_cache, ["SET", game_state.id, game_state])
     game_state
+  end
+
+  @spec delete_game(String.t()) :: :ok
+  defp delete_game(game_id) do
+    Redix.command(:games_cache, ["DEL", game_id])
+    :ok
   end
 end

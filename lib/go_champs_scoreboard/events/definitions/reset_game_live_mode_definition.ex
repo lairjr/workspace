@@ -1,11 +1,11 @@
-defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition do
+defmodule GoChampsScoreboard.Events.Definitions.ResetGameLiveModeDefinition do
   @behaviour GoChampsScoreboard.Events.Definitions.DefinitionBehavior
 
   alias GoChampsScoreboard.Events.Models.Event
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Events.Models.StreamConfig
 
-  @key "start-game-live-mode"
+  @key "reset-game-live-mode"
 
   @impl true
   @spec key() :: String.t()
@@ -26,7 +26,7 @@ defmodule GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition do
         game_state,
         _event \\ nil
       ) do
-    %{game_state | live_state: %{state: :in_progress}}
+    %{game_state | live_state: %{state: :not_started}}
   end
 
   @impl true

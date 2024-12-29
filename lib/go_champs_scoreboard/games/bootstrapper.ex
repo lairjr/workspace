@@ -1,4 +1,5 @@
 defmodule GoChampsScoreboard.Games.Bootstrapper do
+  alias GoChampsScoreboard.Games.Models.LiveState
   alias GoChampsScoreboard.ApiClient
   alias GoChampsScoreboard.Games.Models.GameClockState
   alias GoChampsScoreboard.Games.Models.GameState
@@ -13,8 +14,9 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
     away_team = TeamState.new("Away team")
     clock_state = GameClockState.new()
     game_id = Ecto.UUID.generate()
+    live_state = LiveState.new()
 
-    GameState.new(game_id, away_team, home_team, clock_state)
+    GameState.new(game_id, away_team, home_team, clock_state, live_state)
   end
 
   def bootstrap_from_go_champs(game, game_id, token) do
@@ -33,7 +35,9 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
 
     clock_state = GameClockState.new(@mock_initial_period_time, @mock_initial_period_time)
 
-    GameState.new(game_id, away_team, home_team, clock_state)
+    live_state = map_live_state(game_response["live_state"])
+
+    GameState.new(game_id, away_team, home_team, clock_state, live_state)
   end
 
   defp map_api_team_to_team(team) do
@@ -50,5 +54,14 @@ defmodule GoChampsScoreboard.Games.Bootstrapper do
       state = if index < 5, do: :playing, else: :available
       PlayerState.new(player["id"], player["name"], player["number"], state)
     end)
+  end
+
+  defp map_live_state(live_state) do
+    case live_state do
+      "not_started" -> LiveState.new(:not_started)
+      "in_progress" -> LiveState.new(:in_progress)
+      "ended" -> LiveState.new(:ended)
+      _ -> LiveState.new(:not_started)
+    end
   end
 end

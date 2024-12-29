@@ -5,6 +5,7 @@ import ClockControls from './ClockControls';
 import TopLevel from './TopLevel';
 import PlayersControls from './PlayersControls';
 import TeamControls from './TeamControls';
+import EndLiveModal from './EndLiveModal';
 
 export interface LiveReactBase {
   pushEvent: (event: string, payload: any) => void;
@@ -23,6 +24,7 @@ interface MainProps extends LiveReactBase {
 
 function Main({ game_state, pushEvent }: MainProps) {
   const [playerSelection, setPlayerSelection] = useState<PlayerSelection>(null);
+  const showEndLiveModal = game_state.live_state.state === 'ended';
 
   return (
     <>
@@ -72,6 +74,8 @@ function Main({ game_state, pushEvent }: MainProps) {
             selectedPlayer={playerSelection}
           />
         </div>
+
+        <EndLiveModal showModal={showEndLiveModal} />
       </div>
     </>
   );

@@ -31,7 +31,7 @@ defmodule GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinitionTest do
         home_team: %TeamState{
           players: []
         },
-        live_state: %LiveState{state: :running}
+        live_state: %LiveState{state: :in_progress}
       }
 
       game =

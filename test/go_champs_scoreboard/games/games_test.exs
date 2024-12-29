@@ -4,9 +4,7 @@ defmodule GoChampsScoreboard.Games.GamesTest do
   alias GoChampsScoreboard.Events.Definitions.StartGameLiveModeDefinition
   alias GoChampsScoreboard.Events.Definitions.EndGameLiveModeDefinition
   alias GoChampsScoreboard.Games.Games
-  alias GoChampsScoreboard.Games.Models.TeamState
-  alias GoChampsScoreboard.Games.Models.GameState
-  alias GoChampsScoreboard.Games.Models.GameClockState
+  alias GoChampsScoreboard.Games.Models.{GameState, GameClockState, LiveState, TeamState}
 
   import Mox
 
@@ -83,6 +81,18 @@ defmodule GoChampsScoreboard.Games.GamesTest do
       assert handled_game == result_game
 
       unset_test_game()
+    end
+  end
+
+  describe "reset_live_mode/1" do
+    test "deletes a game from cache" do
+      set_test_game()
+
+      Games.reset_live_mode("some-game-id")
+
+      {:ok, game_json} = Redix.command(:games_cache, ["GET", "some-game-id"])
+
+      assert game_json == nil
     end
   end
 
@@ -166,7 +176,8 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     away_team = TeamState.new("Some away team")
     home_team = TeamState.new("Some home team")
     clock_state = GameClockState.new()
-    game_state = GameState.new("some-game-id", away_team, home_team, clock_state)
+    live_state = LiveState.new()
+    game_state = GameState.new("some-game-id", away_team, home_team, clock_state, live_state)
     Redix.command(:games_cache, ["SET", "some-game-id", game_state])
   end
 

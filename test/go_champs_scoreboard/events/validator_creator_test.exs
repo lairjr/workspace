@@ -1,7 +1,7 @@
 defmodule GoChampsScoreboard.Events.ValidatorCreatorTest do
   use ExUnit.Case
   alias GoChampsScoreboard.Events.ValidatorCreator
-  alias GoChampsScoreboard.Games.Models.{GameState, TeamState, GameClockState}
+  alias GoChampsScoreboard.Games.Models.{GameState, LiveState, TeamState, GameClockState}
 
   describe "validate_and_create/2 for AddPlayerToTeam" do
     @event_key "add-player-to-team"
@@ -38,7 +38,8 @@ defmodule GoChampsScoreboard.Events.ValidatorCreatorTest do
     away_team = TeamState.new("Some away team")
     home_team = TeamState.new("Some home team")
     clock_state = GameClockState.new()
-    game_state = GameState.new("some-game-id", away_team, home_team, clock_state)
+    live_state = LiveState.new()
+    game_state = GameState.new("some-game-id", away_team, home_team, clock_state, live_state)
     Redix.command(:games_cache, ["SET", "some-game-id", game_state])
   end
 
