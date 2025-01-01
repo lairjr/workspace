@@ -66,7 +66,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
             Miss 3 PTS
           </button>
         </div>
-        <div className="column is-6 has-text-centered">
+        <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
             onClick={onStatUpdate('rebounds_offensive')}
@@ -74,7 +74,15 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
             +1 REB OFF
           </button>
         </div>
-        <div className="column is-6 has-text-centered">
+        <div className="column is-4 has-text-centered">
+          <button
+            className="button is-tall is-info"
+            onClick={onStatUpdate('steals')}
+          >
+            +1 STL
+          </button>
+        </div>
+        <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
             onClick={onStatUpdate('rebounds_defensive')}

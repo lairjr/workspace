@@ -4,22 +4,42 @@ import { PlayerState, TeamType } from '../../../types';
 import FormField from '../../FormField';
 
 interface StatInputProps {
+  teamType: TeamType;
   player: PlayerState;
   statKey: string;
   pushEvent: (event: string, data: any) => void;
 }
 
-function StatInput({ player, statKey, pushEvent }) {
+function StatInput({ player, statKey, pushEvent, teamType }: StatInputProps) {
   const value = player.stats_values[statKey];
+  const onMinusClick = () => {
+    pushEvent('update-player-stat', {
+      ['stat-id']: statKey,
+      operation: 'decrement',
+      ['player-id']: player.id,
+      ['team-type']: teamType,
+    });
+  };
+  const onPlusClick = () => {
+    pushEvent('update-player-stat', {
+      ['stat-id']: statKey,
+      operation: 'increment',
+      ['player-id']: player.id,
+      ['team-type']: teamType,
+    });
+  };
+
   return (
-    <div class="field has-addons has-addons-right">
-      <p class="control">
-        <button class="button is-primary">-</button>
-      </p>
-      <p class="control">{value}</p>
-      <p class="control">
-        <button class="button is-primary">+</button>
-      </p>
+    <div className="buttons has-addons">
+      <button className="button" onClick={onMinusClick}>
+        -
+      </button>
+      <button className="button" disabled>
+        {value}
+      </button>
+      <button className="button" onClick={onPlusClick}>
+        +
+      </button>
     </div>
   );
 }
@@ -80,6 +100,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="free_throws_made"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -87,6 +108,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="field_goals_made"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -94,6 +116,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="three_point_field_goals_made"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -101,6 +124,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="free_throws_missed"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -108,29 +132,47 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="field_goals_missed"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
         <StatInput
           player={player}
-          statKey="three_point_field_goals_made"
+          statKey="three_point_field_goals_missed"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
-        <StatInput player={player} statKey="assists" pushEvent={pushEvent} />
+        <StatInput
+          player={player}
+          statKey="assists"
+          pushEvent={pushEvent}
+          teamType={teamType}
+        />
       </td>
       <td>
-        <StatInput player={player} statKey="blocks" pushEvent={pushEvent} />
+        <StatInput
+          player={player}
+          statKey="blocks"
+          pushEvent={pushEvent}
+          teamType={teamType}
+        />
       </td>
       <td>
-        <StatInput player={player} statKey="steals" pushEvent={pushEvent} />
+        <StatInput
+          player={player}
+          statKey="steals"
+          pushEvent={pushEvent}
+          teamType={teamType}
+        />
       </td>
       <td>
         <StatInput
           player={player}
           statKey="rebounds_defensive"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -138,16 +180,23 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="rebounds_offensive"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
-        <StatInput player={player} statKey="turnovers" pushEvent={pushEvent} />
+        <StatInput
+          player={player}
+          statKey="turnovers"
+          pushEvent={pushEvent}
+          teamType={teamType}
+        />
       </td>
       <td>
         <StatInput
           player={player}
           statKey="fouls_personal"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -155,6 +204,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="fouls_technical"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
       <td>
@@ -162,6 +212,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           player={player}
           statKey="fouls_flagrant"
           pushEvent={pushEvent}
+          teamType={teamType}
         />
       </td>
     </tr>
