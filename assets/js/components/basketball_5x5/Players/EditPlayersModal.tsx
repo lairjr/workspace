@@ -21,7 +21,12 @@ function EditPlayersModal({
   const selectedTeam =
     activeTab === 'away' ? game_state.away_team : game_state.home_team;
   return (
-    <Modal title="Edit Players" showModal={showModal} onClose={onCloseModal}>
+    <Modal
+      title="Edit Players"
+      showModal={showModal}
+      onClose={onCloseModal}
+      modalCardStyle={{ width: '1024px' }}
+    >
       <div className="tabs is-boxed">
         <ul>
           <li className={activeTab === 'away' ? 'is-active' : ''}>
@@ -50,6 +55,21 @@ function EditPlayersModal({
                 <th>Number</th>
                 <th>Name</th>
                 <th>State</th>
+                <th>+ 1 PT</th>
+                <th>+ 2 PTs</th>
+                <th>+ 3 PTs</th>
+                <th>1 PT Miss</th>
+                <th>2 PTs Miss</th>
+                <th>3 PTs Miss</th>
+                <th>AST</th>
+                <th>BLK</th>
+                <th>STL</th>
+                <th>DRB</th>
+                <th>ORB</th>
+                <th>TO</th>
+                <th>PF</th>
+                <th>TF</th>
+                <th>FF</th>
               </tr>
             </thead>
             <tbody>
