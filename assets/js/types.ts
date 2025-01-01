@@ -8,7 +8,7 @@ export interface PlayerState {
     | 'not_available';
   id: string;
   name: string;
-  number: number;
+  number: string;
   stats_values: { [key: string]: number };
 }
 

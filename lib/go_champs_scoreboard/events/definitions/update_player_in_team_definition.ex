@@ -24,7 +24,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerInTeamDefinition do
 
   @impl true
   @spec handle(GameState.t(), Event.t()) :: GameState.t()
-  def handle(game_state, %Event{payload: %{"team_type" => team_type, "player" => player}}) do
+  def handle(game_state, %Event{payload: %{"team-type" => team_type, "player" => player}}) do
     player = Map.new(player, fn {k, v} -> {String.to_atom(k), v} end)
 
     current_player =

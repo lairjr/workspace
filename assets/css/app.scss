@@ -8,6 +8,7 @@
 // Load other Bulma components
 @use '../../node_modules/bulma/sass/components/panel.scss';
 @use '../../node_modules/bulma/sass/components/modal.scss';
+@use '../../node_modules/bulma/sass/components/tabs.scss';
 @use '../../node_modules/bulma/sass/elements/box';
 @use '../../node_modules/bulma/sass/elements/button';
 @use '../../node_modules/bulma/sass/elements/content';
@@ -17,6 +18,10 @@
 
 @import './colors.scss';
 @import './components/index.scss';
+
+* {
+  font-family: 'Fira Sans', sans-serif;
+}
 
 .live-mode {
   display: inline-block;

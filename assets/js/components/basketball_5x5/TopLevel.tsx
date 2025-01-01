@@ -3,6 +3,7 @@ import React from 'react';
 import { GameState } from '../../types';
 import Modal from '../Modal';
 import BoxScore from './BoxScore';
+import EditPlayersModal from './Players/EditPlayersModal';
 
 interface TopLevelProps {
   game_state: GameState;
@@ -11,6 +12,7 @@ interface TopLevelProps {
 
 function TopLevel({ game_state, pushEvent }: TopLevelProps) {
   const [showBoxScoreModal, setShowBoxScoreModal] = React.useState(false);
+  const [showEditPlayersModal, setShowEditPlayersModal] = React.useState(false);
   const onStartLive = () => {
     pushEvent('start-game-live-mode', {});
   };
@@ -28,6 +30,13 @@ function TopLevel({ game_state, pushEvent }: TopLevelProps) {
           >
             Box score
           </button>
+
+          <button
+            className="button is-info"
+            onClick={() => setShowEditPlayersModal(true)}
+          >
+            Edit players
+          </button>
         </p>
         <Modal
           title="Box Score"
@@ -36,6 +45,12 @@ function TopLevel({ game_state, pushEvent }: TopLevelProps) {
         >
           <BoxScore game_state={game_state} />
         </Modal>
+        <EditPlayersModal
+          game_state={game_state}
+          showModal={showEditPlayersModal}
+          onCloseModal={() => setShowEditPlayersModal(false)}
+          pushEvent={pushEvent}
+        />
       </div>
 
       <div className="level-right">

@@ -11,7 +11,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerInTeamDefinitionTest
 
       assert {:ok} =
                UpdatePlayerInTeamDefinition.validate(game_state, %{
-                 "team_type" => "home",
+                 "team-type" => "home",
                  "player" => %{
                    "id" => "some-id",
                    "name" => "Michael Jordan",
@@ -25,7 +25,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerInTeamDefinitionTest
     test "returns event" do
       assert %Event{key: "update-player-in-team", game_id: "some-game-id"} =
                UpdatePlayerInTeamDefinition.create("some-game-id", %{
-                 "team_type" => "home",
+                 "team-type" => "home",
                  "player" => %{
                    "id" => "some-id",
                    "name" => "Michael Jordan",
@@ -48,7 +48,7 @@ defmodule GoChampsScoreboard.Events.Definitions.UpdatePlayerInTeamDefinitionTest
       }
 
       update_player_in_team_payload = %{
-        "team_type" => "home",
+        "team-type" => "home",
         "player" => %{
           "id" => "some-id",
           "name" => "Michael Jordan",
