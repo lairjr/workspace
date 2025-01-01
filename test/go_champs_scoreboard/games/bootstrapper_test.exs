@@ -32,16 +32,18 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
             %{
               "id" => "player-1",
               "name" => "Player 1",
-              "number" => 1
+              "shirt_name" => "P 1",
+              "shirt_number" => "1"
             },
             %{
               "id" => "player-2",
-              "name" => "Player 2"
+              "name" => "Player 2",
+              "shirt_number" => "2"
             },
             %{
               "id" => "player-3",
               "name" => "Player 3",
-              "number" => 3
+              "shirt_name" => "P 3"
             },
             %{
               "id" => "player-4",
@@ -49,8 +51,7 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
             },
             %{
               "id" => "player-5",
-              "name" => "Player 5",
-              "number" => 5
+              "name" => "Player 5"
             },
             %{
               "id" => "player-6",
@@ -64,16 +65,18 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
             %{
               "id" => "player-7",
               "name" => "Player 7",
-              "number" => 7
+              "shirt_name" => "P 7",
+              "shirt_number" => "7"
             },
             %{
               "id" => "player-8",
-              "name" => "Player 8"
+              "name" => "Player 8",
+              "shirt_number" => "8"
             },
             %{
               "id" => "player-9",
               "name" => "Player 9",
-              "number" => 9
+              "shirt_name" => "P 9"
             },
             %{
               "id" => "player-10",
@@ -81,8 +84,7 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
             },
             %{
               "id" => "player-11",
-              "name" => "Player 11",
-              "number" => 11
+              "name" => "Player 11"
             },
             %{
               "id" => "player-12",
@@ -113,16 +115,16 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       assert game.id == "game-id"
       assert game.away_team.name == "Team A"
       assert player_1.id == "player-1"
-      assert player_1.name == "Player 1"
-      assert player_1.number == 1
+      assert player_1.name == "P 1"
+      assert player_1.number == "1"
       assert player_1.state == :playing
       assert player_2.id == "player-2"
       assert player_2.name == "Player 2"
-      assert player_2.number == nil
+      assert player_2.number == "2"
       assert player_2.state == :playing
       assert player_3.id == "player-3"
-      assert player_3.name == "Player 3"
-      assert player_3.number == 3
+      assert player_3.name == "P 3"
+      assert player_3.number == nil
       assert player_3.state == :playing
       assert player_4.id == "player-4"
       assert player_4.name == "Player 4"
@@ -130,7 +132,7 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       assert player_4.state == :playing
       assert player_5.id == "player-5"
       assert player_5.name == "Player 5"
-      assert player_5.number == 5
+      assert player_5.number == nil
       assert player_5.state == :playing
       assert player_6.id == "player-6"
       assert player_6.name == "Player 6"
@@ -141,16 +143,16 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       [player_7, player_8, player_9, player_10, player_11, player_12] = game.home_team.players
       assert game.home_team.name == "Team B"
       assert player_7.id == "player-7"
-      assert player_7.name == "Player 7"
-      assert player_7.number == 7
+      assert player_7.name == "P 7"
+      assert player_7.number == "7"
       assert player_7.state == :playing
       assert player_8.id == "player-8"
       assert player_8.name == "Player 8"
-      assert player_8.number == nil
+      assert player_8.number == "8"
       assert player_8.state == :playing
       assert player_9.id == "player-9"
-      assert player_9.name == "Player 9"
-      assert player_9.number == 9
+      assert player_9.name == "P 9"
+      assert player_9.number == nil
       assert player_9.state == :playing
       assert player_10.id == "player-10"
       assert player_10.name == "Player 10"
@@ -158,7 +160,7 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       assert player_10.state == :playing
       assert player_11.id == "player-11"
       assert player_11.name == "Player 11"
-      assert player_11.number == 11
+      assert player_11.number == nil
       assert player_11.state == :playing
       assert player_12.id == "player-12"
       assert player_12.name == "Player 12"

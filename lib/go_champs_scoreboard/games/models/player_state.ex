@@ -6,14 +6,14 @@ defmodule GoChampsScoreboard.Games.Models.PlayerState do
   @type t :: %__MODULE__{
           id: String.t(),
           name: String.t(),
-          number: number(),
+          number: String.t(),
           state: state(),
           stats_values: map()
         }
   defstruct [:id, :name, :number, :state, :stats_values]
 
-  @spec new(String.t(), String.t(), number(), state(), map()) :: t()
-  def new(id, name, number \\ 0, state \\ :available, stats_values \\ Basketball.bootstrap()) do
+  @spec new(String.t(), String.t(), String.t(), state(), map()) :: t()
+  def new(id, name, number \\ "0", state \\ :available, stats_values \\ Basketball.bootstrap()) do
     %__MODULE__{
       id: id,
       name: name,
