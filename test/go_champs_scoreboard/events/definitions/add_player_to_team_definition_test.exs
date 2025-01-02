@@ -12,7 +12,7 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
 
       assert {:ok} =
                AddPlayerToTeamDefinition.validate(game_state, %{
-                 "team_type" => "home",
+                 "team-type" => "home",
                  "name" => "Michael Jordan",
                  "number" => 23
                })
@@ -23,7 +23,7 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
     test "returns event" do
       assert %Event{key: "add-player-to-team", game_id: "some-game-id"} =
                AddPlayerToTeamDefinition.create("some-game-id", %{
-                 "team_type" => "home",
+                 "team-type" => "home",
                  "name" => "Michael Jordan",
                  "number" => 23
                })
@@ -43,7 +43,7 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinitionTest do
       }
 
       add_player_to_team_payload = %{
-        "team_type" => "home",
+        "team-type" => "home",
         "name" => "Michael Jordan",
         "number" => 23
       }

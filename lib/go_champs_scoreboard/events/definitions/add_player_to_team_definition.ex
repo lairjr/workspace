@@ -25,7 +25,7 @@ defmodule GoChampsScoreboard.Events.Definitions.AddPlayerToTeamDefinition do
   @impl true
   @spec handle(GameState.t(), Event.t()) :: GameState.t()
   def handle(game_state, %Event{
-        payload: %{"name" => name, "number" => number, "team_type" => team_type}
+        payload: %{"name" => name, "number" => number, "team-type" => team_type}
       }) do
     player = Players.bootstrap(name, number)
 

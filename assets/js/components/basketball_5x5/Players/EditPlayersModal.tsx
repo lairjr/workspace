@@ -3,6 +3,7 @@ import React from 'react';
 import { GameState, TeamType } from '../../../types';
 import Modal from '../../Modal';
 import EditPlayerRow from './EditPlayerRow';
+import AddPlayerRow from './AddPlayerRow';
 
 interface EditPlayersModalProps {
   game_state: GameState;
@@ -18,6 +19,7 @@ function EditPlayersModal({
   pushEvent,
 }: EditPlayersModalProps) {
   const [activeTab, setActiveTab] = React.useState('away' as TeamType);
+  const [showAddPlayerRow, setShowAddPlayerRow] = React.useState(false);
   const selectedTeam =
     activeTab === 'away' ? game_state.away_team : game_state.home_team;
   return (
@@ -44,7 +46,9 @@ function EditPlayersModal({
 
       <div className="columns is-multiline">
         <div className="column is-12">
-          <button className="button">Add player</button>
+          <button className="button" onClick={() => setShowAddPlayerRow(true)}>
+            Add player
+          </button>
           <button className="button">Remove player</button>
         </div>
 
@@ -83,6 +87,13 @@ function EditPlayersModal({
                 </tr>
               </thead>
               <tbody>
+                {showAddPlayerRow && (
+                  <AddPlayerRow
+                    teamType={activeTab}
+                    pushEvent={pushEvent}
+                    onConfirmAction={() => setShowAddPlayerRow(false)}
+                  />
+                )}
                 {selectedTeam.players.map((player) => (
                   <EditPlayerRow
                     key={player.id}
