@@ -1,0 +1,25 @@
+.stat-input-container {
+  position: relative;
+
+  .button {
+    &.top {
+      position: absolute;
+      top: -34px;
+      z-index: 1;
+    }
+
+    &.bottom {
+      position: absolute;
+      top: 34px;
+      z-index: 1;
+    }
+
+    &.hide {
+      display: none;
+    }
+
+    &.show {
+      display: block;
+    }
+  }
+}

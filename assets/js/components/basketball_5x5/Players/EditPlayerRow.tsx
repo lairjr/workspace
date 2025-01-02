@@ -12,6 +12,25 @@ interface StatInputProps {
 
 function StatInput({ player, statKey, pushEvent, teamType }: StatInputProps) {
   const value = player.stats_values[statKey];
+  const [showButtons, setShowButtons] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
+      setShowButtons(false);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const onMinusClick = () => {
     pushEvent('update-player-stat', {
       ['stat-id']: statKey,
@@ -30,14 +49,27 @@ function StatInput({ player, statKey, pushEvent, teamType }: StatInputProps) {
   };
 
   return (
-    <div className="buttons has-addons">
-      <button className="button" onClick={onMinusClick}>
+    <div ref={containerRef} className="stat-input-container">
+      <button
+        className={`button is-small is-warning top ${
+          showButtons ? 'show' : 'hide'
+        }`}
+        onClick={onMinusClick}
+      >
         -
       </button>
-      <button className="button" disabled>
+      <button
+        className={`button is-small ${showButtons ? 'is-warning' : ''}`}
+        onClick={() => setShowButtons(!showButtons)}
+      >
         {value}
       </button>
-      <button className="button" onClick={onPlusClick}>
+      <button
+        className={`button is-small is-warning bottom ${
+          showButtons ? 'show' : 'hide'
+        }`}
+        onClick={onPlusClick}
+      >
         +
       </button>
     </div>
@@ -73,7 +105,7 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           render={(value, onChange) => (
             <input
               className="input is-small"
-              type="number"
+              type="text"
               value={value}
               onChange={onChange}
             />
@@ -94,7 +126,6 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           )}
         />
       </td>
-      <td>{player.state}</td>
       <td>
         <StatInput
           player={player}

@@ -49,40 +49,51 @@ function EditPlayersModal({
         </div>
 
         <div className="column is-12">
-          <table className="table is-fullwidth">
-            <thead>
-              <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>State</th>
-                <th>+ 1 PT</th>
-                <th>+ 2 PTs</th>
-                <th>+ 3 PTs</th>
-                <th>1 PT Miss</th>
-                <th>2 PTs Miss</th>
-                <th>3 PTs Miss</th>
-                <th>AST</th>
-                <th>BLK</th>
-                <th>STL</th>
-                <th>DRB</th>
-                <th>ORB</th>
-                <th>TO</th>
-                <th>PF</th>
-                <th>TF</th>
-                <th>FF</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedTeam.players.map((player) => (
-                <EditPlayerRow
-                  key={player.id}
-                  player={player}
-                  teamType={activeTab}
-                  pushEvent={pushEvent}
-                />
-              ))}
-            </tbody>
-          </table>
+          <div className="table-container">
+            <table className="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>#</th>
+                  <th style={{ minWidth: '140px', maxWidth: '140px' }}>Name</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>+ 1 PT</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>
+                    + 2 PTs
+                  </th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>
+                    + 3 PTs
+                  </th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>
+                    1 PT Miss
+                  </th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>
+                    2 PTs Miss
+                  </th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>
+                    3 PTs Miss
+                  </th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>AST</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>BLK</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>STL</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>DRB</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>ORB</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>TO</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>PF</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>TF</th>
+                  <th style={{ minWidth: '65px', maxWidth: '65px' }}>FF</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedTeam.players.map((player) => (
+                  <EditPlayerRow
+                    key={player.id}
+                    player={player}
+                    teamType={activeTab}
+                    pushEvent={pushEvent}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Modal>
