@@ -48,6 +48,13 @@ defmodule GoChampsScoreboardWeb.ScoreboardControlLive do
     {:noreply, socket}
   end
 
+  def handle_event("remove-player-in-team", params, socket) do
+    game_id = socket.assigns.game_state.result.id
+    {:ok, event} = ValidatorCreator.validate_and_create("remove-player-in-team", game_id, params)
+    Games.react_to_event(event, game_id)
+    {:noreply, socket}
+  end
+
   def handle_event("substitute-player", params, socket) do
     game_id = socket.assigns.game_state.result.id
     {:ok, event} = ValidatorCreator.validate_and_create("substitute-player", game_id, params)

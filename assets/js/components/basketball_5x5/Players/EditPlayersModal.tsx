@@ -49,7 +49,6 @@ function EditPlayersModal({
           <button className="button" onClick={() => setShowAddPlayerRow(true)}>
             Add player
           </button>
-          <button className="button">Remove player</button>
         </div>
 
         <div className="column is-12">
@@ -84,6 +83,7 @@ function EditPlayersModal({
                   <th style={{ minWidth: '65px', maxWidth: '65px' }}>PF</th>
                   <th style={{ minWidth: '65px', maxWidth: '65px' }}>TF</th>
                   <th style={{ minWidth: '65px', maxWidth: '65px' }}>FF</th>
+                  <th style={{ minWidth: '85px', maxWidth: '85px' }}>Delete</th>
                 </tr>
               </thead>
               <tbody>

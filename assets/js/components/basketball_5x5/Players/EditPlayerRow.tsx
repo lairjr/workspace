@@ -2,6 +2,7 @@ import React from 'react';
 
 import { PlayerState, TeamType } from '../../../types';
 import FormField from '../../FormField';
+import DoubleClickButton from '../../DoubleClickButton';
 
 interface StatInputProps {
   teamType: TeamType;
@@ -94,6 +95,12 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
     pushEvent('update-player-in-team', {
       ['team-type']: teamType,
       player: { ...player, name: value },
+    });
+  };
+  const onRemovePlayer = () => {
+    pushEvent('remove-player-in-team', {
+      ['team-type']: teamType,
+      ['player-id']: player.id,
     });
   };
   return (
@@ -245,6 +252,14 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           pushEvent={pushEvent}
           teamType={teamType}
         />
+      </td>
+      <td>
+        <DoubleClickButton
+          className="button is-warning is-small"
+          onClick={onRemovePlayer}
+        >
+          &#10008;
+        </DoubleClickButton>
       </td>
     </tr>
   );
