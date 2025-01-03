@@ -1,32 +1,6 @@
 import React from 'react';
 import Main from './basketball_5x5/Main';
-import { GameState } from '../types';
-
-const DEFAULT_GAME_STATE = {
-  id: '',
-  away_team: {
-    name: '',
-    players: [],
-    total_player_stats: {},
-    stats_values: {},
-  },
-  home_team: {
-    name: '',
-    players: [],
-    total_player_stats: {},
-    stats_values: {},
-  },
-  sport_id: '',
-  clock_state: {
-    initial_period_time: 0,
-    time: 0,
-    period: 0,
-    state: 'not_started',
-  },
-  live_state: {
-    state: 'not_started',
-  },
-} as GameState;
+import { GameState, DEFAULT_GAME_STATE } from '../types';
 
 const ScoreboardRegistry = {
   basketball: Main,

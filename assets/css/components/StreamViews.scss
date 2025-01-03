@@ -1,0 +1,68 @@
+@import '../colors.scss';
+
+.stream-views {
+  width: 500px;
+  padding: 1rem;
+
+  .column {
+    border: 1px solid $white-dark;
+    box-shadow: 0px 0px 5px 3px rgba(255, 255, 255, 0.1);
+
+    &.ad {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      background-color: $black;
+    }
+
+    &.away {
+      background-color: $green;
+    }
+
+    &.home {
+      background-color: $red-dark;
+    }
+
+    &.period {
+      background-color: $black;
+    }
+
+    &.time {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      background-color: $black;
+    }
+  }
+
+  .animated-score {
+    position: relative;
+
+    .score-effect {
+      position: absolute;
+
+      &.show {
+        display: block;
+        animation: fallingball 0.8s forwards;
+      }
+
+      &.hide {
+        display: none;
+      }
+    }
+  }
+}
+
+@keyframes fallingball {
+  0% {
+    top: -30px;
+    left: 55px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 75px;
+    opacity: 0;
+  }
+}

@@ -55,6 +55,15 @@ function TopLevel({ game_state, pushEvent }: TopLevelProps) {
 
       <div className="level-right">
         <p className="level-item">
+          <a
+            className="button is-info"
+            href={`/scoreboard/stream_views/${game_state.id}`}
+            target="_blank"
+          >
+            Stream Views (OBS)
+          </a>
+        </p>
+        <p className="level-item">
           {game_state.live_state.state === 'in_progress' ? (
             <button className="button is-danger" onClick={onEndLive}>
               End Live

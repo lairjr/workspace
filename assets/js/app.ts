@@ -23,6 +23,7 @@ import { LiveSocket } from 'phoenix_live_view';
 import topbar from '../vendor/topbar';
 import LiveReact, { initLiveReact } from 'phoenix_live_react';
 import Scoreboard from './components/Scoreboard';
+import StreamViews from './components/StreamViews';
 
 // load react components
 const hooks = { LiveReact };
@@ -56,4 +57,5 @@ document.addEventListener('DOMContentLoaded', (e) => {
 window.liveSocket = liveSocket;
 window.Components = {
   Scoreboard,
+  StreamViews,
 };
