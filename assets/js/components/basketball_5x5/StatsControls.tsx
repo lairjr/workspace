@@ -1,5 +1,6 @@
 import React from 'react';
 import { PlayerSelection } from './Main';
+import debounce from '../../debounce';
 
 interface StatsControlsProps {
   pushEvent: (event: string, payload: any) => void;
@@ -7,21 +8,21 @@ interface StatsControlsProps {
 }
 
 function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
-  const onStatUpdate = (stat: string) => () => {
+  const onStatUpdate = debounce<(stat: string) => void>((stat) => {
     pushEvent('update-player-stat', {
       ['stat-id']: stat,
       operation: 'increment',
       ['player-id']: playerSelection.playerId,
       ['team-type']: playerSelection.teamType,
     });
-  };
+  }, 100);
   return (
     <div className="controls">
       <div className="columns is-multiline">
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-success"
-            onClick={onStatUpdate('free_throws_made')}
+            onClick={() => onStatUpdate('free_throws_made')}
           >
             +1 PT
           </button>
@@ -29,7 +30,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-success"
-            onClick={onStatUpdate('field_goals_made')}
+            onClick={() => onStatUpdate('field_goals_made')}
           >
             +2 PTS
           </button>
@@ -37,7 +38,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-success"
-            onClick={onStatUpdate('three_point_field_goals_made')}
+            onClick={() => onStatUpdate('three_point_field_goals_made')}
           >
             +3 PTS
           </button>
@@ -45,7 +46,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-danger"
-            onClick={onStatUpdate('free_throws_missed')}
+            onClick={() => onStatUpdate('free_throws_missed')}
           >
             Miss 1 PT
           </button>
@@ -53,7 +54,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-danger"
-            onClick={onStatUpdate('field_goals_missed')}
+            onClick={() => onStatUpdate('field_goals_missed')}
           >
             Miss 2 PTS
           </button>
@@ -61,7 +62,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-danger"
-            onClick={onStatUpdate('three_point_field_goals_missed')}
+            onClick={() => onStatUpdate('three_point_field_goals_missed')}
           >
             Miss 3 PTS
           </button>
@@ -69,7 +70,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
-            onClick={onStatUpdate('rebounds_offensive')}
+            onClick={() => onStatUpdate('rebounds_offensive')}
           >
             +1 REB OFF
           </button>
@@ -77,7 +78,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
-            onClick={onStatUpdate('steals')}
+            onClick={() => onStatUpdate('steals')}
           >
             +1 STL
           </button>
@@ -85,7 +86,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
-            onClick={onStatUpdate('rebounds_defensive')}
+            onClick={() => onStatUpdate('rebounds_defensive')}
           >
             +1 REB DEF
           </button>
@@ -93,7 +94,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
-            onClick={onStatUpdate('assists')}
+            onClick={() => onStatUpdate('assists')}
           >
             +1 ASS
           </button>
@@ -101,7 +102,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
-            onClick={onStatUpdate('blocks')}
+            onClick={() => onStatUpdate('blocks')}
           >
             +1 BLK
           </button>
@@ -109,7 +110,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-info"
-            onClick={onStatUpdate('turnovers')}
+            onClick={() => onStatUpdate('turnovers')}
           >
             +1 TO
           </button>
@@ -117,7 +118,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-danger"
-            onClick={onStatUpdate('fouls_personal')}
+            onClick={() => onStatUpdate('fouls_personal')}
           >
             P. Fault
           </button>
@@ -125,7 +126,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-danger"
-            onClick={onStatUpdate('fouls_technical')}
+            onClick={() => onStatUpdate('fouls_technical')}
           >
             T. Fault
           </button>
@@ -133,7 +134,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         <div className="column is-4 has-text-centered">
           <button
             className="button is-tall is-danger"
-            onClick={onStatUpdate('fouls_flagrant')}
+            onClick={() => onStatUpdate('fouls_flagrant')}
           >
             F. Fault
           </button>
