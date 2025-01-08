@@ -75,12 +75,12 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
         </div>
 
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeDecrement60}>
+          <button className="button is-info" onClick={onTimeIncrement60}>
             {'<<'}
           </button>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeDecrement}>
+          <button className="button is-info" onClick={onTimeIncrement}>
             {'<'}
           </button>
         </div>
@@ -88,12 +88,12 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
           <span className="chip-label">{formatTime(clock_state.time)}</span>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeIncrement}>
+          <button className="button is-info" onClick={onTimeDecrement}>
             {'>'}
           </button>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeIncrement60}>
+          <button className="button is-info" onClick={onTimeDecrement60}>
             {'>>'}
           </button>
         </div>
