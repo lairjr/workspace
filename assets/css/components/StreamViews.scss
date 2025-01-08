@@ -38,10 +38,21 @@
 
     .score-effect {
       position: absolute;
+      left: 85px;
 
-      &.show {
+      &.show-1 {
         display: block;
-        animation: fallingball 0.8s forwards;
+        animation: fallingball 0.6s forwards 1;
+      }
+
+      &.show-2 {
+        display: block;
+        animation: fallingball 0.6s forwards 2;
+      }
+
+      &.show-3 {
+        display: block;
+        animation: fallingball 0.6s forwards 3;
       }
 
       &.hide {
@@ -53,16 +64,14 @@
 
 @keyframes fallingball {
   0% {
-    top: -30px;
-    left: 55px;
+    top: -20px;
     opacity: 0;
   }
   50% {
     opacity: 1;
   }
   100% {
-    top: 0px;
-    left: 75px;
+    top: 20px;
     opacity: 0;
   }
 }

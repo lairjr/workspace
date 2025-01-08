@@ -1,5 +1,6 @@
 import React from 'react';
 import { GameState, DEFAULT_GAME_STATE } from '../types';
+import FallingBasketball from '../icons/FallingBasketball';
 
 interface StreamViewsProps {
   game_data: string;
@@ -16,14 +17,19 @@ function formatTime(time: number) {
 function AnimatedScore({ score }: { score: number }) {
   const [currentScore, setCurrentScore] = React.useState(0);
   const [scoreMadeEffect, setScoreMakeEffect] = React.useState(false);
+  const [scoreDiff, setScoreDiff] = React.useState(1);
 
   React.useEffect(() => {
+    setScoreDiff(score - currentScore);
     setCurrentScore(score);
   }, [score]);
 
   React.useEffect(() => {
     setScoreMakeEffect(true);
-    const timeoutScoreMake = setTimeout(() => setScoreMakeEffect(false), 1000);
+    const timeoutScoreMake = setTimeout(() => {
+      setScoreMakeEffect(false);
+      setScoreDiff(1);
+    }, 1800);
     return () => {
       clearTimeout(timeoutScoreMake);
     };
@@ -31,8 +37,12 @@ function AnimatedScore({ score }: { score: number }) {
 
   return (
     <div className="animated-score">
-      <span className={`score-effect ${scoreMadeEffect ? 'show' : 'hide'}`}>
-        <Basketball />
+      <span
+        className={`score-effect ${
+          scoreMadeEffect ? `show-${scoreDiff}` : 'hide'
+        }`}
+      >
+        <FallingBasketball />
       </span>
       <span className="title is-1">{currentScore}</span>
     </div>
