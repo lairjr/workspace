@@ -18,12 +18,8 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListener do
     stream_config = StreamConfigs.find_for_game_event(event.key)
 
     if stream_config.streamable do
-      IO.inspect("Will stream at #{System.system_time()}")
-
       PayloadBuilder.build(stream_config.payload_builder, payload)
       |> Publisher.publish()
-
-      IO.inspect("Streamed stream at #{System.system_time()}")
     end
 
     {:noreply, state}

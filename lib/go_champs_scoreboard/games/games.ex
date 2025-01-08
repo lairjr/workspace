@@ -91,12 +91,9 @@ defmodule GoChampsScoreboard.Games.Games do
 
       {:ok, current_game_state} ->
         new_game_state = Handler.handle(current_game_state, event)
-        IO.inspect("Will update game at #{System.system_time()}")
         update_game(new_game_state)
-        IO.inspect("Updated game at #{System.system_time()}")
 
         PubSub.broadcast_game_reacted_to_event(event, new_game_state)
-        IO.inspect("Broadcasted game at #{System.system_time()}")
 
         new_game_state
     end
