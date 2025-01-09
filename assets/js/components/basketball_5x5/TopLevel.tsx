@@ -43,6 +43,7 @@ function TopLevel({ game_state, pushEvent }: TopLevelProps) {
           title="Box Score"
           onClose={() => setShowBoxScoreModal(false)}
           showModal={showBoxScoreModal}
+          modalCardStyle={{ width: '1024px' }}
         >
           <BoxScore game_state={game_state} />
         </Modal>
