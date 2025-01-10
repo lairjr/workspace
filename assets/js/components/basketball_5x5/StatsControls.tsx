@@ -109,7 +109,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         </div>
         <div className="column is-4 has-text-centered">
           <button
-            className="button is-tall is-info"
+            className="button is-tall is-danger"
             onClick={() => onStatUpdate('turnovers')}
           >
             +1 TO
@@ -117,26 +117,26 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
         </div>
         <div className="column is-4 has-text-centered">
           <button
-            className="button is-tall is-danger"
+            className="button is-tall is-warning"
             onClick={() => onStatUpdate('fouls_personal')}
           >
-            P. Fault
+            Personal Fault
           </button>
         </div>
         <div className="column is-4 has-text-centered">
           <button
-            className="button is-tall is-danger"
+            className="button is-tall is-warning"
             onClick={() => onStatUpdate('fouls_technical')}
           >
-            T. Fault
+            Technical Fault
           </button>
         </div>
         <div className="column is-4 has-text-centered">
           <button
-            className="button is-tall is-danger"
+            className="button is-tall is-warning"
             onClick={() => onStatUpdate('fouls_flagrant')}
           >
-            F. Fault
+            Flagrant Fault
           </button>
         </div>
       </div>

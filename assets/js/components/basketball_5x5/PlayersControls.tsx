@@ -87,6 +87,40 @@ function BenchPlayers({
   );
 }
 
+interface NotStartingPlayersProps {
+  players: PlayerState[];
+  teamType: TeamType;
+  onPlayerClick: (playerSelection: PlayerSelection) => void;
+}
+
+function NotStartingPlayers({
+  players,
+  teamType,
+  onPlayerClick,
+}: NotStartingPlayersProps) {
+  return (
+    <div className="controls">
+      <div className="columns is-multiline">
+        <div className="column is-12 has-text-centered">
+          <span className="title is-6">Select starting players</span>
+        </div>
+        {players.map((player) => (
+          <div key={player.id} className="column is-12">
+            <button
+              className="button is-fullwidth"
+              onClick={() =>
+                onPlayerClick({ playerId: player.id, teamType: teamType })
+              }
+            >
+              {player.name + ' - ' + player.number}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 interface PlayersControlsProps {
   team: TeamState;
   pushEvent: (event: string, payload: any) => void;
@@ -95,6 +129,8 @@ interface PlayersControlsProps {
   selectedPlayer: PlayerSelection;
 }
 
+type PlayerView = 'playing' | 'bench' | 'not_started';
+
 function PlayersControls({
   team,
   pushEvent,
@@ -102,37 +138,61 @@ function PlayersControls({
   selectPlayer,
   selectedPlayer,
 }: PlayersControlsProps) {
-  const [showPlayingPlayers, setShowPlayingPlayers] = React.useState(true);
   const playingPlayers = team.players.filter(
     (player) => player.state === 'playing',
   );
   const benchPlayers = team.players.filter(
     (player) => player.state !== 'playing',
   );
+  const initialView = playingPlayers.length < 5 ? 'not_started' : 'playing';
+  React.useEffect(() => {
+    const view = playingPlayers.length < 5 ? 'not_started' : 'playing';
+    setPlayerView(view);
+  }, [team]);
+  const [playerView, setPlayerView] = React.useState<PlayerView>(initialView);
   const onSubstitute = (playerId: string) => {
     pushEvent('substitute-player', {
       ['team-type']: teamType,
       ['playing-player-id']: selectedPlayer.playerId,
       ['bench-player-id']: playerId,
     });
-    setShowPlayingPlayers(true);
+    setPlayerView('playing');
     selectPlayer(null);
   };
+  const onPlayerStartUp = (selectPlayer: PlayerSelection) => {
+    pushEvent('substitute-player', {
+      ['team-type']: selectPlayer.teamType,
+      ['playing-player-id']: null,
+      ['bench-player-id']: selectPlayer.playerId,
+    });
+  };
 
-  return showPlayingPlayers ? (
-    <PlayingPlayers
-      players={playingPlayers}
-      selectPlayer={selectPlayer}
-      selectedPlayer={selectedPlayer}
-      teamType={teamType}
-      onSubstituteClick={() => setShowPlayingPlayers(false)}
-    />
-  ) : (
-    <BenchPlayers
-      players={benchPlayers}
-      onCancelClick={() => setShowPlayingPlayers(true)}
-      onPlayerClick={onSubstitute}
-    />
+  return (
+    <>
+      {playerView === 'playing' && (
+        <PlayingPlayers
+          players={playingPlayers}
+          selectPlayer={selectPlayer}
+          selectedPlayer={selectedPlayer}
+          teamType={teamType}
+          onSubstituteClick={() => setPlayerView('bench')}
+        />
+      )}
+      {playerView === 'bench' && (
+        <BenchPlayers
+          players={benchPlayers}
+          onCancelClick={() => setPlayerView('playing')}
+          onPlayerClick={onSubstitute}
+        />
+      )}
+      {playerView === 'not_started' && (
+        <NotStartingPlayers
+          teamType={teamType}
+          players={benchPlayers}
+          onPlayerClick={onPlayerStartUp}
+        />
+      )}
+    </>
   );
 }
 

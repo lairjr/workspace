@@ -64,5 +64,43 @@ defmodule GoChampsScoreboard.Events.Definitions.SubstitutePlayerDefinitionTest d
                }
              ]
     end
+
+    test "returns game state with updated player state when only bench player id is provided" do
+      game_state = %GameState{
+        away_team: %TeamState{
+          players: [
+            %PlayerState{
+              id: "some-id",
+              state: :playing
+            },
+            %PlayerState{
+              id: "some-other",
+              state: :bench
+            }
+          ]
+        }
+      }
+
+      event_payload = %{
+        "team-type" => "away",
+        "playing-player-id" => nil,
+        "bench-player-id" => "some-other"
+      }
+
+      event = SubstitutePlayerDefinition.create(game_state.id, event_payload)
+
+      new_game_state = SubstitutePlayerDefinition.handle(game_state, event)
+
+      assert new_game_state.away_team.players == [
+               %PlayerState{
+                 id: "some-id",
+                 state: :playing
+               },
+               %PlayerState{
+                 id: "some-other",
+                 state: :playing
+               }
+             ]
+    end
   end
 end
