@@ -33,14 +33,23 @@ defmodule GoChampsScoreboard.Events.Definitions.SubstitutePlayerDefinitionTest d
           players: [
             %PlayerState{
               id: "some-id",
-              state: :playing
+              state: :playing,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
             },
             %PlayerState{
               id: "some-other",
-              state: :bench
+              state: :bench,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
             }
           ]
-        }
+        },
+        sport_id: "basketball"
       }
 
       event_payload = %{
@@ -56,11 +65,65 @@ defmodule GoChampsScoreboard.Events.Definitions.SubstitutePlayerDefinitionTest d
       assert new_game_state.away_team.players == [
                %PlayerState{
                  id: "some-id",
-                 state: :bench
+                 state: :bench,
+                 stats_values: %{"game_played" => 0, "game_started" => 0}
                },
                %PlayerState{
                  id: "some-other",
-                 state: :playing
+                 state: :playing,
+                 stats_values: %{"game_played" => 1, "game_started" => 0}
+               }
+             ]
+    end
+
+    test "returns game state with check game_played player stat" do
+      game_state = %GameState{
+        away_team: %TeamState{
+          players: [
+            %PlayerState{
+              id: "some-id",
+              state: :playing,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
+            },
+            %PlayerState{
+              id: "some-other",
+              state: :bench,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
+            }
+          ]
+        },
+        sport_id: "basketball"
+      }
+
+      event_payload = %{
+        "team-type" => "away",
+        "playing-player-id" => "some-id",
+        "bench-player-id" => "some-other"
+      }
+
+      event = SubstitutePlayerDefinition.create(game_state.id, event_payload)
+
+      new_game_state = SubstitutePlayerDefinition.handle(game_state, event)
+
+      assert new_game_state.away_team.players == [
+               %PlayerState{
+                 id: "some-id",
+                 state: :bench,
+                 stats_values: %{"game_played" => 0, "game_started" => 0}
+               },
+               %PlayerState{
+                 id: "some-other",
+                 state: :playing,
+                 stats_values: %{
+                   "game_played" => 1,
+                   "game_started" => 0
+                 }
                }
              ]
     end
@@ -71,14 +134,23 @@ defmodule GoChampsScoreboard.Events.Definitions.SubstitutePlayerDefinitionTest d
           players: [
             %PlayerState{
               id: "some-id",
-              state: :playing
+              state: :playing,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
             },
             %PlayerState{
               id: "some-other",
-              state: :bench
+              state: :bench,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
             }
           ]
-        }
+        },
+        sport_id: "basketball"
       }
 
       event_payload = %{
@@ -94,11 +166,65 @@ defmodule GoChampsScoreboard.Events.Definitions.SubstitutePlayerDefinitionTest d
       assert new_game_state.away_team.players == [
                %PlayerState{
                  id: "some-id",
-                 state: :playing
+                 state: :playing,
+                 stats_values: %{"game_played" => 0, "game_started" => 0}
                },
                %PlayerState{
                  id: "some-other",
-                 state: :playing
+                 state: :playing,
+                 stats_values: %{"game_played" => 1, "game_started" => 1}
+               }
+             ]
+    end
+
+    test "returns game state with checked game_played and game_started stats when only bench player id is provided" do
+      game_state = %GameState{
+        away_team: %TeamState{
+          players: [
+            %PlayerState{
+              id: "some-id",
+              state: :playing,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
+            },
+            %PlayerState{
+              id: "some-other",
+              state: :bench,
+              stats_values: %{
+                "game_played" => 0,
+                "game_started" => 0
+              }
+            }
+          ]
+        },
+        sport_id: "basketball"
+      }
+
+      event_payload = %{
+        "team-type" => "away",
+        "playing-player-id" => nil,
+        "bench-player-id" => "some-other"
+      }
+
+      event = SubstitutePlayerDefinition.create(game_state.id, event_payload)
+
+      new_game_state = SubstitutePlayerDefinition.handle(game_state, event)
+
+      assert new_game_state.away_team.players == [
+               %PlayerState{
+                 id: "some-id",
+                 state: :playing,
+                 stats_values: %{"game_played" => 0, "game_started" => 0}
+               },
+               %PlayerState{
+                 id: "some-other",
+                 state: :playing,
+                 stats_values: %{
+                   "game_played" => 1,
+                   "game_started" => 1
+                 }
                }
              ]
     end
