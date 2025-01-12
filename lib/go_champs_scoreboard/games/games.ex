@@ -12,6 +12,8 @@ defmodule GoChampsScoreboard.Games.Games do
   alias GoChampsScoreboard.Games.Models.GameState
   alias GoChampsScoreboard.Games.Models.GameClockState
 
+  @two_days_in_seconds 172_800
+
   @spec find_or_bootstrap(String.t()) :: GameState.t()
   @spec find_or_bootstrap(String.t(), String.t()) :: GameState.t()
   def find_or_bootstrap(game_id, go_champs_token \\ "") do
@@ -134,7 +136,7 @@ defmodule GoChampsScoreboard.Games.Games do
 
   @spec update_game(GameState.t()) :: GameState.t()
   defp update_game(game_state) do
-    Redix.command(:games_cache, ["SET", game_state.id, game_state])
+    Redix.command(:games_cache, ["SET", game_state.id, game_state, "EX", @two_days_in_seconds])
     game_state
   end
 

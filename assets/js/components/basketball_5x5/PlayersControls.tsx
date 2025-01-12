@@ -11,6 +11,14 @@ interface PlayingPlayersProps {
   onSubstituteClick: (playerId: string) => void;
 }
 
+function renderPlayerButtonText(player: PlayerState) {
+  if (!player.number) {
+    return `${player.name}`;
+  }
+
+  return `${player.name} - ${player.number}`;
+}
+
 function PlayingPlayers({
   players,
   teamType,
@@ -31,7 +39,7 @@ function PlayingPlayers({
                 selectPlayer({ playerId: player.id, teamType: teamType })
               }
             >
-              {player.name + ' - ' + player.number}
+              {renderPlayerButtonText(player)}
             </button>
           </div>
         ))}
