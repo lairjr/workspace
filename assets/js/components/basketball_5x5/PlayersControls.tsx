@@ -16,7 +16,7 @@ function renderPlayerButtonText(player: PlayerState) {
     return `${player.name}`;
   }
 
-  return `${player.name} - ${player.number}`;
+  return `${player.number} - ${player.name}`;
 }
 
 function PlayingPlayers({
@@ -77,7 +77,7 @@ function BenchPlayers({
               className="button is-fullwidth"
               onClick={() => onPlayerClick(player.id)}
             >
-              {player.name + ' - ' + player.number}
+              {renderPlayerButtonText(player)}
             </button>
           </div>
         ))}
@@ -120,7 +120,7 @@ function NotStartingPlayers({
                 onPlayerClick({ playerId: player.id, teamType: teamType })
               }
             >
-              {player.name + ' - ' + player.number}
+              {renderPlayerButtonText(player)}
             </button>
           </div>
         ))}

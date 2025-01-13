@@ -3,8 +3,18 @@
   padding: 0.4rem;
   border-radius: 5px;
   border-width: 2px;
+  transition: all 0.3s;
 
   &.is-tall {
     padding: 1.25rem;
+  }
+
+  &:hover {
+    filter: brightness(120%);
+  }
+
+  &:active {
+    filter: brightness(140%);
+    transform: scale(1.2, 1.2);
   }
 }
