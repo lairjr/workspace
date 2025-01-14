@@ -8,7 +8,7 @@ interface EndLiveModalProps {
 function EndLiveModal({ showModal }: EndLiveModalProps) {
   return (
     <Modal title="Game has ended" showModal={showModal} onClose={() => {}}>
-      Game has ended
+      Game stats are saved in Go Champs and we cannot use Scoreboard anymore.
     </Modal>
   );
 }
