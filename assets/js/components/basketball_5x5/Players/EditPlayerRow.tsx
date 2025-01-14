@@ -119,19 +119,16 @@ function EditPlayerRow({ player, teamType, pushEvent }: EditPlayerRowProps) {
           )}
         />
       </td>
-      <td>
-        <FormField
-          initialValue={player.name}
-          onChange={onUpdatePlayerName}
-          render={(value, onChange) => (
-            <input
-              className="input is-small"
-              type="text"
-              value={value}
-              onChange={onChange}
-            />
-          )}
-        />
+      <td
+        style={{
+          maxWidth: '140px',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          textWrap: 'nowrap',
+          verticalAlign: 'middle',
+        }}
+      >
+        {player.name}
       </td>
       <td>
         <StatInput

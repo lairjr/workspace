@@ -117,23 +117,23 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       assert player_1.id == "player-1"
       assert player_1.name == "P 1"
       assert player_1.number == "1"
-      assert player_1.state == :playing
+      assert player_1.state == :available
       assert player_2.id == "player-2"
       assert player_2.name == "Player 2"
       assert player_2.number == "2"
-      assert player_2.state == :playing
+      assert player_2.state == :available
       assert player_3.id == "player-3"
       assert player_3.name == "P 3"
       assert player_3.number == nil
-      assert player_3.state == :playing
+      assert player_3.state == :available
       assert player_4.id == "player-4"
       assert player_4.name == "Player 4"
       assert player_4.number == nil
-      assert player_4.state == :playing
+      assert player_4.state == :available
       assert player_5.id == "player-5"
       assert player_5.name == "Player 5"
       assert player_5.number == nil
-      assert player_5.state == :playing
+      assert player_5.state == :available
       assert player_6.id == "player-6"
       assert player_6.name == "Player 6"
       assert player_6.number == nil
@@ -145,23 +145,23 @@ defmodule GoChampsScoreboard.Games.BootstrapperTest do
       assert player_7.id == "player-7"
       assert player_7.name == "P 7"
       assert player_7.number == "7"
-      assert player_7.state == :playing
+      assert player_7.state == :available
       assert player_8.id == "player-8"
       assert player_8.name == "Player 8"
       assert player_8.number == "8"
-      assert player_8.state == :playing
+      assert player_8.state == :available
       assert player_9.id == "player-9"
       assert player_9.name == "P 9"
       assert player_9.number == nil
-      assert player_9.state == :playing
+      assert player_9.state == :available
       assert player_10.id == "player-10"
       assert player_10.name == "Player 10"
       assert player_10.number == nil
-      assert player_10.state == :playing
+      assert player_10.state == :available
       assert player_11.id == "player-11"
       assert player_11.name == "Player 11"
       assert player_11.number == nil
-      assert player_11.state == :playing
+      assert player_11.state == :available
       assert player_12.id == "player-12"
       assert player_12.name == "Player 12"
       assert player_12.number == nil

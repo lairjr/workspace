@@ -110,7 +110,7 @@ function NotStartingPlayers({
     <div className="controls">
       <div className="columns is-multiline">
         <div className="column is-12 has-text-centered">
-          <span className="title is-6">Select starting players</span>
+          <span className="title is-6">Select the starting players</span>
         </div>
         {players.map((player) => (
           <div key={player.id} className="column is-12">
