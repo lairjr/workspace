@@ -26,6 +26,8 @@ function PlayingPlayers({
   selectedPlayer,
   onSubstituteClick,
 }: PlayingPlayersProps) {
+  const subButtonDisabled =
+    selectedPlayer === null || selectedPlayer?.teamType !== teamType;
   return (
     <div className="controls">
       <div className="columns is-multiline">
@@ -48,6 +50,7 @@ function PlayingPlayers({
           <button
             className="button is-warning is-fullwidth"
             onClick={onSubstituteClick}
+            disabled={subButtonDisabled}
           >
             Substitute
           </button>

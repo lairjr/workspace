@@ -5,9 +5,14 @@ import debounce from '../../debounce';
 interface StatsControlsProps {
   pushEvent: (event: string, payload: any) => void;
   playerSelection: PlayerSelection;
+  selectPlayer: (playerSelection: PlayerSelection | null) => void;
 }
 
-function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
+function StatsControls({
+  pushEvent,
+  playerSelection,
+  selectPlayer,
+}: StatsControlsProps) {
   const onStatUpdate = debounce<(stat: string) => void>((stat) => {
     pushEvent('update-player-stat', {
       ['stat-id']: stat,
@@ -15,6 +20,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
       ['player-id']: playerSelection.playerId,
       ['team-type']: playerSelection.teamType,
     });
+    selectPlayer(null);
   }, 100);
   const buttonsDisabled = playerSelection === null;
   return (

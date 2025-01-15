@@ -62,6 +62,7 @@ function Main({ game_state, pushEvent }: MainProps) {
           <StatsControls
             playerSelection={playerSelection}
             pushEvent={pushEvent}
+            selectPlayer={setPlayerSelection}
           />
         </div>
 
