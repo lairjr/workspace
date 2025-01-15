@@ -30,6 +30,22 @@ defmodule GoChampsScoreboard.Games.PlayersTest do
                }
              } == Players.update_manual_stats_values(player_state, player_stat, "increment")
     end
+
+    test "does not update the player state if new value is negative" do
+      player_state = %{
+        stats_values: %{
+          "one-points-made" => 0
+        }
+      }
+
+      player_stat = Stat.new("one-points-made", :manual, [:decrement])
+
+      assert %{
+               stats_values: %{
+                 "one-points-made" => 0
+               }
+             } == Players.update_manual_stats_values(player_state, player_stat, "decrement")
+    end
   end
 
   describe "update_calculated_stats_values" do

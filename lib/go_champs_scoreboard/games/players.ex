@@ -15,8 +15,12 @@ defmodule GoChampsScoreboard.Games.Players do
       Map.fetch!(player_state.stats_values, player_stat.key)
       |> Operations.calc(operation)
 
-    player_state
-    |> update_stats_values(player_stat, new_stat_value)
+    if new_stat_value < 0 do
+      player_state
+    else
+      player_state
+      |> update_stats_values(player_stat, new_stat_value)
+    end
   end
 
   @spec update_calculated_stats_values(PlayerState.t(), [Stat.t()]) :: PlayerState.t()
