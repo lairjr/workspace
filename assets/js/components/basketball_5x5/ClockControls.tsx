@@ -1,8 +1,9 @@
 import React from 'react';
-import { GameClockState } from '../../types';
+import { GameClockState, LiveState } from '../../types';
 
 interface ClockControlsProps {
   clock_state: GameClockState;
+  live_state: LiveState;
   pushEvent: (event: string, payload: any) => void;
 }
 
@@ -14,7 +15,12 @@ function formatTime(time: number) {
   return `${minutesStr}:${secondsStr}`;
 }
 
-function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
+function ClockControls({
+  clock_state,
+  live_state,
+  pushEvent,
+}: ClockControlsProps) {
+  const clockButtonsDisabled = live_state?.state !== 'in_progress';
   const onStartClock = () => {
     pushEvent('update-clock-state', { state: 'running' });
   };
@@ -61,7 +67,11 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
     <div className="controls">
       <div className="columns is-multiline">
         <div className="column is-2">
-          <button className="button is-info" onClick={onPeriodDecrement}>
+          <button
+            className="button is-info"
+            onClick={onPeriodDecrement}
+            disabled={clockButtonsDisabled}
+          >
             {'<'}
           </button>
         </div>
@@ -69,18 +79,32 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
           <span className="chip-label">{clock_state.period}</span>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onPeriodIncrement}>
+          <button
+            className="button is-info"
+            onClick={onPeriodIncrement}
+            disabled={clockButtonsDisabled}
+          >
             {'>'}
           </button>
         </div>
 
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeIncrement60}>
+          <button
+            className="button is-info has-tooltip"
+            data-tooltip="- 1 Min"
+            onClick={onTimeIncrement60}
+            disabled={clockButtonsDisabled}
+          >
             {'<<'}
           </button>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeIncrement}>
+          <button
+            className="button is-info"
+            data-tooltip="- 1 Seg"
+            onClick={onTimeIncrement}
+            disabled={clockButtonsDisabled}
+          >
             {'<'}
           </button>
         </div>
@@ -88,12 +112,22 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
           <span className="chip-label">{formatTime(clock_state.time)}</span>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeDecrement}>
+          <button
+            className="button is-info"
+            data-tooltip="+ 1 Seg"
+            onClick={onTimeDecrement}
+            disabled={clockButtonsDisabled}
+          >
             {'>'}
           </button>
         </div>
         <div className="column is-2">
-          <button className="button is-info" onClick={onTimeDecrement60}>
+          <button
+            className="button is-info"
+            data-tooltip="+ 1 Min"
+            onClick={onTimeDecrement60}
+            disabled={clockButtonsDisabled}
+          >
             {'>>'}
           </button>
         </div>
@@ -103,6 +137,7 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
             <button
               className="button is-info is-fullwidth"
               onClick={onPauseClock}
+              disabled={clockButtonsDisabled}
             >
               Pause
             </button>
@@ -110,6 +145,7 @@ function ClockControls({ clock_state, pushEvent }: ClockControlsProps) {
             <button
               className="button is-info is-fullwidth"
               onClick={onStartClock}
+              disabled={clockButtonsDisabled}
             >
               Start
             </button>

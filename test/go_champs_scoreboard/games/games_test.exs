@@ -15,13 +15,32 @@ defmodule GoChampsScoreboard.Games.GamesTest do
 
   describe "find_or_bootstrap/1 when game is set" do
     test "returns game_state" do
-      set_test_game()
+      set_test_game(:in_progress)
 
       result_game_state = Games.find_or_bootstrap("some-game-id")
 
       assert result_game_state.id == "some-game-id"
       assert result_game_state.away_team.name == "Some away team"
       assert result_game_state.home_team.name == "Some home team"
+
+      unset_test_game()
+    end
+
+    test "returns bootstrapped game from go champs if current game is not_started" do
+      set_test_game()
+      # Let's say teams have been updated in Go Champs
+      set_go_champs_api_respose("Go champs updated away team", "Go champs updated home team")
+
+      result_game_state = Games.find_or_bootstrap("some-game-id", "token")
+
+      {:ok, stored_game} = Redix.command(:games_cache, ["GET", "some-game-id"])
+
+      redis_game = GameState.from_json(stored_game)
+
+      assert redis_game.id == "some-game-id"
+      assert result_game_state.id == "some-game-id"
+      assert result_game_state.away_team.name == "Go champs updated away team"
+      assert result_game_state.home_team.name == "Go champs updated home team"
 
       unset_test_game()
     end
@@ -151,15 +170,18 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     end
   end
 
-  defp set_go_champs_api_respose() do
+  defp set_go_champs_api_respose(
+         away_team_name \\ "Go champs away team",
+         home_team_name \\ "Go champs home team"
+       ) do
     response_body = %{
       "data" => %{
         "id" => "some-game-id",
         "away_team" => %{
-          "name" => "Go champs away team"
+          "name" => away_team_name
         },
         "home_team" => %{
-          "name" => "Go champs home team"
+          "name" => home_team_name
         }
       }
     }
@@ -172,11 +194,11 @@ defmodule GoChampsScoreboard.Games.GamesTest do
     end)
   end
 
-  defp set_test_game() do
+  defp set_test_game(live_state \\ :not_started) do
     away_team = TeamState.new("Some away team")
     home_team = TeamState.new("Some home team")
     clock_state = GameClockState.new()
-    live_state = LiveState.new()
+    live_state = LiveState.new(live_state)
     game_state = GameState.new("some-game-id", away_team, home_team, clock_state, live_state)
     Redix.command(:games_cache, ["SET", "some-game-id", game_state])
   end

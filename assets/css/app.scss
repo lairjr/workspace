@@ -16,6 +16,9 @@
 @use '../../node_modules/bulma/sass/elements/title';
 @use '../../node_modules/bulma/sass/layout/level';
 
+// Load bulma Tooltip
+@use '../../node_modules/bulma-tooltip/dist/css/bulma-tooltip.min.css';
+
 @import './colors.scss';
 @import './components/index.scss';
 

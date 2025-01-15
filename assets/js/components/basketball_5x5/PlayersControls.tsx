@@ -113,7 +113,7 @@ function NotStartingPlayers({
     <div className="controls">
       <div className="columns is-multiline">
         <div className="column is-12 has-text-centered">
-          <span className="title is-3">
+          <span className="title is-3 has-text-warning">
             CLICK TO SELECT THE STARTING PLAYERS
           </span>
         </div>

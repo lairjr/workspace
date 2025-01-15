@@ -38,6 +38,7 @@ function Main({ game_state, pushEvent }: MainProps) {
         <div className="column is-4">
           <ClockControls
             clock_state={game_state.clock_state}
+            live_state={game_state.live_state}
             pushEvent={pushEvent}
           />
         </div>
