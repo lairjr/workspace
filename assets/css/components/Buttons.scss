@@ -9,12 +9,14 @@
     padding: 1.25rem;
   }
 
-  &:hover {
-    filter: brightness(120%);
-  }
+  &:not(:disabled) {
+    &:hover {
+      filter: brightness(120%);
+    }
 
-  &:active {
-    filter: brightness(140%);
-    transform: scale(1.2, 1.2);
+    &:active {
+      filter: brightness(140%);
+      transform: scale(1.2, 1.2);
+    }
   }
 }

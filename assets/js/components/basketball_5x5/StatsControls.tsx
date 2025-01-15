@@ -16,6 +16,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
       ['team-type']: playerSelection.teamType,
     });
   }, 100);
+  const buttonsDisabled = playerSelection === null;
   return (
     <div className="controls">
       <div className="columns is-multiline">
@@ -23,6 +24,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-success"
             onClick={() => onStatUpdate('free_throws_made')}
+            disabled={buttonsDisabled}
           >
             +1 PT
           </button>
@@ -31,6 +33,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-success"
             onClick={() => onStatUpdate('field_goals_made')}
+            disabled={buttonsDisabled}
           >
             +2 PTS
           </button>
@@ -39,6 +42,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-success"
             onClick={() => onStatUpdate('three_point_field_goals_made')}
+            disabled={buttonsDisabled}
           >
             +3 PTS
           </button>
@@ -47,6 +51,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-danger"
             onClick={() => onStatUpdate('free_throws_missed')}
+            disabled={buttonsDisabled}
           >
             Miss 1 PT
           </button>
@@ -55,6 +60,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-danger"
             onClick={() => onStatUpdate('field_goals_missed')}
+            disabled={buttonsDisabled}
           >
             Miss 2 PTS
           </button>
@@ -63,6 +69,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-danger"
             onClick={() => onStatUpdate('three_point_field_goals_missed')}
+            disabled={buttonsDisabled}
           >
             Miss 3 PTS
           </button>
@@ -71,6 +78,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-info"
             onClick={() => onStatUpdate('rebounds_offensive')}
+            disabled={buttonsDisabled}
           >
             +1 REB OFF
           </button>
@@ -79,6 +87,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-info"
             onClick={() => onStatUpdate('steals')}
+            disabled={buttonsDisabled}
           >
             +1 STL
           </button>
@@ -87,6 +96,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-info"
             onClick={() => onStatUpdate('rebounds_defensive')}
+            disabled={buttonsDisabled}
           >
             +1 REB DEF
           </button>
@@ -95,6 +105,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-info"
             onClick={() => onStatUpdate('assists')}
+            disabled={buttonsDisabled}
           >
             +1 ASS
           </button>
@@ -103,6 +114,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-info"
             onClick={() => onStatUpdate('blocks')}
+            disabled={buttonsDisabled}
           >
             +1 BLK
           </button>
@@ -111,6 +123,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-danger"
             onClick={() => onStatUpdate('turnovers')}
+            disabled={buttonsDisabled}
           >
             +1 TO
           </button>
@@ -119,6 +132,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-warning"
             onClick={() => onStatUpdate('fouls_personal')}
+            disabled={buttonsDisabled}
           >
             Personal Fault
           </button>
@@ -127,6 +141,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-warning"
             onClick={() => onStatUpdate('fouls_technical')}
+            disabled={buttonsDisabled}
           >
             Technical Fault
           </button>
@@ -135,6 +150,7 @@ function StatsControls({ pushEvent, playerSelection }: StatsControlsProps) {
           <button
             className="button is-tall is-warning"
             onClick={() => onStatUpdate('fouls_flagrant')}
+            disabled={buttonsDisabled}
           >
             Flagrant Fault
           </button>
