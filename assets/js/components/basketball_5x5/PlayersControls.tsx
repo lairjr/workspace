@@ -110,7 +110,7 @@ function NotStartingPlayers({
     <div className="controls">
       <div className="columns is-multiline">
         <div className="column is-12 has-text-centered">
-          <span className="title is-6">Select the starting players</span>
+          <span className="title is-3">CLICK TO SELECT THE STARTING PLAYERS</span>
         </div>
         {players.map((player) => (
           <div key={player.id} className="column is-12">
@@ -153,11 +153,10 @@ function PlayersControls({
     (player) => player.state !== 'playing',
   );
   const initialView = playingPlayers.length < 5 ? 'not_started' : 'playing';
-  React.useEffect(() => {
-    const view = playingPlayers.length < 5 ? 'not_started' : 'playing';
-    setPlayerView(view);
-  }, [team]);
   const [playerView, setPlayerView] = React.useState<PlayerView>(initialView);
+  React.useEffect(() => {
+    setPlayerView(initialView);
+  }, [initialView]);
   const onSubstitute = (playerId: string) => {
     pushEvent('substitute-player', {
       ['team-type']: teamType,
