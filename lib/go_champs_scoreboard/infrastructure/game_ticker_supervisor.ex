@@ -15,6 +15,16 @@ defmodule GoChampsScoreboard.Infrastructure.GameTickerSupervisor do
   end
 
   @impl true
+  def check_game_ticker(game_id) do
+    children = DynamicSupervisor.which_children(__MODULE__)
+
+    case Enum.find(children, fn {id, _, _, _} -> id == game_id end) do
+      nil -> {:error, :not_found}
+      _ -> :ok
+    end
+  end
+
+  @impl true
   def start_game_ticker(game_id) do
     child_spec = %{
       id: game_id,

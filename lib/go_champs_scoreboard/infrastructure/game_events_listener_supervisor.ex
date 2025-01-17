@@ -28,6 +28,16 @@ defmodule GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor do
   end
 
   @impl true
+  def check_game_events_listener(game_id) do
+    children = DynamicSupervisor.which_children(__MODULE__)
+
+    case Enum.find(children, fn {id, _, _, _} -> id == game_id end) do
+      nil -> {:error, :not_found}
+      _ -> :ok
+    end
+  end
+
+  @impl true
   def stop_game_events_listener(game_id) do
     case Registry.lookup(GoChampsScoreboard.Infrastructure.GameEventsListenerRegistry, game_id) do
       [{pid, _}] ->

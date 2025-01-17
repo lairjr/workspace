@@ -16,7 +16,8 @@ defmodule GoChampsScoreboard.Games.Games do
 
   @spec find_or_bootstrap(String.t()) :: GameState.t()
   @spec find_or_bootstrap(String.t(), String.t()) :: GameState.t()
-  def find_or_bootstrap(game_id, go_champs_token \\ "") do
+  @spec find_or_bootstrap(String.t(), String.t(), module()) :: GameState.t()
+  def find_or_bootstrap(game_id, go_champs_token \\ "", resource_manager \\ ResourceManager) do
     case get_game(game_id) do
       {:ok, nil} ->
         game_state =
@@ -33,6 +34,11 @@ defmodule GoChampsScoreboard.Games.Games do
               |> Bootstrapper.bootstrap_from_go_champs(game.id, go_champs_token)
 
             update_game(updated_game)
+
+          :in_progress ->
+            resource_manager.check_and_restart(game.id)
+
+            game
 
           _ ->
             game

@@ -44,6 +44,24 @@ defmodule GoChampsScoreboard.Games.GamesTest do
 
       unset_test_game()
     end
+
+    test "return game from cache and restart resource manager if game is in progress" do
+      set_test_game(:in_progress)
+
+      expect(@resource_manager, :check_and_restart, fn game_id ->
+        assert game_id == "some-game-id"
+
+        :ok
+      end)
+
+      result_game_state = Games.find_or_bootstrap("some-game-id", "token", @resource_manager)
+
+      assert result_game_state.id == "some-game-id"
+      assert result_game_state.away_team.name == "Some away team"
+      assert result_game_state.home_team.name == "Some home team"
+
+      unset_test_game()
+    end
   end
 
   describe "find_or_bootstrap/1 when game is not set" do

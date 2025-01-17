@@ -8,6 +8,30 @@ defmodule GoChampsScoreboard.Games.ResourceManager do
   alias GoChampsScoreboard.Infrastructure.GameTickerSupervisor
 
   @impl true
+  @spec check_and_restart(String.t(), module(), module()) :: :ok | {:error, any()}
+  def check_and_restart(
+        game_id,
+        game_events_listener_supervisor \\ GameEventsListenerSupervisor,
+        game_ticker_supervisor \\ GameTickerSupervisor
+      ) do
+    case game_events_listener_supervisor.check_game_events_listener(game_id) do
+      {:error, :not_found} ->
+        game_events_listener_supervisor.start_game_events_listener(game_id)
+
+      _ ->
+        :ok
+    end
+
+    case game_ticker_supervisor.check_game_ticker(game_id) do
+      {:error, :not_found} ->
+        game_ticker_supervisor.start_game_ticker(game_id)
+
+      _ ->
+        :ok
+    end
+  end
+
+  @impl true
   @spec start_up(String.t(), module(), module()) :: :ok
   def start_up(
         game_id,
@@ -35,6 +59,7 @@ defmodule GoChampsScoreboard.Games.ResourceManager do
 end
 
 defmodule GoChampsScoreboard.Games.ResourceManagerBehavior do
+  @callback check_and_restart(String.t()) :: :ok | {:error, any()}
   @callback start_up(String.t()) :: :ok | {:error, any()}
   @callback shut_down(String.t()) :: :ok | {:error, any()}
 end
