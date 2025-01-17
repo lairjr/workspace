@@ -13,6 +13,7 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
+  @impl true
   def init(_) do
     case AMQP.Connection.open(
            Application.get_env(:go_champs_scoreboard, GoChampsScoreboard.Infrastructure.RabbitMQ)
@@ -53,6 +54,12 @@ defmodule GoChampsScoreboard.Infrastructure.RabbitMQ do
     )
 
     AMQP.Basic.publish(chan, @exchange, routing_key, message)
+    {:reply, :ok, state}
+  end
+
+  @impl true
+  def handle_call(msg, _from, state) do
+    Logger.warning("Unhandled call: #{inspect(msg)}")
     {:reply, :ok, state}
   end
 
