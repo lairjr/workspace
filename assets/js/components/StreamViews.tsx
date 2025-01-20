@@ -44,7 +44,18 @@ function AnimatedScore({ score }: { score: number }) {
       >
         <FallingBasketball />
       </span>
-      <span className="title is-1">{currentScore}</span>
+      <span className="score">{currentScore}</span>
+    </div>
+  );
+}
+
+function TeamScore({ teamName, score }: { teamName: string; score: number }) {
+  return (
+    <div className="team-score">
+      <div className="name">{teamName}</div>
+      <div className="score">
+        <AnimatedScore score={score} />
+      </div>
     </div>
   );
 }
@@ -55,45 +66,31 @@ function StreamViews({ game_data }: StreamViewsProps) {
   return (
     <div className="stream-views">
       <div className="container">
-        <div className="columns is-multiline">
-          <div className="column is-12 has-text-centered ad">
-            <span className="title is-7">go-champs.com</span>
-          </div>
-          <div className="column is-6 has-text-centered away">
-            <span className="title is-6">{game_state.away_team.name}</span>
-          </div>
-          <div className="column is-6 has-text-centered home">
-            <span className="title is-6">{game_state.home_team.name}</span>
-          </div>
-          <div className="column is-6 has-text-centered away">
-            <AnimatedScore
+        <div className="columns is-multiline is-vcentered">
+          <div className="column has-text-centered away">
+            <TeamScore
+              teamName={game_state.away_team.name}
               score={game_state.away_team.total_player_stats['points'] || 0}
             />
           </div>
-          <div className="column is-6 has-text-centered home">
-            <AnimatedScore
+          <div className="column has-text-centered home">
+            <TeamScore
+              teamName={game_state.home_team.name}
               score={game_state.home_team.total_player_stats['points'] || 0}
             />
           </div>
-          <div className="column is-6 has-text-centered away">
-            <span className="title is-5">
-              Faltas: {game_state.away_team.total_player_stats['fouls'] || 0}
-            </span>
-          </div>
-          <div className="column is-6 has-text-centered home">
-            <span className="title is-5">
-              Faltas: {game_state.home_team.total_player_stats['fouls'] || 0}
-            </span>
-          </div>
-          <div className="column is-12 has-text-centered period">
-            <span className="title is-6">
-              Quarto: {game_state.clock_state.period}
-            </span>
-          </div>
-          <div className="column is-12 has-text-centered time">
-            <span className="title is-4">
-              {formatTime(game_state.clock_state.time)}
-            </span>
+          <div className="column is-3 has-text-centered period">
+            <div className="period-time">
+              <span className="period">
+                {`${game_state.clock_state.period}º`}
+              </span>
+              <span className="time">
+                {formatTime(game_state.clock_state.time)}
+              </span>
+            </div>
+            <div className="ad">
+              <span>go-champs.com</span>
+            </div>
           </div>
         </div>
       </div>
