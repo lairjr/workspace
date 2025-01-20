@@ -1,5 +1,6 @@
 import React from 'react';
 import { GameClockState, LiveState } from '../../types';
+import { invokeButtonClickRef } from '../../shared/invokeButtonClick';
 
 interface ClockControlsProps {
   clock_state: GameClockState;
@@ -20,12 +21,14 @@ function ClockControls({
   live_state,
   pushEvent,
 }: ClockControlsProps) {
+  const buttonPauseStart = React.useRef<HTMLButtonElement>(null);
   const clockButtonsDisabled = live_state?.state !== 'in_progress';
-  const onStartClock = () => {
-    pushEvent('update-clock-state', { state: 'running' });
-  };
-  const onPauseClock = () => {
-    pushEvent('update-clock-state', { state: 'paused' });
+  const onPauseStartClock = () => {
+    if (clock_state.state === 'running') {
+      pushEvent('update-clock-state', { state: 'paused' });
+    } else {
+      pushEvent('update-clock-state', { state: 'running' });
+    }
   };
   const onPeriodIncrement = () => {
     pushEvent('update-clock-time-and-period', {
@@ -63,6 +66,20 @@ function ClockControls({
       operation: 'decrement60',
     });
   };
+
+  React.useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      const { key } = event;
+      if (key === ' ') {
+        event.preventDefault();
+        invokeButtonClickRef(buttonPauseStart);
+      }
+    };
+
+    document.addEventListener('keydown', listener);
+    return () => document.removeEventListener('keydown', listener);
+  }, [buttonPauseStart, clock_state]);
+
   return (
     <div className="controls">
       <div className="columns is-multiline">
@@ -133,23 +150,15 @@ function ClockControls({
         </div>
 
         <div className="column is-12">
-          {clock_state.state === 'running' ? (
-            <button
-              className="button is-info is-fullwidth"
-              onClick={onPauseClock}
-              disabled={clockButtonsDisabled}
-            >
-              Pause
-            </button>
-          ) : (
-            <button
-              className="button is-info is-fullwidth"
-              onClick={onStartClock}
-              disabled={clockButtonsDisabled}
-            >
-              Start
-            </button>
-          )}
+          <button
+            ref={buttonPauseStart}
+            className="button is-info is-fullwidth"
+            onClick={onPauseStartClock}
+            disabled={clockButtonsDisabled}
+          >
+            <span className="shortcut">ESPACE</span>
+            {clock_state.state === 'running' ? 'Pause' : 'Start'}
+          </button>
         </div>
       </div>
     </div>

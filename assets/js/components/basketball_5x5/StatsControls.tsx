@@ -1,19 +1,7 @@
 import React from 'react';
 import { PlayerSelection } from './Main';
 import debounce from '../../debounce';
-
-function invokeButtonClickRef(ref: React.RefObject<HTMLButtonElement>) {
-  if (ref.current?.disabled) {
-    return;
-  }
-
-  ref.current?.classList.add('action');
-
-  ref.current?.click();
-  setTimeout(() => {
-    ref.current?.classList.remove('action');
-  }, 200);
-}
+import { invokeButtonClickRef } from '../../shared/invokeButtonClick';
 
 interface StatsControlsProps {
   pushEvent: (event: string, payload: any) => void;
@@ -54,7 +42,6 @@ function StatsControls({
     selectPlayer(null);
   }, 100);
 
-  // add a listener for keyboard shortcuts
   React.useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       const { key } = event;
