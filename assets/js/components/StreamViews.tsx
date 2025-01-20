@@ -20,27 +20,27 @@ function AnimatedScore({ score }: { score: number }) {
 
   React.useEffect(() => {
     setScoreDiff(score - currentScore);
-    setCurrentScore(score);
   }, [score]);
 
   React.useEffect(() => {
     setScoreMakeEffect(true);
+    const timeoutScore = setTimeout(() => {
+      setCurrentScore(score);
+    }, 600);
     const timeoutScoreMake = setTimeout(() => {
       setScoreMakeEffect(false);
       setScoreDiff(1);
-    }, 1800);
+    }, 2000);
     return () => {
       clearTimeout(timeoutScoreMake);
+      clearTimeout(timeoutScore);
     };
   }, [score]);
 
   return (
     <div className="animated-score">
-      <span
-        className={`score-effect ${
-          scoreMadeEffect ? `show-${scoreDiff}` : 'hide'
-        }`}
-      >
+      <span className={`score-effect ${scoreMadeEffect ? `show` : 'hide'}`}>
+        {scoreDiff > 0 ? `+${scoreDiff}` : ''}
       </span>
       <span className="score">{currentScore}</span>
     </div>
