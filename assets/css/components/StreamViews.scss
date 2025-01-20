@@ -9,10 +9,6 @@
     padding: 0;
     box-shadow: 0px 0px 5px 3px rgba(255, 255, 255, 0.1);
 
-    &.ad {
-      background-color: $black;
-    }
-
     &.away {
       background-color: $green;
     }
@@ -31,13 +27,40 @@
     justify-content: space-between;
 
     .name {
+      position: relative;
       width: 70%;
-      color: $white;
       font-weight: bold;
-      font-size: 60px;
-      text-overflow: ellipsis;
-      max-width: 203px;
-      overflow: hidden;
+      font-size: 50px;
+
+      .text {
+        position: absolute;
+        top: 7px;
+        left: 2px;
+        pointer-events: none;
+        text-overflow: ellipsis;
+        max-width: 200px;
+        max-height: 92px;
+        overflow: hidden;
+      }
+    }
+
+    input[type='color'] {
+      cursor: pointer;
+      box-shadow: 0px;
+      border: none;
+      padding: 0;
+      padding-inline: 0;
+      padding-block: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    input[type='color']::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    input[type='color']::-webkit-color-swatch {
+      border: none;
     }
 
     .score {
@@ -70,7 +93,8 @@
 
   .animated-score {
     position: relative;
-    font-size: 60px;
+    font-size: 56px;
+    padding: 3px 0;
     font-weight: bold;
     color: $dark;
     background: linear-gradient(#fdfdff 0%, #cdcdcd 50%, #fdfdff 100%);

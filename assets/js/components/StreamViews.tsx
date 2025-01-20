@@ -13,6 +13,23 @@ function formatTime(time: number) {
   return `${minutesStr}:${secondsStr}`;
 }
 
+// Utility function to calculate contrast color
+function getContrastColor(hex: string): string {
+  // Remove the hash at the start if it's there
+  hex = hex.replace(/^#/, '');
+
+  // Parse the r, g, b values
+  let r = parseInt(hex.substring(0, 2), 16);
+  let g = parseInt(hex.substring(2, 4), 16);
+  let b = parseInt(hex.substring(4, 6), 16);
+
+  // Calculate the luminance
+  let luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+  // Return black for light colors and white for dark colors
+  return luminance > 0.5 ? '#1e1200' : '#fdfdff';
+}
+
 function AnimatedScore({ score }: { score: number }) {
   const [currentScore, setCurrentScore] = React.useState(0);
   const [scoreMadeEffect, setScoreMakeEffect] = React.useState(false);
@@ -47,10 +64,35 @@ function AnimatedScore({ score }: { score: number }) {
   );
 }
 
-function TeamScore({ teamName, score }: { teamName: string; score: number }) {
+function TeamScore({
+  teamName,
+  score,
+  defaultColor,
+}: {
+  teamName: string;
+  score: number;
+  defaultColor: string;
+}) {
+  const [color, setColor] = React.useState(defaultColor);
+  const [contrastColor, setContrastColor] = React.useState('#FFFFFF');
+
+  const handleColorChange = (color: string) => {
+    setColor(color);
+    setContrastColor(getContrastColor(color));
+  };
+
   return (
     <div className="team-score">
-      <div className="name">{teamName}</div>
+      <div className="name">
+        <span className="text" style={{ color: contrastColor }}>
+          {teamName}
+        </span>
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => handleColorChange(e.target.value)}
+        />
+      </div>
       <div className="score">
         <AnimatedScore score={score} />
       </div>
@@ -69,12 +111,14 @@ function StreamViews({ game_data }: StreamViewsProps) {
             <TeamScore
               teamName={game_state.away_team.name}
               score={game_state.away_team.total_player_stats['points'] || 0}
+              defaultColor="#970c10"
             />
           </div>
           <div className="column has-text-centered home">
             <TeamScore
               teamName={game_state.home_team.name}
               score={game_state.home_team.total_player_stats['points'] || 0}
+              defaultColor="#2b5615"
             />
           </div>
           <div className="column is-3 has-text-centered period">
