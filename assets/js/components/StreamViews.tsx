@@ -1,6 +1,5 @@
 import React from 'react';
 import { GameState, DEFAULT_GAME_STATE } from '../types';
-import FallingBasketball from '../icons/FallingBasketball';
 
 interface StreamViewsProps {
   game_data: string;
@@ -42,7 +41,6 @@ function AnimatedScore({ score }: { score: number }) {
           scoreMadeEffect ? `show-${scoreDiff}` : 'hide'
         }`}
       >
-        <FallingBasketball />
       </span>
       <span className="score">{currentScore}</span>
     </div>
