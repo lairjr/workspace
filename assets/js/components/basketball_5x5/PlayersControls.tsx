@@ -62,21 +62,28 @@ function PlayingPlayers({
 
 interface BenchPlayersProps {
   players: PlayerState[];
+  selectedPlayer: PlayerSelection;
+  teamType: TeamType;
   onPlayerClick: (playerId: string) => void;
   onCancelClick: () => void;
 }
 
 function BenchPlayers({
   players,
+  selectedPlayer,
+  teamType,
   onPlayerClick,
   onCancelClick,
 }: BenchPlayersProps) {
+  const playerButtonDisabled =
+    selectedPlayer === null || selectedPlayer.teamType !== teamType;
   return (
     <div className="controls">
       <div className="columns is-multiline">
         {players.map((player) => (
           <div key={player.id} className="column is-12">
             <button
+              disabled={playerButtonDisabled}
               className="button is-fullwidth"
               onClick={() => onPlayerClick(player.id)}
             >
@@ -193,6 +200,8 @@ function PlayersControls({
       {playerView === 'bench' && (
         <BenchPlayers
           players={benchPlayers}
+          selectedPlayer={selectedPlayer}
+          teamType={teamType}
           onCancelClick={() => setPlayerView('playing')}
           onPlayerClick={onSubstitute}
         />
