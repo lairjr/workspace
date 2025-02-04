@@ -4,14 +4,14 @@ defmodule GoChampsScoreboard.Games.ResourceManager do
   """
   @behaviour GoChampsScoreboard.Games.ResourceManagerBehavior
 
-  alias GoChampsScoreboard.Infrastructure.GameEventsListenerSupervisor
+  alias GoChampsScoreboard.Infrastructure.GameEventStreamerSupervisor
   alias GoChampsScoreboard.Infrastructure.GameTickerSupervisor
 
   @impl true
   @spec check_and_restart(String.t(), module(), module()) :: :ok | {:error, any()}
   def check_and_restart(
         game_id,
-        game_events_listener_supervisor \\ GameEventsListenerSupervisor,
+        game_events_listener_supervisor \\ GameEventStreamerSupervisor,
         game_ticker_supervisor \\ GameTickerSupervisor
       ) do
     case game_events_listener_supervisor.check_game_events_listener(game_id) do
@@ -35,7 +35,7 @@ defmodule GoChampsScoreboard.Games.ResourceManager do
   @spec start_up(String.t(), module(), module()) :: :ok
   def start_up(
         game_id,
-        game_events_listener_supervisor \\ GameEventsListenerSupervisor,
+        game_events_listener_supervisor \\ GameEventStreamerSupervisor,
         game_ticker_supervisor \\ GameTickerSupervisor
       ) do
     game_events_listener_supervisor.start_game_events_listener(game_id)
@@ -48,7 +48,7 @@ defmodule GoChampsScoreboard.Games.ResourceManager do
   @spec shut_down(String.t(), module(), module()) :: :ok
   def shut_down(
         game_id,
-        game_events_listener_supervisor \\ GameEventsListenerSupervisor,
+        game_events_listener_supervisor \\ GameEventStreamerSupervisor,
         game_ticker_supervisor \\ GameTickerSupervisor
       ) do
     game_events_listener_supervisor.stop_game_events_listener(game_id)
